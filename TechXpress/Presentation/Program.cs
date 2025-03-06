@@ -1,3 +1,6 @@
+using DataAccess.Contexts;
+using Microsoft.EntityFrameworkCore;
+
 namespace Presentation
 {
     public class Program
@@ -8,6 +11,16 @@ namespace Presentation
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            var connectionString = builder.Configuration.GetConnectionString("TechXpress");
+
+            builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            {
+                options
+                .UseSqlServer(connectionString)
+                .LogTo(Console.WriteLine, LogLevel.Information);
+            });
+
 
             var app = builder.Build();
 
