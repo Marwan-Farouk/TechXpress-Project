@@ -16,7 +16,8 @@ namespace DataAccess.Entities
         public DateTime OrderDate { get; set; }
         public decimal TotalAmount { get; set; }
         public string Status { get; set; }
-        public int PaymentId { get; set; }
-        public Payment Payment { get; set; }
+        public int? PaymentId { get; set; }
+        public Payment? Payment { get; set; }
+        public ICollection<OrderDetails> OrderItems { get; set; }
     }
 }

@@ -19,5 +19,6 @@ namespace DataAccess.Entities
         public int CategoryId { get; set; }
         public Category Category { get; set; }
         public DateTime DateAdded { get; set; }
+        public ICollection<OrderDetails> OrderDetails { get; set; }
     }
 }
