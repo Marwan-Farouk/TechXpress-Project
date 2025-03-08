@@ -15,6 +15,9 @@ namespace DataAccess.Contexts
         public DbSet<Category> Categories { get; set; }
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<OrderDetails> OrderDetails { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -164,6 +167,111 @@ namespace DataAccess.Contexts
                 .WithMany(c => c.Products)
                 .HasForeignKey(p => p.CategoryId);
             //====================================================================================================
+            // [7] Order
+            //=================
+            // Table name
+            modelBuilder.Entity<Order>().ToTable("Orders");
+            // Primary key
+            modelBuilder.Entity<Order>().HasKey(o => o.Id); // PK ID
+            // Column Data Types
+            modelBuilder.Entity<Order>().Property(o => o.Id) // ID
+                .HasColumnType("int").UseIdentityColumn(10, 1);
+            modelBuilder.Entity<Order>().Property(o => o.UserId) // FK UserId
+                .HasColumnType("int").IsRequired();
+            modelBuilder.Entity<Order>().Property(o => o.OrderDate) // OrderDate
+                .HasColumnType("datetime").HasDefaultValueSql("GETDATE()");
+            modelBuilder.Entity<Order>().Property(o => o.TotalAmount) // TotalAmount
+                .HasColumnType("decimal(18,2)").IsRequired();
+            modelBuilder.Entity<Order>().Property(o => o.Status) // Status
+                .HasColumnType("nvarchar(max)").HasDefaultValue("pending");
+            modelBuilder.Entity<Order>().Property(o => o.PaymentId) // FK PaymentId
+                .HasColumnType("int");
+            modelBuilder.Entity<Order>().Property(o => o.AddressId) // FK AddressId
+                .HasColumnType("int").IsRequired();
+            // Relationships
+            // User (one) ===> Order (many)
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.User)
+                .WithMany(u => u.Orders)
+                .HasForeignKey(o => o.UserId)
+                .OnDelete(DeleteBehavior.Restrict);
+            // UserAddress (one) ===> Order (many)
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.Address)
+                .WithMany(ua => ua.Orders)
+                .HasForeignKey(o => new {o.AddressId,o.UserId});
+            // Payment (one) ===> Order (one)
+            modelBuilder.Entity<Order>()
+                .HasOne(o => o.Payment)
+                .WithOne(p => p.Order)
+                .HasForeignKey<Order>(o => o.PaymentId);
+            // OrderDetails (many) ===> Order (one)
+            modelBuilder.Entity<Order>()
+                .HasMany(o => o.OrderItems)
+                .WithOne(od => od.Order);
+            //====================================================================================================
+            // [8] Payment
+            //=================
+            // Table name
+            modelBuilder.Entity<Payment>().ToTable("Payments");
+            // Primary key
+            modelBuilder.Entity<Payment>().HasKey(p => p.Id); // PK ID
+            // Column Data Types
+            modelBuilder.Entity<Payment>().Property(p => p.Id) // ID
+                .HasColumnType("int").UseIdentityColumn(10, 1);
+            modelBuilder.Entity<Payment>().Property(p => p.Amount) // Amount
+                .HasColumnType("decimal(18,2)").IsRequired();
+            modelBuilder.Entity<Payment>().Property(p => p.OrederId) // ID
+                .HasColumnType("int").IsRequired();
+            modelBuilder.Entity<Payment>().Property(p=> p.ProviderId) // ProviderId
+                .HasColumnType("int").IsRequired();
+            modelBuilder.Entity<Payment>().Property(p => p.Status) // Status
+                .HasColumnType("nvarchar(max)").IsRequired();
+            // Relationships
+            // Order (one) ===> Payment (one)   
+            modelBuilder.Entity<Payment>()
+                .HasOne(p => p.Order)
+                .WithOne(o => o.Payment)
+                .HasForeignKey<Payment>(p => p.OrederId);
+            // Provider (one) ===> Payment (many)
+            modelBuilder.Entity<Payment>()
+                .HasOne(p => p.Provider)
+                .WithMany(pr => pr.Payments)
+                .HasForeignKey(p => p.ProviderId)
+                .OnDelete(DeleteBehavior.Restrict);
+            //====================================================================================================
+            // [9] OrderDetails
+            //=================
+            // Table name
+            modelBuilder.Entity<OrderDetails>().ToTable("OrderDetails");
+            // Primary key
+            modelBuilder.Entity<OrderDetails>().HasKey(od => new { od.OrderId, od.ProductId }); // PK OrderId, ProductId
+            // Column Data Types
+            modelBuilder.Entity<OrderDetails>().Property(od => od.OrderId) // FK OrderId
+                .HasColumnType("int").IsRequired();
+            modelBuilder.Entity<OrderDetails>().Property(od => od.ProductId) // FK ProductId
+                .HasColumnType("int").IsRequired();
+            modelBuilder.Entity<OrderDetails>().Property(od => od.Quantity) // Quantity
+                .HasColumnType("int").IsRequired();
+            modelBuilder.Entity<OrderDetails>().Property(od => od.UnitPrice) // UnitPrice
+                .HasColumnType("decimal(18,2)").IsRequired();
+            modelBuilder.Entity<OrderDetails>().Property(od => od.Discount) // Discount
+                .HasColumnType("decimal(18,2)").IsRequired();
+            // Relationships
+            // Order (one) ===> OrderDetails (many)
+            modelBuilder.Entity<OrderDetails>()
+                .HasOne(od => od.Order)
+                .WithMany(o => o.OrderItems)
+                .HasForeignKey(od => od.OrderId);
+            // Product (one) ===> OrderDetails (many)
+            modelBuilder.Entity<OrderDetails>()
+                .HasOne(od => od.Product)
+                .WithMany(p => p.OrderDetails)
+                .HasForeignKey(od => od.ProductId);
+            //====================================================================================================
+
+
+
 
 
             base.OnModelCreating(modelBuilder);

@@ -18,6 +18,8 @@ namespace DataAccess.Entities
         public string Role { get; set; }
         public ICollection<UserPhone> userPhones { get; set; }
         public ICollection<UserAddress> userAddresses { get; set; }
+        public ICollection<Order> Orders { get; set; }
+        public ICollection<Payment>? Payments { get; set; } // Payments recived if user is seller 
 
 
     }
