@@ -221,7 +221,7 @@ namespace DataAccess.Contexts
                 .HasColumnType("int").UseIdentityColumn(10, 1);
             modelBuilder.Entity<Payment>().Property(p => p.Amount) // Amount
                 .HasColumnType("decimal(18,2)").IsRequired();
-            modelBuilder.Entity<Payment>().Property(p => p.OrederId) // ID
+            modelBuilder.Entity<Payment>().Property(p => p.OrderId) // ID
                 .HasColumnType("int").IsRequired();
             modelBuilder.Entity<Payment>().Property(p=> p.ProviderId) // ProviderId
                 .HasColumnType("int").IsRequired();
@@ -232,7 +232,7 @@ namespace DataAccess.Contexts
             modelBuilder.Entity<Payment>()
                 .HasOne(p => p.Order)
                 .WithOne(o => o.Payment)
-                .HasForeignKey<Payment>(p => p.OrederId);
+                .HasForeignKey<Payment>(p => p.OrderId);
             // Provider (one) ===> Payment (many)
             modelBuilder.Entity<Payment>()
                 .HasOne(p => p.Provider)
