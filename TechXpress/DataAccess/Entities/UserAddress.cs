@@ -16,7 +16,8 @@ namespace DataAccess.Entities
         public string Street { get; set; }
         public string BuildingNumber { get; set; }
         public string ApartmentNumber { get; set; }
-        public ICollection<Order> Orders { get; set; }
+        public ICollection<Order> Orders { get; set; 
+        }
 
     }
 }
