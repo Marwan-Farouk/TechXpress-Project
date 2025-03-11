@@ -1,0 +1,17 @@
+﻿@model GetAllProductsVM
+
+<h2>Create Product</h2>
+
+<form asp-action="Create" method="post">
+    <div>
+        <label>Name:</label>
+        <input asp-for="Name" class="form-control" required />
+    </div>
+    <div>
+        <label>Price:</label>
+        <input asp-for="Price" class="form-control" required />
+    </div>
+    <div>
+        <button type="submit">Create</button>
+    </div>
+</form>

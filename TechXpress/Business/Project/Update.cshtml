@@ -1,0 +1,25 @@
+
+@model List<GetAllProductsVM>
+
+    <h2>Product List</h2>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Actions</th>
+        </tr>
+        @foreach (var product in Model)
+    {
+        <tr>
+            <td>@product.Name</td>
+            <td>@product.Price</td>
+            <td>
+                <a asp-action="Details" asp-route-id="@product.Id">View</a> |
+                <a asp-action="Update" asp-route-id="@product.Id">Edit</a>
+            </td>
+        </tr>
+    }
+    </table>
+
+    <a asp-action="Create">Add New Product</a>
