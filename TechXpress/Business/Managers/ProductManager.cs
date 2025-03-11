@@ -1,5 +1,5 @@
 ﻿using Business.DTOs.Products;
-using DataAccess.Entities;
+using Business.Mappings;
 using DataAccess.Repositories.PRODUCT;
 namespace Business.Managers
 {
@@ -14,26 +14,19 @@ namespace Business.Managers
 
         public void CreateProduct(CreateProductDto dto)
         {
-            var product = new Product
-            {
-                Name = dto.Name,
-                Description = dto.Description,
-                Price = dto.Price,
-                Image = dto.Image,
-                Stock = dto.Stock
-            };
+
+
+            var product = dto.ToEntity();
+
+            _productRepository.Add(product);
         }
 
         public List<GetAllProductsDto> GetAllProducts()
         {
             var productEntities = _productRepository.GetAll();
-            var productDtos = productEntities.Select(prod => new GetAllProductsDto
-            {
-                Id = prod.Id,
-                Name = prod.Name,
-                Price = prod.Price,
-                CategoryId = prod.CategoryId
-            }).ToList();
+
+            var productDtos = productEntities.ToDto();
+
             return productDtos;
         }
 
@@ -46,23 +39,20 @@ namespace Business.Managers
                 return null;
             }
 
-            var productDto = new GetProductByIdDto
-            {
-                //Id = _productRepository.
-                Name = productEntity.Name,
-                Description = productEntity.Description,
-                Price = productEntity.Price,
-                Image = productEntity.Image,
-                Stock = productEntity.Stock,
-                CategoryId = productEntity.CategoryId,
-                DateAdded = productEntity.DateAdded
-            };
+
+
+            var productDto = productEntity.ToDto();
+
             return productDto;
         }
 
         public void UpdateProduct(UpdateProductDto dto)
         {
-            throw new NotImplementedException();
+
+            var product = dto.ToEntity();
+
+            _productRepository.Update(product);
+
         }
     }
 }
