@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories.CATEGORY
 {
-    interface ICategoryRepository
+    public interface ICategoryRepository
     {
         Category GetById(int id);
         List<Category> GetAll();

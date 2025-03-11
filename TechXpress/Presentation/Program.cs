@@ -1,3 +1,4 @@
+using Business.Managers.Categories;
 using Business.Managers.Products;
 using DataAccess.Contexts;
 using DataAccess.Repositories.PRODUCT;
@@ -16,6 +17,7 @@ namespace Presentation
 
             builder.Services.AddScoped<IProductManager, ProductManager>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
+            builder.Services.AddScoped<ICategoryManager, CategoryManager>();
 
             var connectionString = builder.Configuration.GetConnectionString("TechXpress");
 
