@@ -16,5 +16,6 @@ namespace DataAccess.Repositories.CATEGORY
         void Delete(int id);
         List<Category> SearchByName(string name);
         List<Product> GetProductsByCategoryId(int categoryId);
+        public int GetMaxId();
     }
 }

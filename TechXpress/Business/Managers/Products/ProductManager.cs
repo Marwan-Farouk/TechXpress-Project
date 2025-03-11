@@ -14,9 +14,9 @@ namespace Business.Managers.Products
 
         public void CreateProduct(CreateProductDto dto)
         {
-
-
             var product = dto.ToEntity();
+         
+            product.Id = _productRepository.GetMaxId() + 1;
 
             _productRepository.Add(product);
         }

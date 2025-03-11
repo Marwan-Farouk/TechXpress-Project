@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Business.DTOs.Categories
 {
-    class UpdateCategoryDto
+    public class UpdateCategoryDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
