@@ -1,7 +1,7 @@
 ﻿using Business.DTOs.Products;
 using Business.Mappings;
 using DataAccess.Repositories.PRODUCT;
-namespace Business.Managers
+namespace Business.Managers.Products
 {
     public class ProductManager : IProductManager
     {
@@ -53,6 +53,11 @@ namespace Business.Managers
 
             _productRepository.Update(product);
 
+        }
+
+        public void DeleteProduct(int id)
+        {
+            _productRepository.Delete(id);
         }
     }
 }

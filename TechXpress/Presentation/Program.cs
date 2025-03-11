@@ -1,4 +1,4 @@
-using Business.Managers;
+using Business.Managers.Products;
 using DataAccess.Contexts;
 using DataAccess.Repositories.PRODUCT;
 using Microsoft.EntityFrameworkCore;
