@@ -1,4 +1,7 @@
+using Business.Managers.Categories;
+using Business.Managers.Products;
 using DataAccess.Contexts;
+using DataAccess.Repositories.PRODUCT;
 using Microsoft.EntityFrameworkCore;
 
 namespace Presentation
@@ -11,6 +14,10 @@ namespace Presentation
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            builder.Services.AddScoped<IProductManager, ProductManager>();
+            builder.Services.AddScoped<IProductRepository, ProductRepository>();
+            builder.Services.AddScoped<ICategoryManager, CategoryManager>();
 
             var connectionString = builder.Configuration.GetConnectionString("TechXpress");
 

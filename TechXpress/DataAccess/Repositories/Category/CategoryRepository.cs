@@ -56,6 +56,9 @@ namespace DataAccess.Repositories.CATEGORY
         {
             return _context.Products.Where(p => p.CategoryId == categoryId).ToList();
         }
-
+        public int GetMaxId()
+        {
+            return _context.Categories.Max(p => p.Id);
+        }
     }
 }

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories.PRODUCT
 {
-    class ProductRepository : IProductRepository
+    public class ProductRepository : IProductRepository
     {
         private readonly ApplicationDbContext _context;
         public ProductRepository(ApplicationDbContext context)
@@ -54,6 +54,11 @@ namespace DataAccess.Repositories.PRODUCT
         public List<Product> GetProductsByBrand(int id)
         {
             return _context.Products.Where(x => x.BrandId == id).ToList();
+        }
+
+        public int GetMaxId()
+        {
+            return _context.Products.Max(p => p.Id);
         }
     }
 }

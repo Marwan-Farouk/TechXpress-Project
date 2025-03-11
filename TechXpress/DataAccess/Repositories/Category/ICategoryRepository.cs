@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories.CATEGORY
 {
-    interface ICategoryRepository
+    public interface ICategoryRepository
     {
         Category GetById(int id);
         List<Category> GetAll();
@@ -16,5 +16,6 @@ namespace DataAccess.Repositories.CATEGORY
         void Delete(int id);
         List<Category> SearchByName(string name);
         List<Product> GetProductsByCategoryId(int categoryId);
+        public int GetMaxId();
     }
 }
