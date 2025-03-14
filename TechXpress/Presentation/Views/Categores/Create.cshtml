@@ -1,0 +1,86 @@
+﻿@model CategoreDto
+@{
+    ViewData["Title"] = "New Category";
+}
+
+
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow border-0">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0 d-flex align-items-center">
+                        <i class="fas fa-box me-3"></i>New Category
+                    </h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" enctype="multipart/form-data">
+                        <div class="mb-4">
+                            <label asp-for="Name" class="form-label d-flex justify-content-between">
+                                <span class="d-flex align-items-center">
+                                    <i class="fas fa-tag me-2 text-primary"></i>Category Name
+                                </span>
+                                <span asp-validation-for="Name" class="text-danger small"></span>
+                            </label>
+                            <input asp-for="Name" class="form-control form-control-lg rounded-pill border-2">
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Description" class="form-label d-flex justify-content-between">
+                                <span class="d-flex align-items-center">
+                                    <i class="fas fa-align-left me-2 text-primary"></i>Description
+                                </span>
+                                <span asp-validation-for="Description" class="text-danger small"></span>
+                            </label>
+                            <textarea asp-for="Description" class="form-control rounded-3" rows="4"></textarea>
+                        </div>
+
+                        <div class="mb-4">
+                            <label asp-for="Stock" class="form-label d-flex justify-content-between">
+                                <span class="d-flex align-items-center">
+                                    <i class="fas fa-boxes me-2 text-primary"></i>Stock Quantity
+                                </span>
+                                <span asp-validation-for="Stock" class="text-danger small"></span>
+                            </label>
+                            <input asp-for="Stock" class="form-control form-control-lg rounded-pill border-2">
+                        </div>
+
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
+                            <a asp-controller="Categores" asp-action="Index"
+                               class="btn btn-lg btn-outline-secondary rounded-pill me-md-3">
+                                <i class="fas fa-arrow-left me-2"></i>Cancel
+                            </a>
+                            <button type="submit" class="btn btn-lg btn-primary rounded-pill">
+                                <i class="fas fa-save me-2"></i>Create Category
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+        }
+
+    .form-control:focus {
+        border-color: #80bdff;
+        box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+    }
+
+    .form-control-lg {
+        padding: 0.8rem 1.5rem;
+    }
+
+    .rounded-pill {
+        border-radius: 50rem !important;
+    }
+</style>
