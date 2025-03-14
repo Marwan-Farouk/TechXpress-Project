@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories.CATEGORY
 {
-    class CategoryRepository : ICategoryRepository
+    public class CategoryRepository : ICategoryRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -58,7 +58,8 @@ namespace DataAccess.Repositories.CATEGORY
         }
         public int GetMaxId()
         {
-            return _context.Categories.Max(p => p.Id);
+            if (_context.Categories.ToList().Count == 0) return 0;
+            return _context.Categories.Max(c => c.Id);
         }
     }
 }

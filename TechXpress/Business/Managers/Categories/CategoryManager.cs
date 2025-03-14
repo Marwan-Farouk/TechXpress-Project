@@ -19,7 +19,7 @@ namespace Business.Managers.Categories
         public void CreateCategory(CreateCategoryDto dto)
         {
             var category = dto.ToEntity();
-            category.Id = _categoryRepository.GetMaxId() + 1;
+            //category.Id = _categoryRepository.GetMaxId() + 1;
             _categoryRepository.Add(category);
         }
 

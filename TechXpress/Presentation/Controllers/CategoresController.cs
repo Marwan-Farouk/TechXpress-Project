@@ -45,7 +45,7 @@ namespace BestStoreMVC.Controllers
             _categoryManager.CreateCategory(categoryDto);
             return RedirectToAction("Index");
         }
-
+        [HttpGet]
         public IActionResult Edit(int id)
         {
             var category = _categoryManager.GetCategoryById(id);
@@ -53,7 +53,7 @@ namespace BestStoreMVC.Controllers
             {
                 return RedirectToAction("Index");
             }
-            return View(category);
+            return View("Edit");
         }
 
         [HttpPost]
