@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace BusinessLayer.Services
+namespace Business.Services
 {
     public class FileService
     {
@@ -10,9 +10,20 @@ namespace BusinessLayer.Services
 
             if (file != null && file.Length > 0)
             {
-                var uploadsFolder = Path.Combine(@"./wwwroot/", destinationFolder);   
 
-                uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;  
+
+                //    ./wwwroot/Images   / {fileName}
+                //var uploadsFolder = Path.Combine(".\\wwwroot\\", "Images");  // Escape Characters
+                //var uploadsFolder = Path.Combine(@".\wwwroot\", "Images");   // Disable Escape Characters
+
+                var uploadsFolder = Path.Combine(@"./wwwroot/", destinationFolder);    //   ===>      "./wwwroot/Images"
+
+                // request.Image.FileName    ==>   Ahmed.jpg
+                // request.Image.FileName    ==>   Ahmed_fhiuheifuheifheifuhf.jpg
+
+                //Guid.NewGuid()  ==> Random Guid
+
+                uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;  // ahmed.jpg ===>  hfieuhfiuhuie_ahmed.jpg
 
                 var filePath = Path.Combine(uploadsFolder, uniqueFileName);
 

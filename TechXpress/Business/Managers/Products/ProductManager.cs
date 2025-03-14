@@ -16,7 +16,7 @@ namespace Business.Managers.Products
         {
             var product = dto.ToEntity();
          
-            product.Id = _productRepository.GetMaxId() + 1;
+            //product.Id = _productRepository.GetMaxId() + 1;
 
             _productRepository.Add(product);
         }

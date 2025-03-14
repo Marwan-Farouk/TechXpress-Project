@@ -26,6 +26,8 @@ namespace DataAccess.Repositories.PRODUCT
         }
         public void Add(Product product)
         {
+            product.BrandId = 1; //to be updated
+            product.CategoryId = 2; // to be updated
             _context.Products.Add(product);
             _context.SaveChanges();
         }
@@ -58,6 +60,7 @@ namespace DataAccess.Repositories.PRODUCT
 
         public int GetMaxId()
         {
+            if (_context.Products.ToList().Count == 0) return 0;
             return _context.Products.Max(p => p.Id);
         }
     }

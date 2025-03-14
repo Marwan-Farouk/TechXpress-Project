@@ -42,7 +42,7 @@ namespace Business.Mappings
                 Id = prod.Id,
                 Name = prod.Name,
                 Price = prod.Price,
-                CategoryId = prod.CategoryId
+                //CategoryId = prod.CategoryId
             }).ToList();
         }
 
@@ -56,7 +56,7 @@ namespace Business.Mappings
                 Price = product.Price,
                 Image = product.Image,
                 Stock = product.Stock,
-                CategoryId = product.CategoryId,
+                //CategoryId = product.CategoryId,
                 DateAdded = product.DateAdded
             };
         } 
