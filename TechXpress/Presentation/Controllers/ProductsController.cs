@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Presentation.Models;
-using Business.Services;
 using System;
+using DataAccess.Entities;
+using Business.DTOs.Products;
+using DataAccess.Contexts;
 
 namespace Presentation.Controllers
 {
@@ -26,35 +28,33 @@ namespace Presentation.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(ProductDetails productDetails)
+        public IActionResult Create(CreateProductDto createproductDetails)
         {
-            if (productDetails.ImageFile == null)
+            if (createproductDetails.Image == null)
             {
                 ModelState.AddModelError("ImageFile", "The ImageFile is required");
             }
             if (!ModelState.IsValid)
             {
-                return View(productDetails);
+                return View(createproductDetails);
             }
             // Save the image to wwwroot/image
             string newFileNAme = DateTime.Now.ToString("yyyyMMddHHmmssfff");
-            newFileNAme += Path.GetExtension(productDetails.ImageFile!.FileName);
+            newFileNAme += Path.GetExtension(createproductDetails.Image?.FileName);
 
             string imageFullPath = environment.WebRootPath + "/products/" + newFileNAme;
             using (var stream = System.IO.File.Create(imageFullPath))
             {
-                productDetails.ImageFile.CopyTo(stream);
+                createproductDetails.Image?.CopyTo(stream);
             }
             // Save the new Product to the database
             Product newProduct = new Product
             {
-                Name = productDetails.Name,
-                Price = productDetails.Price,
-                Description = productDetails.Description,
-                Category = productDetails.Category,
-                Brand = productDetails.Brand,
-                ImageFileName = newFileNAme,
-                CreatedAt = DateTime.Now
+                Name = createproductDetails.Name,
+                Price = createproductDetails.Price,
+                Description = createproductDetails.Description,
+                Image = newFileNAme,
+                Stock = createproductDetails.Stock,
             };
             context.Products.Add(newProduct);
             context.SaveChanges();
@@ -69,58 +69,55 @@ namespace Presentation.Controllers
             }
 
             //create a productDetails from the product
-            ProductDetails productDetails = new ProductDetails
+            CreateProductDto createproductDetails = new CreateProductDto
             {
                 Name = product.Name,
                 Price = product.Price,
                 Description = product.Description,
-                Category = product.Category,
-                Brand = product.Brand
+
+                Stock = product.Stock
             };
 
-            ViewData["ImageFileName"] = product.ImageFileName;
-            ViewData["CreatedAt"] = product.CreatedAt.ToString("MM/dd/yyyy");
+            ViewData["ImageFileName"] = product.Image;
             ViewData["Id"] = product.Id;
-            return View(productDetails);
-
+            return View(createproductDetails);
         }
         [HttpPost]
-        public IActionResult Edit(int id, ProductDetails productDetails)
+        public IActionResult Edit(int id, CreateProductDto createproductDetails)
         {
             var product = context.Products.Find(id);
             if (product == null)
             {
                 return RedirectToAction("index", "Products");
             }
+
             if (!ModelState.IsValid)
             {
-                ViewData["ImageFileName"] = product.ImageFileName;
-                ViewData["CreatedAt"] = product.CreatedAt.ToString("MM/dd/yyyy");
+                ViewData["ImageFileName"] = product.Image;
+                ViewData["CreatedAt"] = ((DateTime)product.DateAdded).ToString("MM/dd/yyyy");
                 ViewData["Id"] = product.Id;
-                return View(productDetails);
+                return View(createproductDetails);
             }
-            // Save the image to wwwroot/image
-            string newFileNAme = product.ImageFileName;
-            if (productDetails.ImageFile != null)
+
+            product.Name = createproductDetails.Name;
+            product.Price = createproductDetails.Price;
+            product.Description = createproductDetails.Description;
+            product.Stock = createproductDetails.Stock;
+
+            if (createproductDetails.Image != null)
             {
-                string newFileName = DateTime.Now.ToString("yyyyMMddHHmmssfff");
-                newFileNAme += Path.GetExtension(productDetails.ImageFile!.FileName);
-                string imageFullPath = environment.WebRootPath + "/products/" + newFileNAme;
+                string newFileName = DateTime.Now.ToString("yyyyMMddHHmmssfff") + Path.GetExtension(createproductDetails.Image.FileName);
+                string imageFullPath = environment.WebRootPath + "/products/" + newFileName;
                 using (var stream = System.IO.File.Create(imageFullPath))
                 {
-                    productDetails.ImageFile.CopyTo(stream);
+                    createproductDetails.Image.CopyTo(stream);
                 }
-                //delete the old image
-                string oldImagePath = environment.WebRootPath + "/products/" + product.ImageFileName;
-                System.IO.File.Delete(oldImagePath);
+                product.Image = newFileName;
             }
-            // Save the new Product to the database
-            product.Name = productDetails.Name;
-            product.Price = productDetails.Price;
-            product.Description = productDetails.Description;
-            product.Category = productDetails.Category;
-            product.Brand = productDetails.Brand;
+
+            context.Products.Update(product);
             context.SaveChanges();
+
             return RedirectToAction("Index", "Products");
         }
 
@@ -131,7 +128,7 @@ namespace Presentation.Controllers
             {
                 return RedirectToAction("index", "Products");
             }
-            string FullImagePath = environment.WebRootPath + "/products/" + product.ImageFileName;
+            string FullImagePath = environment.WebRootPath + "/products/" + product.Image;
             System.IO.File.Delete(FullImagePath);
 
             context.Products.Remove(product);
@@ -139,5 +136,30 @@ namespace Presentation.Controllers
 
             return RedirectToAction("Index", "Products");
         }
+        public IActionResult Search(string query)
+        {
+            if (string.IsNullOrEmpty(query))
+            {
+                return View(new List<Product>());
+            }
+
+            var products = context.Products
+                .Where(p => p.Name.Contains(query) || p.Description.Contains(query))
+                .OrderByDescending(p => p.Id)
+                .ToList();
+
+            return View(products);
+        }
+    }
+
+
+    public class CreateProductDto
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public decimal Price { get; set; }
+        public IFormFile Image { get; set; }
+        public int Stock { get; set; }
     }
 }

@@ -1,0 +1,46 @@
+﻿@page
+@model ProductDetailsModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+</head>
+<body>
+    <h1>Product Details</h1>
+    <div>
+        <label>Id:</label>
+        <span>@Model.Product.Id</span>
+    </div>
+    <div>
+        <label>Name:</label>
+        <span>@Model.Product.Name</span>
+    </div>
+    <div>
+        <label>Description:</label>
+        <span>@Model.Product.Description</span>
+    </div>
+    <div>
+        <label>Price:</label>
+        <span>@Model.Product.Price</span>
+    </div>
+    <div>
+        <label>Image:</label>
+        <img src="/images/@Model.Product.Image" alt="Product Image" />
+    </div>
+    <div>
+        <label>Stock:</label>
+        <span>@Model.Product.Stock</span>
+    </div>
+    <div>
+        <label>Category Id:</label>
+        <span>@Model.Product.CategoryId</span>
+    </div>
+    <div>
+        <label>Date Added:</label>
+        <span>@Model.Product.DateAdded.ToString("MM/dd/yyyy")</span>
+    </div>
+</body>
+</html>

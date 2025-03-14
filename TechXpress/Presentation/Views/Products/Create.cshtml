@@ -1,4 +1,5 @@
-@model ProductDetails
+@using Business.DTOs.Products
+@model CreateProductDto
 @{}
 
 <div class="row">
@@ -15,28 +16,10 @@
                 </div>
             </div>
             <div class="row mb-3">
-                <label class="col-sm-4 col col-form-label">Brand</label>
+                <label class="col-sm-4 col col-form-label">Stock</label>
                 <div class="col-sm-8">
-                    <input class="form-control" asp-for="Brand">
-                    <span asp-validation-for="Brand" class="text-danger"></span>
-
-                </div>
-            </div>
-            <div class="row mb-3">
-                <label class ="col-sm-4 col-form-label">Category</label>
-                <div class="col-sm-8">
-                    <select class="form-control" asp-for="Category">
-                        <option value="Laptops & PCs">Laptops & PCs</option>
-                        <option value="Smartphones & Tablets">Smartphones & Tablets</option>
-                        <option value="Gaming">Gaming</option>
-                        <option value="Accessories">Accessories</option>
-                        <option value="Audio & Headphones">Audio & Headphones</option>
-                        <option value="Monitors & Displays">Monitors & Displays</option>
-                        <option value="Storage & Hard Drives">Storage & Hard Drives</option>
-                        <option value="Networking">Networking</option>
-                        <option value="Wearables">Wearables</option>
-                        <option value="PC Components">PC Components</option>
-                    </select>
+                    <input class="form-control" asp-for="Stock">
+                    <span asp-validation-for="Stock" class="text-danger"></span>
 
                 </div>
             </div>
@@ -57,8 +40,14 @@
              <div class="row mb-3">
                 <label class="col-sm-4 col-form-label">Image</label>
                 <div class="col-sm-8">
-                    <input class="form-control" asp-for="ImageFile">
-                    <span asp-validation-for="ImageFile" class="text-danger"></span>
+                    <input class="form-control" asp-for="Image">
+                    <span asp-validation-for="Image" class="text-danger"></span>
+                </div>
+                <div class="row mb-3">
+                    <label class="col-sm-4 col-form-label">Created At</label>
+                    <div class="col-sm-8">
+                        <input class="form-control-plaintext" readonly value="@ViewData["CreatedAt"]">
+                    </div>
                 </div>
 
             </div>
@@ -74,5 +63,5 @@
             </div>
 
         </form>
-    </div>
-</div>
+             </div>
+         </div>

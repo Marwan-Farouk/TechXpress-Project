@@ -1,4 +1,4 @@
-﻿@model List<Product>
+﻿@model List<Business.DTOs.Products.GetAllProductsDto>
 @{
     ViewData["Title"] = "Product List";
 }
@@ -61,10 +61,10 @@
                     <th>Name</th>
                     <th>Description</th>
                     <th>Price</th>
-                    <th>Category</th>
                     <th>Image</th>
-                    <th>Brand</th>
-                    <th>Created At</th>
+                    <th>Stock</th>
+                    <th>Category ID</th>
+                    <th>Date Added</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -76,13 +76,13 @@
                         <td>@product.Name</td>
                         <td>@product.Description</td>
                         <td>@(product.Price)$</td>
-                        <td>@product.Category</td>
-                        <td><img src="@product.ImageFileName" class="img-thumbnail" width="100" height="100" /></td>
-                        <td>@product.Brand</td>
-                        <td>@product.CreatedAt.ToString("MM/dd/yyyy")</td>
+                        <td><img src="@product.Image" class="img-thumbnail" width="100" height="100" /></td>
+                        <td>@product.Stock</td>
+                        <td>@product.CategoryId</td>
+                        <td>@product.DateAdded.ToString("MM/dd/yyyy")</td>
                         <td style="white-space:nowrap">
                             <a class="btn btn-sm btn-primary" asp-controller="Products" asp-action="Edit" asp-route-id="@product.Id">Edit</a>
-                            <a class="btn btn-sm btn-danger" asp-controller="Products" asp-action="Delete" asp-route-id="@product.Id" onclick="return confirm('you sure! ,you are gonna to delete this?')">Delete</a>
+                            <a class="btn btn-sm btn-danger" asp-controller="Products" asp-action="Delete" asp-route-id="@product.Id" onclick="return confirm('Are you sure you want to delete this?')">Delete</a>
                         </td>
                     </tr>
                 }
@@ -93,4 +93,3 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
-
