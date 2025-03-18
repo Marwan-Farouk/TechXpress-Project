@@ -7,11 +7,11 @@ using System.Linq;
 
 namespace BestStoreMVC.Controllers
 {
-    public class CategoresController : Controller
+    public class CategoriesController : Controller
     {
         private readonly ICategoryManager _categoryManager;
 
-        public CategoresController(ICategoryManager categoryManager)
+        public CategoriesController(ICategoryManager categoryManager)
         {
             _categoryManager = categoryManager;
         }
