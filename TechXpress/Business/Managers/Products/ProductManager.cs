@@ -59,5 +59,10 @@ namespace Business.Managers.Products
         {
             _productRepository.Delete(id);
         }
+
+        public dynamic GetAllBrands()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

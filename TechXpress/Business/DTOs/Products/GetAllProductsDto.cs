@@ -14,6 +14,7 @@ namespace Business.DTOs.Products
         public decimal Price { get; set; }
         public string Image { get; set; }
         public int Stock { get; set; }
+        public int BrandId { get; set; }
         public int CategoryId { get; set; }
         public DateTime DateAdded { get; set; }
 

@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace Business.Managers.Products
 {
+
     public interface IProductManager
     {
         List<GetAllProductsDto> GetAllProducts();
         GetProductByIdDto GetProductById(int id);
         void CreateProduct(CreateProductDto dto);
         void UpdateProduct(UpdateProductDto dto);
+        dynamic GetAllBrands();
     }
 }

@@ -1,123 +1,102 @@
 ﻿using Business.DTOs.Products;
+using Business.Managers.Categories;
 using Business.Managers.Products;
 using Business.Services;
+using DataAccess.Contexts;
+using DataAccess.Entities;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace PresentationLayer.Controllers
 {
     public class ProductController : Controller
     {
-        private readonly IProductManager _productManager; //= new ProductManager(); // Composition ===> Tightly Coupled
+        private readonly IProductManager _productManager;
+        private readonly ICategoryManager _categoryManager;
+        private readonly ApplicationDbContext _context;
         private readonly FileService _fileService = new FileService();
 
-        public ProductController(IProductManager productManager)
+        public ProductController(IProductManager productManager, ICategoryManager categoryManager, ApplicationDbContext context)
         {
             _productManager = productManager;
+            _categoryManager = categoryManager;
+            _context = context;
         }
-        // 🚀 /product/index
+
         [HttpGet]
         public IActionResult Index()
         {
-            // 1- Catch Request
-
-            // 2- Call Model    ---->  Model returns data
             var productDTOs = _productManager.GetAllProducts();
-
-            //var productVMS = productDTOs
-            //    .Select(dto => new GetAllProductsVM
-            //    {
-            //        Id = dto.Id,
-            //        Name = dto.Name,
-            //        Price = dto.Price,
-            //        Image = dto.Image,
-            //    })
-            //    .ToList();
-
-            // 3- send data to view
-            //return View();
-            //return View("Index");
             return View("Index", productDTOs);
         }
-        [HttpGet]
 
-        //          /product/details/:id      ✅ Path Variable
-        //          /product/details?id=3     ✅ Query Parameter
+        [HttpGet]
         public IActionResult Details(int id)
         {
             var product = _productManager.GetProductById(id);
-
-            if(product == null)
-            {
-                return NotFound();
-            }
-
-            //var productVM = new GetProductByIdVM
-            //{
-            //    Id = product.Id,
-            //    Name = product.Name,
-            //    Price = product.Price,
-            //    Image = product.Image,
-            //    Description = product.Description,
-            //};
-
+            if (product == null) return NotFound();
             return View("Details", product);
         }
+
         [HttpGet]
         public IActionResult Create()
         {
-            return View("Create");
+            ViewBag.Categories = _categoryManager.GetAllCategories();
+            ViewBag.Brands = _context.Brands.ToList();
+            return View();
         }
+
         [HttpPost]
-        public IActionResult Create(CreateProductDto request)
+        [ValidateAntiForgeryToken]
+        public IActionResult Create(CreateProductDto model)
         {
-            // 1- Upload Image
-            //var uniqueFileName = _fileService.UploadFile(request.Image, "Images");
-            
-            // 2- new product object
-            //var productDto = new CreateProductDto
-            //{
-            //    //Id = _productManager.GetMaxId() + 1,
-            //    Name = request.Name,
-            //    Price = request.Price,
-            //    Description = request.Description,
-            //    //Image = uniqueFileName
-            //};
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Categories = _categoryManager.GetAllCategories();
+                ViewBag.Brands = _context.Brands.ToList();
+                return View(model);
+            }
 
-            // 3- add to the products list
-            _productManager.CreateProduct(request);
+            var product = new Product
+            {
+                Name = model.Name,
+                Description = model.Description,
+                Price = model.Price,
+                Stock = model.Stock,
+                CategoryId = model.CategoryId,
+                BrandId = model.BrandId
+            };
 
-            // 4- Redirection
+            _context.Products.Add(product);
+            _context.SaveChanges();
 
-            //return RedirectToAction("Index");
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
-        //   /product/update/:id
         public IActionResult Update(int id)
         {
             var product = _productManager.GetProductById(id);
+            if (product == null) return NotFound();
 
-            //var productDto = new UpdateProductDto
-            //{
-            //    Id = product.Id,
-            //    Name = product.Name,
-            //    Price = product.Price,
-            //    Description = product.Description,
-            //};
+            ViewBag.Categories = _categoryManager.GetAllCategories();
+            ViewBag.Brands = _context.Brands.ToList();
 
             return View(product);
         }
 
         [HttpPost]
-        //   /product/update
+        [ValidateAntiForgeryToken]
         public IActionResult Update(UpdateProductDto request)
         {
-
-            //var productDto = request.ToDto();
+            if (!ModelState.IsValid)
+            {
+                ViewBag.Categories = _categoryManager.GetAllCategories();
+                ViewBag.Brands = _context.Brands.ToList();
+                return View(request);
+            }
 
             _productManager.UpdateProduct(request);
-
             return RedirectToAction(nameof(Details), new { id = request.Id });
         }
     }

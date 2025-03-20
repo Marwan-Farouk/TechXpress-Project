@@ -24,7 +24,7 @@ namespace DataAccess.Contexts
         {
             if (!optionsBuilder.IsConfigured)
             {
-                var connectionString = "Server=DESKTOP-7VF6E7V;Database=TechXpress_DB;Integrated Security = SSPI; TrustServerCertificate = True";
+                var connectionString = "Server=DESKTOP-DU7A107;Database=TechXpress_DB;Integrated Security = SSPI; TrustServerCertificate = True";
                 optionsBuilder.UseSqlServer(connectionString).LogTo(Console.WriteLine, LogLevel.Information);
             }
 
