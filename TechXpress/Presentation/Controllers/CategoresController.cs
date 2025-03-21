@@ -1,6 +1,9 @@
-﻿using Business.DTOs.Categories;
+﻿using BestStoreMVC.ViewModels;
+using Business.DTOs.Categories;
 using Business.Managers.Categories;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BestStoreMVC.Controllers
 {
@@ -15,36 +18,57 @@ namespace BestStoreMVC.Controllers
 
         public IActionResult Index()
         {
-            var categories = _categoryManager.GetAllCategories();
+            var categories = _categoryManager.GetAllCategories()
+                .Select(c => new CategoryViewModel
+                {
+                    Id = c.Id,
+                    Name = c.Name,
+                    Description = c.Description,
+                    Stock = c.Stock
+                }).ToList();
+
             return View(categories);
         }
 
         public IActionResult Details(int id)
         {
             var category = _categoryManager.GetCategoryById(id);
-            if (category == null)
+            if (category == null) return NotFound();
+
+            var viewModel = new CategoryViewModel
             {
-                return NotFound();
-            }
-            return View(category);
+                Id = category.Id,
+                Name = category.Name,
+                Description = category.Description,
+                Stock = category.Stock
+            };
+
+            return View(viewModel);
         }
 
         public IActionResult Create()
         {
-            return View();
+            return View(new CategoryViewModel());
         }
 
         [HttpPost]
-        public IActionResult Create(CreateCategoryDto categoryDto)
+        public IActionResult Create(CategoryViewModel categoryViewModel)
         {
             if (!ModelState.IsValid)
             {
-                return View(categoryDto);
+                return View(categoryViewModel);
             }
 
-            _categoryManager.CreateCategory(categoryDto);
+            _categoryManager.CreateCategory(new CreateCategoryDto
+            {
+                Name = categoryViewModel.Name,
+                Description = categoryViewModel.Description,
+                Stock = categoryViewModel.Stock
+            });
+
             return RedirectToAction("Index");
         }
+
         [HttpGet]
         public IActionResult Edit(int id)
         {
@@ -53,18 +77,34 @@ namespace BestStoreMVC.Controllers
             {
                 return RedirectToAction("Index");
             }
-            return View("Edit");
+
+            var viewModel = new CategoryViewModel
+            {
+                Id = category.Id,
+                Name = category.Name,
+                Description = category.Description,
+                Stock = category.Stock
+            };
+
+            return View(viewModel);
         }
 
         [HttpPost]
-        public IActionResult Edit(UpdateCategoryDto categoryDto)
+        public IActionResult Edit(CategoryViewModel categoryViewModel)
         {
             if (!ModelState.IsValid)
             {
-                return View(categoryDto);
+                return View(categoryViewModel);
             }
 
-            _categoryManager.UpdateCategory(categoryDto);
+            _categoryManager.UpdateCategory(new UpdateCategoryDto
+            {
+                Id = categoryViewModel.Id,
+                Name = categoryViewModel.Name,
+                Description = categoryViewModel.Description,
+                Stock = categoryViewModel.Stock
+            });
+
             return RedirectToAction("Index");
         }
 
