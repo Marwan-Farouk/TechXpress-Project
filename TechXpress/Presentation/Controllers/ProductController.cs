@@ -25,13 +25,35 @@ namespace PresentationLayer.Controllers
 
         // 📌 List all products
         [HttpGet]
-        public IActionResult Index()
+        [HttpGet]
+        public IActionResult Index(string search, int? categoryId, int? brandId)
         {
-            var productDTOs = _productManager.GetAllProducts();
-            return View("Index", productDTOs);
-        }
+            var products = _productManager.GetAllProducts();
 
-        // 📌 Show product details
+            // 🔍 Apply search filter
+            if (!string.IsNullOrEmpty(search))
+            {
+                products = products.Where(p => p.Name.Contains(search, StringComparison.OrdinalIgnoreCase) ||
+                                               p.Description.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
+
+            // 🔍 Apply category filter
+            if (categoryId.HasValue)
+            {
+                products = products.Where(p => p.CategoryId == categoryId.Value).ToList();
+            }
+
+            // 🔍 Apply brand filter
+            if (brandId.HasValue)
+            {
+                products = products.Where(p => p.BrandId == brandId.Value).ToList();
+            }
+
+            ViewBag.Categories = _categoryManager.GetAllCategories();
+            ViewBag.Brands = _context.Brands.ToList();
+
+            return View(products);
+        }
         [HttpGet]
         public IActionResult Details(int id)
         {
@@ -53,7 +75,7 @@ namespace PresentationLayer.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         
-        public IActionResult Create(CreateProductDto model)
+        public IActionResult Create(CreateProductRequest model)
         {
             if (!ModelState.IsValid)
             {
@@ -132,7 +154,7 @@ namespace PresentationLayer.Controllers
             var product = _productManager.GetProductById(id);
             if (product == null) return NotFound();
 
-            var editProductDto = new UpdateProductDto
+            var editProductDto = new UpdateProductRequest
             {
                 Id = product.Id,
                 Name = product.Name,
@@ -141,7 +163,7 @@ namespace PresentationLayer.Controllers
                 Stock = product.Stock,
                 CategoryId = product.CategoryId,
                 BrandId = product.BrandId,
-                // Do NOT assign Image here because it's an IFormFile, not a string
+                ExistingImage = product.Image // ✅ Pass current image path
             };
 
             ViewBag.Categories = _categoryManager.GetAllCategories();
@@ -151,48 +173,59 @@ namespace PresentationLayer.Controllers
         }
 
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public IActionResult Edit(UpdateProductDto model)
+
+       [HttpPost]
+[ValidateAntiForgeryToken]
+public IActionResult Edit(UpdateProductRequest model)
+{
+    if (!ModelState.IsValid)
+    {
+        ViewBag.Categories = _categoryManager.GetAllCategories();
+        ViewBag.Brands = _context.Brands.ToList();
+        return View(model);
+    }
+
+    var product = _context.Products.Find(model.Id);
+    if (product == null) return NotFound();
+
+    // ✅ Delete old image if a new one is uploaded
+    if (model.Image != null)
+    {
+        if (!string.IsNullOrEmpty(product.Image))
         {
-            if (!ModelState.IsValid)
+            string oldImagePath = Path.Combine("wwwroot", product.Image);
+            if (System.IO.File.Exists(oldImagePath))
             {
-                ViewBag.Categories = _categoryManager.GetAllCategories();
-                ViewBag.Brands = _context.Brands.ToList();
-                return View(model);
+                System.IO.File.Delete(oldImagePath);
             }
-
-            var product = _context.Products.Find(model.Id);
-            if (product == null) return NotFound();
-
-            if (model.Image != null)
-            {
-                string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/images/products");
-                Directory.CreateDirectory(uploadsFolder);
-
-                string uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(model.Image.FileName);
-                string imagePath = Path.Combine("images/products", uniqueFileName);
-
-                using (var fileStream = new FileStream(Path.Combine(uploadsFolder, uniqueFileName), FileMode.Create))
-                {
-                    model.Image.CopyTo(fileStream);
-                }
-
-                product.Image = imagePath;
-            }
-
-            product.Name = model.Name;
-            product.Description = model.Description;
-            product.Price = model.Price;
-            product.Stock = model.Stock;
-            product.CategoryId = model.CategoryId;
-            product.BrandId = model.BrandId;
-
-            _context.Products.Update(product);
-            _context.SaveChanges();
-
-            return RedirectToAction(nameof(Details), new { id = model.Id });
         }
+
+        // ✅ Save new image
+        string uniqueFileName = Guid.NewGuid().ToString() + Path.GetExtension(model.Image.FileName);
+        string imagePath = Path.Combine("images/products", uniqueFileName);
+        string fullPath = Path.Combine("wwwroot", imagePath);
+
+        using (var stream = new FileStream(fullPath, FileMode.Create))
+        {
+            model.Image.CopyTo(stream);
+        }
+
+        product.Image = imagePath; // ✅ Update new image path
+    }
+
+    product.Name = model.Name;
+    product.Description = model.Description;
+    product.Price = model.Price;
+    product.Stock = model.Stock;
+    product.CategoryId = model.CategoryId;
+    product.BrandId = model.BrandId;
+
+    _context.Products.Update(product);
+    _context.SaveChanges();
+
+    return RedirectToAction(nameof(Details), new { id = model.Id });
+}
+
 
 
 
