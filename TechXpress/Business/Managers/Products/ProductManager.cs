@@ -1,11 +1,13 @@
 ﻿using Business.DTOs.Products;
 using Business.Mappings;
 using DataAccess.Repositories.PRODUCT;
+using System.Collections.Generic;
+
 namespace Business.Managers.Products
 {
     public class ProductManager : IProductManager
     {
-        private IProductRepository _productRepository;
+        private readonly IProductRepository _productRepository;
 
         public ProductManager(IProductRepository productRepository)
         {
@@ -15,44 +17,25 @@ namespace Business.Managers.Products
         public void CreateProduct(CreateProductDto dto)
         {
             var product = dto.ToEntity();
-         
-            //product.Id = _productRepository.GetMaxId() + 1;
-
             _productRepository.Add(product);
         }
 
         public List<GetAllProductsDto> GetAllProducts()
         {
             var productEntities = _productRepository.GetAll();
-
-            var productDtos = productEntities.ToDto();
-
-            return productDtos;
+            return productEntities.ToDto(); // ✅ Correctly calls ToDto()
         }
 
         public GetProductByIdDto GetProductById(int id)
         {
             var productEntity = _productRepository.GetById(id);
-
-            if (productEntity == null)
-            {
-                return null;
-            }
-
-
-
-            var productDto = productEntity.ToDto();
-
-            return productDto;
+            return productEntity?.ToDto(); // ✅ Handles null case properly
         }
 
         public void UpdateProduct(UpdateProductDto dto)
         {
-
             var product = dto.ToEntity();
-
             _productRepository.Update(product);
-
         }
 
         public void DeleteProduct(int id)

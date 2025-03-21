@@ -16,7 +16,7 @@ namespace Business.DTOs.Products
         public int Stock { get; set; }
         public int BrandId { get; set; }
         public int CategoryId { get; set; }
-        public DateTime DateAdded { get; set; }
+        public DateTime DateAdded { get; set; } = DateTime.UtcNow;
 
     }
 }
