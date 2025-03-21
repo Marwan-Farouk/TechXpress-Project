@@ -16,9 +16,35 @@ namespace BestStoreMVC.Controllers
             _categoryManager = categoryManager;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string searchString, string stockFilter)
         {
-            var categories = _categoryManager.GetAllCategories()
+            // Get all categories from the manager
+            var allCategories = _categoryManager.GetAllCategories();
+
+            // Filter by search string
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                allCategories = allCategories
+                    .Where(c => c.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+
+            // Filter by stock status
+            if (!string.IsNullOrEmpty(stockFilter))
+            {
+                switch (stockFilter)
+                {
+                    case "inStock":
+                        allCategories = allCategories.Where(c => c.Stock > 0).ToList();
+                        break;
+                    case "outOfStock":
+                        allCategories = allCategories.Where(c => c.Stock == 0).ToList();
+                        break;
+                }
+            }
+
+            // Map to ViewModel
+            var categories = allCategories
                 .Select(c => new CategoryViewModel
                 {
                     Id = c.Id,
@@ -26,6 +52,10 @@ namespace BestStoreMVC.Controllers
                     Description = c.Description,
                     Stock = c.Stock
                 }).ToList();
+
+            // Pass the search and filter values to the view
+            ViewData["CurrentFilter"] = searchString;
+            ViewData["StockFilter"] = stockFilter;
 
             return View(categories);
         }
