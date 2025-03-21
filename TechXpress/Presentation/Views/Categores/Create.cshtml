@@ -1,9 +1,8 @@
-﻿@using Business.DTOs.Categories;
-@model CreateCategoryDto
+﻿@using BestStoreMVC.ViewModels;
+@model CategoryViewModel
 @{
     ViewData["Title"] = "New Category";
 }
-
 
 <div class="container my-5">
     <div class="row justify-content-center">
@@ -61,27 +60,3 @@
         </div>
     </div>
 </div>
-
-<style>
-    .card {
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-        }
-
-    .form-control:focus {
-        border-color: #80bdff;
-        box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
-    }
-
-    .form-control-lg {
-        padding: 0.8rem 1.5rem;
-    }
-
-    .rounded-pill {
-        border-radius: 50rem !important;
-    }
-</style>

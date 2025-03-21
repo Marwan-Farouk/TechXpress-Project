@@ -1,35 +1,20 @@
-﻿@using Business.DTOs.Categories
-@model UpdateCategoryDto
+﻿@using BestStoreMVC.ViewModels;
+@model CategoryViewModel
 @{
     ViewData["Title"] = "Edit Category";
 }
-
 
 <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow border-0">
-                <div class="card-header bg-primary bg-gradient text-white">
+                <div class="card-header bg-primary text-white">
                     <h3 class="mb-0 d-flex align-items-center">
-                        <i class="fas fa-edit me-3"></i>Category Details
+                        <i class="fas fa-edit me-3"></i>Edit Category
                     </h3>
                 </div>
                 <div class="card-body">
                     <form method="post" enctype="multipart/form-data">
-                        <!-- ID Field -->
-                        <div class="mb-4">
-                            <label class="form-label d-flex justify-content-between align-items-center">
-                                <span class="d-flex align-items-center text-muted">
-                                    <i class="fas fa-hashtag me-2"></i>Category ID
-                                </span>
-                            </label>
-                            <input type="text"
-                                   class="form-control form-control-lg rounded-pill bg-light"
-                                   value="@ViewData["Categoreid"]"
-                                   readonly>
-                        </div>
-
-                        <!-- Name Field -->
                         <div class="mb-4">
                             <label asp-for="Name" class="form-label d-flex justify-content-between">
                                 <span class="d-flex align-items-center">
@@ -40,7 +25,6 @@
                             <input asp-for="Name" class="form-control form-control-lg rounded-pill border-2">
                         </div>
 
-                        <!-- Description Field -->
                         <div class="mb-4">
                             <label asp-for="Description" class="form-label d-flex justify-content-between">
                                 <span class="d-flex align-items-center">
@@ -48,13 +32,9 @@
                                 </span>
                                 <span asp-validation-for="Description" class="text-danger small"></span>
                             </label>
-                            <textarea asp-for="Description"
-                                      class="form-control rounded-3"
-                                      rows="4"
-                                      style="resize: vertical"></textarea>
+                            <textarea asp-for="Description" class="form-control rounded-3" rows="4"></textarea>
                         </div>
 
-                        <!-- Stock Field -->
                         <div class="mb-4">
                             <label asp-for="Stock" class="form-label d-flex justify-content-between">
                                 <span class="d-flex align-items-center">
@@ -62,12 +42,9 @@
                                 </span>
                                 <span asp-validation-for="Stock" class="text-danger small"></span>
                             </label>
-                            <input asp-for="Stock"
-                                   type="number"
-                                   class="form-control form-control-lg rounded-pill border-2">
+                            <input asp-for="Stock" class="form-control form-control-lg rounded-pill border-2">
                         </div>
 
-                        <!-- Action Buttons -->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
                             <a asp-controller="Categores" asp-action="Index"
                                class="btn btn-lg btn-outline-secondary rounded-pill me-md-3">
@@ -83,31 +60,3 @@
         </div>
     </div>
 </div>
-
-<style>
-    .card {
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-        }
-
-    .form-control:focus {
-        border-color: #80bdff;
-        box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
-    }
-
-    .form-control-lg {
-        padding: 0.8rem 1.5rem;
-    }
-
-    .rounded-pill {
-        border-radius: 50rem !important;
-    }
-
-    .bg-light {
-        background-color: #f8f9fa !important;
-    }
-</style>
