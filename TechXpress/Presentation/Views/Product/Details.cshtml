@@ -1,14 +1,25 @@
 ﻿@using Business.DTOs.Products
-
 @model GetProductByIdDto
 
-<div class="card" style="width: 18rem;">
-    <img class="card-img-top" src="/Images/@Model.Image" alt="Card image cap">
+<div class="card" style="width: 24rem;">
+    <img src="@(string.IsNullOrEmpty(Model.Image) ? "/images/default-product.png" : Url.Content($"~/{Model.Image}"))"
+         class="card-img-top" alt="Product Image" />
+
     <div class="card-body">
         <h5 class="card-title">@Model.Name</h5>
-        <p class="card-text">
-            @Model.Description , Price = @Model.Price
-        </p>
-        <a href="/product/index" class="btn btn-primary">Back to Index</a>
+        <p class="card-text">@Model.Description</p>
+
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item"><strong>Price:</strong> @Model.Price$</li>
+            <li class="list-group-item"><strong>Stock:</strong> @Model.Stock</li>
+            <li class="list-group-item"><strong>Category:</strong> @Model.CategoryId</li>
+            <li class="list-group-item"><strong>Brand:</strong> @Model.BrandId</li>
+            <li class="list-group-item"><strong>Added on:</strong> @Model.DateAdded.ToString("MM/dd/yyyy")</li>
+        </ul>
+
+        <div class="mt-3">
+            <a href="/product/index" class="btn btn-primary">Back to Index</a>
+            <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+        </div>
     </div>
 </div>
