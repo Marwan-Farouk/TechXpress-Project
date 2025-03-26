@@ -5,12 +5,18 @@
     ViewData["Title"] = "Product List";
 }
 
+
+    <head>
+    <link rel="stylesheet" href="~/css/site.css" />
+    </head>
+
+
 <h2>Product List</h2>
+
 <div class="mb-3 text-right">
     <a class="btn btn-primary" asp-action="Create">Add New Product</a>
 </div>
 
-<!-- 🔍 Search & Filter Form -->
 <form method="get" class="mb-3 d-flex gap-2">
     <input type="text" name="search" class="form-control" placeholder="Search by name or description" value="@Context.Request.Query["search"]" />
 
@@ -75,3 +81,13 @@
         }
     </tbody>
 </table>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const form = document.querySelector("form");
+        form.addEventListener("submit", function() {
+            document.querySelector("tbody").style.opacity = "0";
+            setTimeout(() => document.querySelector("tbody").style.opacity = "1", 500);
+        });
+    });
+</script>

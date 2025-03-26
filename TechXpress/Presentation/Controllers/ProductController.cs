@@ -22,6 +22,7 @@ namespace PresentationLayer.Controllers
             _categoryManager = categoryManager;
             _context = context;
         }
+        
 
         // 📌 List all products
         [HttpGet]
