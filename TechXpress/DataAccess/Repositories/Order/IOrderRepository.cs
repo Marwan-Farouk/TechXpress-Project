@@ -7,16 +7,17 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories.ORDER
 {
-    interface IOrderRepository
+    public interface IOrderRepository
     {
-        Order GetById(int id);
-        List<Order> GetAll();
-        void Add(Order order);
-        void Update(Order order);
-        void Delete(int id);
-        List<Order> GetOrdersByUserId(int userId);
-        List<Order> GetOrdersByStatus(string status);
-        List<Order> GetOrdersInDateRange(DateTime startDate, DateTime endDate);
-        List<Order> GetOrdersByUserIdAndStatus(int userId, string status);
+        Task<Order> GetById(int id);
+        Task<List<Order>> GetAll();
+        Task Add(Order order);
+        Task Update(Order order);
+        Task Delete(int id);
+        Task<List<Order>> GetOrdersByUserId(int userId);
+        Task<List<Order>> GetOrdersByStatus(string status);
+        Task<List<Order>> GetOrdersInDateRange(DateTime startDate, DateTime endDate);
+        Task<List<Order>> GetOrdersByUserIdAndStatus(int userId, string status);
+        Task SaveChangesAsync();
     }
 }

@@ -29,7 +29,7 @@ namespace Business.Managers.Products
         public GetProductByIdDto GetProductById(int id)
         {
             var productEntity = _productRepository.GetById(id);
-            return productEntity?.ToDto(); // ✅ Handles null case properly
+            return productEntity!.ToDto(); // ✅ Handles null case properly
         }
 
         public void UpdateProduct(UpdateProductDto dto)
@@ -46,6 +46,11 @@ namespace Business.Managers.Products
         public dynamic GetAllBrands()
         {
             throw new NotImplementedException();
+        }
+
+        public int GetProductStock(int id)
+        {
+            return _productRepository.GetById(id).Stock;
         }
     }
 }
