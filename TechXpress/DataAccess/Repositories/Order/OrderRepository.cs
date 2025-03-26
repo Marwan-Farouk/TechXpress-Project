@@ -17,26 +17,26 @@ namespace DataAccess.Repositories.ORDER
             _context = context;
         }
 
-        public Order GetById(int id)
+        public async Task<Order> GetById(int id)
         {
-            return _context.Orders
+            return await _context.Orders
             .Include(o => o.User)
             .Include(o => o.Address)
             .Include(o => o.Payment)
             .Include(o => o.OrderItems)
             .ThenInclude(od => od.Product)
-            .FirstOrDefault(o => o.Id == id);
+            .FirstOrDefaultAsync(o => o.Id == id);
         } 
 
-        public List<Order> GetAll()
+        public async Task<List<Order>> GetAll()
         {
-            return _context.Orders.Include(o => o.User).Include(o=>o.OrderItems).ToList();
+            return await _context.Orders.Include(o => o.User).Include(o=>o.OrderItems).ToListAsync();
         }
 
-        public void Add(Order order)
+        public async Task Add(Order order)
         {
-            _context.Orders.Add(order);
-            _context.SaveChanges();
+            await _context.Orders.AddAsync(order);
+            await _context.SaveChangesAsync();
         }
 
         public void Update(Order order)
@@ -55,27 +55,39 @@ namespace DataAccess.Repositories.ORDER
             }
         }
 
-        public List<Order> GetOrdersByUserId(int userId) {
-        return _context.Orders.Where(o=>o.UserId==userId).ToList();
+        public async Task<List<Order>> GetOrdersByUserId(int userId) {
+        return await _context.Orders.Where(o=>o.UserId==userId).ToListAsync();
         }
 
-        public List<Order> GetOrdersByStatus(string status)
+        public async Task<List<Order>> GetOrdersByStatus(string status)
         {
-            return _context.Orders.Where(o => o.Status.ToLower() == status.ToLower()).ToList();
+            return await _context.Orders.Where(o => o.Status.ToLower() == status.ToLower()).ToListAsync();
         }
 
-        public List<Order> GetOrdersByUserIdAndStatus(int userId, string status)
+        public async Task<List<Order>> GetOrdersByUserIdAndStatus(int userId, string status)
         {
-            return _context.Orders.Where(o => o.UserId == userId && o.Status.ToLower() == status.ToLower()).ToList();
+            return await _context.Orders.Where(o => o.UserId == userId && o.Status.ToLower() == status.ToLower()).ToListAsync();
         }
-        public List<Order> GetOrdersInDateRange(DateTime StartDate, DateTime EndDate)
+        public async Task<List<Order>> GetOrdersInDateRange(DateTime StartDate, DateTime EndDate)
         {
-            return _context.Orders
+            return await _context.Orders
             .Where(o => o.OrderDate >= StartDate && o.OrderDate <= EndDate)
-            .ToList();
+            .ToListAsync();
         }
 
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
 
+        Task IOrderRepository.Update(Order order)
+        {
+            throw new NotImplementedException();
+        }
 
+        Task IOrderRepository.Delete(int id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
