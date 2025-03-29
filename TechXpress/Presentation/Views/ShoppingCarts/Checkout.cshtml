@@ -1,0 +1,55 @@
+﻿@model Presentation.ViewModels.CheckoutViewModel
+
+<h2>Checkout</h2>
+
+<form asp-action="PlaceOrder" method="post">
+    <div class="row">
+        <div class="col-md-8">
+            <h4>Shipping Address</h4>
+
+            <div class="form-group">
+                <label>Select Address:</label>
+                <select asp-for="Cart.AddressId" class="form-control">
+                    @foreach (var address in Model.UserAddresses)
+                    {
+                        <option value="@address.Id">@address.AddressLine, @address.City, @address.Country</option>
+                    }
+                </select>
+            </div>
+
+            <h4>Order Summary</h4>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model.Cart.Items)
+                    {
+                        <tr>
+                            <td>@item.ProductName</td>
+                            <td>@item.Quantity</td>
+                            <td>@item.Price.ToString("C")</td>
+                            <td>@item.SubTotal.ToString("C")</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="3" class="text-right"><strong>Total:</strong></td>
+                        <td><strong>@Model.Cart.TotalAmount.ToString("C")</strong></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <button type="submit" class="btn btn-success">Place Order</button>
+        <a asp-action="Index" class="btn btn-secondary">Back to Cart</a>
+    </div>
+</form>

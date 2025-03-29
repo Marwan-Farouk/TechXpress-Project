@@ -4,10 +4,49 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome To TechXpress</h1>
-    @* <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p> *@
 
-    <div class="container" >
-        <a href="/Categores/Index" class="btn btn-success">View Categories</a>
-        <a href="/Product/Index" class="btn btn-success">View Products</a>
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="d-flex flex-wrap justify-content-center gap-3">
+                    <!-- Existing Buttons -->
+                    <a href="/Categories/Index" class="btn btn-primary btn-lg px-4">
+                        <i class="bi bi-list-ul"></i> View Categories
+                    </a>
+                    <a href="/Product/Index" class="btn btn-primary btn-lg px-4">
+                        <i class="bi bi-box-seam"></i> View Products
+                    </a>
+                    <a href="/Order/Index" class="btn btn-primary btn-lg px-4">
+                        <i class="bi bi-receipt"></i> View Orders
+                    </a>
+
+                    <!-- New Shopping Cart Button -->
+                    <a href="/ShoppingCarts/Index" class="btn btn-warning btn-lg px-4 position-relative">
+                        <i class="bi bi-cart"></i> Shopping Cart
+                        <span id="cartCount" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            0
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        // Update cart count on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+        });
+
+        function updateCartCount() {
+            // Get cart from session (simplified example)
+            fetch('/ShoppingCart/GetCartCount')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('cartCount').textContent = data.count;
+                });
+        }
+    </script>
+}
