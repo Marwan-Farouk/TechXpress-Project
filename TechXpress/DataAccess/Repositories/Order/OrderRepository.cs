@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories.ORDER
 {
-    class OrderRepository : IOrderRepository
+    public class OrderRepository : IOrderRepository
     {
         private readonly ApplicationDbContext _context;
         public OrderRepository(ApplicationDbContext context)
@@ -19,6 +19,11 @@ namespace DataAccess.Repositories.ORDER
 
         public async Task<Order> GetById(int id)
         {
+            return await _context.Orders.FindAsync(id);
+        }
+
+        public async Task<Order> GetOrderWithDetails(int id)
+        {
             return await _context.Orders
             .Include(o => o.User)
             .Include(o => o.Address)
@@ -26,37 +31,41 @@ namespace DataAccess.Repositories.ORDER
             .Include(o => o.OrderItems)
             .ThenInclude(od => od.Product)
             .FirstOrDefaultAsync(o => o.Id == id);
-        } 
+        }
 
         public async Task<List<Order>> GetAll()
         {
-            return await _context.Orders.Include(o => o.User).Include(o=>o.OrderItems).ToListAsync();
+            return await _context.Orders.Include(o => o.User).Include(o => o.OrderItems).ToListAsync();
         }
 
         public async Task Add(Order order)
         {
             await _context.Orders.AddAsync(order);
-            await _context.SaveChangesAsync();
         }
 
-        public void Update(Order order)
+        public async Task Update(Order order)
         {
-            _context.Orders.Update(order);
-            _context.SaveChanges();
+            _context.Entry(order).State = EntityState.Modified;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var order = _context.Orders.Find(id);
-            if(order is not null)
+            var order = await _context.Orders.FindAsync(id);
+            if (order is not null)
             {
-            _context.Orders.Remove(order);
-            _context.SaveChanges();
+                _context.Orders.Remove(order);
             }
         }
 
-        public async Task<List<Order>> GetOrdersByUserId(int userId) {
-        return await _context.Orders.Where(o=>o.UserId==userId).ToListAsync();
+        public async Task<List<Order>> GetOrdersByUserId(int userId)
+        {
+            return await _context.Orders
+                .Include(o => o.User)
+                .Include(o => o.Address)
+                .Include(o => o.OrderItems)
+                .ThenInclude(od => od.Product)
+                .Where(o => o.UserId == userId)
+                .ToListAsync();
         }
 
         public async Task<List<Order>> GetOrdersByStatus(string status)
@@ -68,6 +77,7 @@ namespace DataAccess.Repositories.ORDER
         {
             return await _context.Orders.Where(o => o.UserId == userId && o.Status.ToLower() == status.ToLower()).ToListAsync();
         }
+
         public async Task<List<Order>> GetOrdersInDateRange(DateTime StartDate, DateTime EndDate)
         {
             return await _context.Orders
@@ -78,16 +88,6 @@ namespace DataAccess.Repositories.ORDER
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
-        }
-
-        Task IOrderRepository.Update(Order order)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task IOrderRepository.Delete(int id)
-        {
-            throw new NotImplementedException();
         }
     }
 }

@@ -3,45 +3,97 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Business.DTOs.Orders;
-using Business.Managers.Products;
 using DataAccess.Entities;
-using DataAccess.Repositories.ORDER;
 using DataAccess.Repositories.PRODUCT;
 
 namespace Business.Managers.Orders
 {
     public class OrderManager : IOrderManager
     {
-        private readonly IOrderRepository _orderRepository;
         private readonly IProductRepository _productRepository;
-        
-        public OrderManager(IOrderRepository orderRepository , IProductRepository productRepository)
+        private Dictionary<int, int> _cartItems = new Dictionary<int, int>(); // ProductId, Quantity
+
+        public OrderManager(IProductRepository productRepository)
         {
-            _orderRepository = orderRepository; 
             _productRepository = productRepository;
         }
 
-        public async Task CreateOrder(CreateOrderDto orderDto)
+        // Cart management methods
+        public void AddToCart(int productId, int quantity = 1)
         {
-            var order = orderDto.ToOrder();
-            await _orderRepository.Add(order);
-
-            await _orderRepository.SaveChangesAsync();
-
-            order.OrderItems = orderDto.ProductIds.Select(id => new OrderDetails
+            if (_cartItems.ContainsKey(productId))
             {
-                ProductId = id,
-                OrderId = order.Id,
-                Quantity = 1,
-                UnitPrice = _productRepository.GetById(id).Price
-            }).ToList();
-
-            await _orderRepository.SaveChangesAsync();
-
+                _cartItems[productId] += quantity;
+            }
+            else
+            {
+                _cartItems[productId] = quantity;
+            }
         }
 
+        public void RemoveFromCart(int productId)
+        {
+            if (_cartItems.ContainsKey(productId))
+            {
+                _cartItems.Remove(productId);
+            }
+        }
 
+        public void UpdateCartItemQuantity(int productId, int quantity)
+        {
+            if (quantity <= 0)
+            {
+                RemoveFromCart(productId);
+            }
+            else if (_cartItems.ContainsKey(productId))
+            {
+                _cartItems[productId] = quantity;
+            }
+        }
 
+        public void ClearCart()
+        {
+            _cartItems.Clear();
+        }
+
+        public List<(Product Product, int Quantity)> GetCartItems()
+        {
+            var result = new List<(Product, int)>();
+
+            foreach (var item in _cartItems)
+            {
+                var product = _productRepository.GetById(item.Key);
+                if (product != null)
+                {
+                    result.Add((product, item.Value));
+                }
+            }
+
+            return result;
+        }
+
+        public decimal GetCartTotal()
+        {
+            decimal total = 0;
+            foreach (var item in _cartItems)
+            {
+                var product = _productRepository.GetById(item.Key);
+                if (product != null)
+                {
+                    total += product.Price * item.Value;
+                }
+            }
+            return total;
+        }
+
+        public int GetCartItemCount()
+        {
+            return _cartItems.Sum(x => x.Value);
+        }
+
+        public bool IsCartEmpty()
+        {
+            return _cartItems.Count == 0;
+        }
     }
 }

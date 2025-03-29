@@ -11,6 +11,7 @@ namespace DataAccess.Repositories.ORDER
     {
         Task<Order> GetById(int id);
         Task<List<Order>> GetAll();
+        Task<Order> GetOrderWithDetails(int id);
         Task Add(Order order);
         Task Update(Order order);
         Task Delete(int id);
