@@ -24,7 +24,7 @@ namespace Presentation.Controllers
             var cartJson = HttpContext.Session.GetString(CartSessionKey);
             return string.IsNullOrEmpty(cartJson)
                 ? new ShoppingCartViewModel()
-                : JsonSerializer.Deserialize<ShoppingCartViewModel>(cartJson);
+                : JsonSerializer.Deserialize<ShoppingCartViewModel>(cartJson)!;
         }
 
         private void SaveCart(ShoppingCartViewModel cart)
@@ -41,7 +41,7 @@ namespace Presentation.Controllers
         public IActionResult Index()
         {
             var cart = GetCart();
-            return View(cart);
+            return View("Index",cart);
         }
 
         [HttpPost]

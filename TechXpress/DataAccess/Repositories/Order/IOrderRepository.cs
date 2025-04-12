@@ -20,5 +20,6 @@ namespace DataAccess.Repositories.ORDER
         Task<List<Order>> GetOrdersByStatusAsync(string status);
         Task<List<Order>> GetOrdersInDateRangeAsync(DateTime startDate, DateTime endDate);
         Task SaveChangesAsync();
+        Task<List<Order>> GetOrdersByUserIdAndStatus(int userId, string status);
     }
 }

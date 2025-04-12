@@ -24,7 +24,7 @@ namespace Business.Managers.Orders
         {
             // Your existing implementation
             var order = orderDto.ToOrder();
-            await _orderRepository.Add(order);
+            await _orderRepository.AddAsync(order);
             await _orderRepository.SaveChangesAsync();
 
             order.OrderItems = orderDto.ProductIds.Select(id => new OrderDetails
@@ -39,28 +39,28 @@ namespace Business.Managers.Orders
         }
 
         public async Task<Order> GetOrderById(int id)
-            => await _orderRepository.GetById(id);
+            => await _orderRepository.GetByIdAsync(id);
 
         public async Task<List<Order>> GetAllOrders()
-            => await _orderRepository.GetAll();
+            => await _orderRepository.GetAllAsync();
 
         public async Task<List<Order>> GetOrdersByUserId(int userId)
-            => await _orderRepository.GetOrdersByUserId(userId);
+            => await _orderRepository.GetOrdersByUserIdAsync(userId);
 
         public async Task<List<Order>> GetOrdersByStatus(string status)
-            => await _orderRepository.GetOrdersByStatus(status);
+            => await _orderRepository.GetOrdersByStatusAsync(status);
 
         public async Task<List<Order>> GetOrdersByUserIdAndStatus(int userId, string status)
             => await _orderRepository.GetOrdersByUserIdAndStatus(userId, status);
 
         public async Task<List<Order>> GetOrdersInDateRange(DateTime startDate, DateTime endDate)
-            => await _orderRepository.GetOrdersInDateRange(startDate, endDate);
+            => await _orderRepository.GetOrdersInDateRangeAsync(startDate, endDate);
 
         public async Task UpdateOrder(Order order)
-            => await _orderRepository.Update(order);
+            => await _orderRepository.UpdateAsync(order);
 
         public async Task DeleteOrder(int id)
-            => await _orderRepository.Delete(id);
+            => await _orderRepository.DeleteAsync(id);
 
         public async Task SaveChangesAsync()
             => await _orderRepository.SaveChangesAsync();

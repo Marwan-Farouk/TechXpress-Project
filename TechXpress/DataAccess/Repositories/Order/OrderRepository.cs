@@ -82,5 +82,10 @@ namespace DataAccess.Repositories.ORDER
         {
             await _context.SaveChangesAsync();
         }
+
+        public Task<List<Order>> GetOrdersByUserIdAndStatus(int userId, string status)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
