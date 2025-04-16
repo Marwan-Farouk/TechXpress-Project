@@ -1,6 +1,9 @@
 ﻿@using Business.DTOs.Products
 @model GetProductByIdDto
-
+@{
+    ViewData["Title"] = "Details Product";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
 <div class="card" style="width: 24rem;">
     <img src="@(string.IsNullOrEmpty(Model.Image) ? "/images/default-product.png" : Url.Content($"~/{Model.Image}"))"
          class="card-img-top" alt="Product Image" />
