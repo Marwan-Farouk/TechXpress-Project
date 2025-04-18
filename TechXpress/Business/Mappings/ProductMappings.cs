@@ -32,8 +32,9 @@ namespace Business.Mappings
             };
         }
 
-        public static GetProductByIdDto ToDto(this Product product)
+        public static GetProductByIdDto? ToDto(this Product product)
         {
+            if (product == null) return null;
             return new GetProductByIdDto
             {
                 Id = product.Id,

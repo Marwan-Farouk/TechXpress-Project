@@ -29,7 +29,13 @@
                     </td>
                     <td>@item.SubTotal.ToString("C")</td>
                     <td>
-                        <form asp-action="RemoveFromCart" method="post">
+                        <form asp-action="RemoveFromCart" method="post"> 
+                            <td>
+                                <form asp-action="RemoveFromCart" method="post">
+                                    <input type="hidden" name="productId" value="@item.ProductId" />
+                                    <button type="submit" class="btn btn-sm btn-danger">Remove</button>
+                                </form>
+                            </td>
                             <input type="hidden" name="productId" value="@item.ProductId" />
                             <button type="submit" class="btn btn-sm btn-danger">Remove</button>
                         </form>
@@ -47,7 +53,7 @@
     </table>
 
     <div class="text-right">
-        <a asp-action="Checkout" class="btn btn-primary">Proceed to Checkout</a>
+        <a asp-action="Checkout" asp-controller="ShoppingCart" class="btn btn-primary">Proceed to Checkout</a>
     </div>
 }
 else

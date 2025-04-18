@@ -2,6 +2,7 @@
 using Business.Mappings;
 using DataAccess.Repositories.PRODUCT;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Business.Managers.Products
 {
@@ -14,43 +15,44 @@ namespace Business.Managers.Products
             _productRepository = productRepository;
         }
 
-        public void CreateProduct(CreateProductDto dto)
+        public async Task CreateProductAsync(CreateProductDto dto)
         {
             var product = dto.ToEntity();
-            _productRepository.Add(product);
+            await _productRepository.AddAsync(product);
         }
 
-        public List<GetAllProductsDto> GetAllProducts()
+        public async Task<List<GetAllProductsDto>> GetAllProductsAsync()
         {
-            var productEntities = _productRepository.GetAll();
+            var productEntities = await _productRepository.GetAllAsync();
             return productEntities.ToDto(); // ✅ Correctly calls ToDto()
         }
 
-        public GetProductByIdDto GetProductById(int id)
+        public async Task<GetProductByIdDto?> GetProductByIdAsync(int id)
         {
-            var productEntity = _productRepository.GetById(id);
-            return productEntity!.ToDto(); // ✅ Handles null case properly
+            var productEntity = await _productRepository.GetByIdAsync(id);
+            return productEntity?.ToDto(); // ✅ Handles null case properly
         }
 
-        public void UpdateProduct(UpdateProductDto dto)
+        public async Task UpdateProductAsync(UpdateProductDto dto)
         {
             var product = dto.ToEntity();
-            _productRepository.Update(product);
+            await _productRepository.UpdateAsync(product);
         }
 
-        public void DeleteProduct(int id)
+        public async Task DeleteProductAsync(int id)
         {
-            _productRepository.Delete(id);
+            await _productRepository.DeleteAsync(id);
         }
 
-        public dynamic GetAllBrands()
+        public async Task<dynamic> GetAllBrandsAsync()
         {
             throw new NotImplementedException();
         }
 
-        public int GetProductStock(int id)
+        public async Task<int> GetProductStockAsync(int id)
         {
-            return _productRepository.GetById(id).Stock;
+            var product = await _productRepository.GetByIdAsync(id);
+            return product?.Stock ?? 0;
         }
     }
 }
