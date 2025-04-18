@@ -1,81 +1,91 @@
-﻿using DataAccess.Contexts;
+﻿// OrderRepository.cs
+using DataAccess.Contexts;
 using DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Repositories.ORDER
 {
-    class OrderRepository : IOrderRepository
+    public class OrderRepository : IOrderRepository
     {
         private readonly ApplicationDbContext _context;
+
         public OrderRepository(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        public Order GetById(int id)
+        public async Task<Order> GetByIdAsync(int id)
         {
-            return _context.Orders
-            .Include(o => o.User)
-            .Include(o => o.Address)
-            .Include(o => o.Payment)
-            .Include(o => o.OrderItems)
-            .ThenInclude(od => od.Product)
-            .FirstOrDefault(o => o.Id == id);
-        } 
-
-        public List<Order> GetAll()
-        {
-            return _context.Orders.Include(o => o.User).Include(o=>o.OrderItems).ToList();
+            return await _context.Orders
+                .Include(o => o.User)
+                .Include(o => o.Address)
+                .Include(o => o.OrderItems)
+                .FirstOrDefaultAsync(o => o.Id == id);
         }
 
-        public void Add(Order order)
+        public async Task<List<Order>> GetAllAsync()
         {
-            _context.Orders.Add(order);
-            _context.SaveChanges();
+            return await _context.Orders
+                .Include(o => o.User)
+                .Include(o => o.OrderItems)
+                .ToListAsync();
         }
 
-        public void Update(Order order)
+        public async Task AddAsync(Order order)
+        {
+            await _context.Orders.AddAsync(order);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(Order order)
         {
             _context.Orders.Update(order);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            var order = _context.Orders.Find(id);
-            if(order is not null)
+            var order = await _context.Orders.FindAsync(id);
+            if (order != null)
             {
-            _context.Orders.Remove(order);
-            _context.SaveChanges();
+                _context.Orders.Remove(order);
+                await _context.SaveChangesAsync();
             }
         }
 
-        public List<Order> GetOrdersByUserId(int userId) {
-        return _context.Orders.Where(o=>o.UserId==userId).ToList();
-        }
-
-        public List<Order> GetOrdersByStatus(string status)
+        public async Task<List<Order>> GetOrdersByUserIdAsync(int userId)
         {
-            return _context.Orders.Where(o => o.Status.ToLower() == status.ToLower()).ToList();
+            return await _context.Orders
+                .Where(o => o.UserId == userId)
+                .ToListAsync();
         }
 
-        public List<Order> GetOrdersByUserIdAndStatus(int userId, string status)
+        public async Task<List<Order>> GetOrdersByStatusAsync(string status)
         {
-            return _context.Orders.Where(o => o.UserId == userId && o.Status.ToLower() == status.ToLower()).ToList();
+            return await _context.Orders
+                .Where(o => o.Status.ToLower() == status.ToLower())
+                .ToListAsync();
         }
-        public List<Order> GetOrdersInDateRange(DateTime StartDate, DateTime EndDate)
+
+        public async Task<List<Order>> GetOrdersInDateRangeAsync(DateTime startDate, DateTime endDate)
         {
-            return _context.Orders
-            .Where(o => o.OrderDate >= StartDate && o.OrderDate <= EndDate)
-            .ToList();
+            return await _context.Orders
+                .Where(o => o.OrderDate >= startDate && o.OrderDate <= endDate)
+                .ToListAsync();
         }
 
+        public async Task SaveChangesAsync()
+        {
+            await _context.SaveChangesAsync();
+        }
 
-
+        public Task<List<Order>> GetOrdersByUserIdAndStatus(int userId, string status)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

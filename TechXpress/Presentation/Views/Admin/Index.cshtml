@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4">Admin Dashboard <i class="bi bi-speedometer2 text-primary"></i></h1>
+        <p class="lead text-muted">Welcome, Admin! Manage your platform with ease.</p>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-box-seam fs-1 text-primary mb-3"></i>
+                    <h5 class="card-title">Manage Products</h5>
+                    <p class="card-text">Add, update, or remove products from your catalog.</p>
+                    <a href="/Product/Index" class="btn btn-outline-primary">Go to Products</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-tags fs-1 text-success mb-3"></i>
+                    <h5 class="card-title">Manage Categories</h5>
+                    <p class="card-text">Organize your product categories efficiently.</p>
+                    <a href="/Categores/Index" class="btn btn-outline-success">Go to Categories</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-receipt fs-1 text-warning mb-3"></i>
+                    <h5 class="card-title">View Orders</h5>
+                    <p class="card-text">Track and manage customer orders and statuses.</p>
+                    <a href="/Order/Index" class="btn btn-outline-warning">Go to Orders</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

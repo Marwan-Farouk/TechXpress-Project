@@ -1,22 +1,25 @@
-﻿using DataAccess.Entities;
+﻿// IOrderRepository.cs
+using DataAccess.Entities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Repositories.ORDER
 {
-    interface IOrderRepository
+    public interface IOrderRepository
     {
-        Order GetById(int id);
-        List<Order> GetAll();
-        void Add(Order order);
-        void Update(Order order);
-        void Delete(int id);
-        List<Order> GetOrdersByUserId(int userId);
-        List<Order> GetOrdersByStatus(string status);
-        List<Order> GetOrdersInDateRange(DateTime startDate, DateTime endDate);
-        List<Order> GetOrdersByUserIdAndStatus(int userId, string status);
+        // الأساسية
+        Task<Order> GetByIdAsync(int id);
+        Task<List<Order>> GetAllAsync();
+        Task AddAsync(Order order);
+        Task UpdateAsync(Order order);
+        Task DeleteAsync(int id);
+
+        // المتخصصة
+        Task<List<Order>> GetOrdersByUserIdAsync(int userId);
+        Task<List<Order>> GetOrdersByStatusAsync(string status);
+        Task<List<Order>> GetOrdersInDateRangeAsync(DateTime startDate, DateTime endDate);
+        Task SaveChangesAsync();
+        Task<List<Order>> GetOrdersByUserIdAndStatus(int userId, string status);
     }
 }
