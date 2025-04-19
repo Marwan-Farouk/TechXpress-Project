@@ -1,21 +1,26 @@
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Models;
+using Business.DTOs.Products;
+using Business.Managers.Products;
 
 namespace Presentation.Controllers;
 
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
+    private readonly IProductManager _productManager;
 
-    public HomeController(ILogger<HomeController> logger)
+    public HomeController(ILogger<HomeController> logger, IProductManager productManager)
     {
         _logger = logger;
+        _productManager = productManager;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        return View();
+        var products = await _productManager.GetAllProductsAsync();
+        return View(products);
     }
 
     public IActionResult Privacy()

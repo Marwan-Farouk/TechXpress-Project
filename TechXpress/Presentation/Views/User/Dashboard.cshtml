@@ -1,0 +1,51 @@
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "_UserLayout";
+}
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-shopping-cart text-primary me-2"></i>Recent Orders</h5>
+                <p class="card-text">You have no recent orders.</p>
+                <a asp-controller="User" asp-action="Orders" class="btn btn-outline-primary">View All Orders</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-heart text-danger me-2"></i>Wishlist</h5>
+                <p class="card-text">Your wishlist is empty.</p>
+                <a asp-controller="User" asp-action="Wishlist" class="btn btn-outline-danger">View Wishlist</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-map-marker-alt text-success me-2"></i>Default Address</h5>
+                <p class="card-text">No default address set.</p>
+                <a asp-controller="User" asp-action="Addresses" class="btn btn-outline-success">Manage Addresses</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title"><i class="fas fa-bell text-warning me-2"></i>Recent Activities</h5>
+                <div class="list-group list-group-flush">
+                    <div class="list-group-item">
+                        <p class="mb-0">Welcome to your dashboard! Start shopping to see your activities here.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
