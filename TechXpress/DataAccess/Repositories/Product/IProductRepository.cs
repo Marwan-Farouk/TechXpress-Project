@@ -4,15 +4,14 @@ namespace DataAccess.Repositories.PRODUCT
 {
     public interface IProductRepository
     {
-        Product GetById(int id);
-        List<Product> GetAll();
-        void Add(Product product);
-        void Update(Product product);
-        void Delete(int id);
-        List<Product> SearchByName(string name);
-        List<Product> GetProductsByCategory(int categoryId);
-        List<Product> GetProductsByBrand(int brandId);
-        public int GetMaxId();
-
+        Task<Product> GetByIdAsync(int id);
+        Task<List<Product>> GetAllAsync();
+        Task AddAsync(Product product);
+        Task UpdateAsync(Product product);
+        Task DeleteAsync(int id);
+        Task<List<Product>> SearchByNameAsync(string name);
+        Task<List<Product>> GetProductsByCategoryAsync(int categoryId);
+        Task<List<Product>> GetProductsByBrandAsync(int brandId);
+        Task<int> GetMaxIdAsync();
     }
 }

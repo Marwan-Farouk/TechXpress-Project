@@ -1,5 +1,6 @@
 ﻿using DataAccess.Contexts;
 using DataAccess.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,52 +17,59 @@ namespace DataAccess.Repositories.PRODUCT
             _context = context;
         }
 
-        public Product GetById(int id)
+        public async Task<Product> GetByIdAsync(int id)
         {
-            return _context.Products.FirstOrDefault(x => x.Id == id);
-        }
-        public List<Product> GetAll()
-        {
-            return _context.Products.ToList();
-        }
-        public void Add(Product product)
-        {
-            product.BrandId = 1; //to be updated
-            product.CategoryId = 2; // to be updated
-            _context.Products.Add(product);
-            _context.SaveChanges();
-        }
-        public void Update(Product product)
-        {
-            _context.Products.Update(product);
-            _context.SaveChanges();
-        }
-        public void Delete(int id)
-        {
-            var prod = _context.Products.FirstOrDefault(x => x.Id == id);
-            if (prod is not null)
-            {
-            _context.Products.Remove(prod);
-            _context.SaveChanges();
-            }
-        }
-        public List<Product> SearchByName(string name)
-        {
-            return _context.Products.Where(x => x.Name.Contains(name)).ToList();
-        }
-        public List<Product> GetProductsByCategory(int id)
-        {
-            return _context.Products.Where(x => x.CategoryId == id).ToList();
-        }
-        public List<Product> GetProductsByBrand(int id)
-        {
-            return _context.Products.Where(x => x.BrandId == id).ToList();
+            return await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
         }
 
-        public int GetMaxId()
+        public async Task<List<Product>> GetAllAsync()
         {
-            if (_context.Products.ToList().Count == 0) return 0;
-            return _context.Products.Max(p => p.Id);
+            return await _context.Products.ToListAsync();
+        }
+
+        public async Task AddAsync(Product product)
+        {
+            product.BrandId = 1; // to be updated
+            product.CategoryId = 2; // to be updated
+            await _context.Products.AddAsync(product);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(Product product)
+        {
+            _context.Products.Update(product);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var prod = await _context.Products.FirstOrDefaultAsync(x => x.Id == id);
+            if (prod is not null)
+            {
+                _context.Products.Remove(prod);
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task<List<Product>> SearchByNameAsync(string name)
+        {
+            return await _context.Products.Where(x => x.Name.Contains(name)).ToListAsync();
+        }
+
+        public async Task<List<Product>> GetProductsByCategoryAsync(int id)
+        {
+            return await _context.Products.Where(x => x.CategoryId == id).ToListAsync();
+        }
+
+        public async Task<List<Product>> GetProductsByBrandAsync(int id)
+        {
+            return await _context.Products.Where(x => x.BrandId == id).ToListAsync();
+        }
+
+        public async Task<int> GetMaxIdAsync()
+        {
+            if (!await _context.Products.AnyAsync()) return 0;
+            return await _context.Products.MaxAsync(p => p.Id);
         }
     }
 }

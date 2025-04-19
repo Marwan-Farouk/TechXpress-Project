@@ -1,6 +1,7 @@
 using Business.Managers.Categories;
 using Business.Managers.Products;
 using DataAccess.Contexts;
+using DataAccess.Repositories.BRAND;
 using DataAccess.Repositories.CATEGORY;
 using DataAccess.Repositories.ORDER;
 using DataAccess.Repositories.PRODUCT;
@@ -22,6 +23,7 @@ namespace Presentation
             builder.Services.AddScoped<ICategoryManager, CategoryManager>();
             builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+            builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 
             var connectionString = builder.Configuration.GetConnectionString("TechXpress");
 
@@ -31,10 +33,10 @@ namespace Presentation
                 .UseSqlServer(connectionString)
                 .LogTo(Console.WriteLine, LogLevel.Information);
             });
-            builder.Services.AddSession(options =>
-            {
-                options.Cookie.HttpOnly = true;
-            });
+            //builder.Services.AddSession(options =>
+            //{
+            //    options.Cookie.HttpOnly = true;
+            //});
 
             var app = builder.Build();
 
@@ -53,7 +55,7 @@ namespace Presentation
 
             app.UseAuthorization();
 
-            app.UseSession();
+            //app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",

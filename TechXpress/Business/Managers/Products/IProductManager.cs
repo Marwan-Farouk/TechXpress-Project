@@ -10,10 +10,12 @@ namespace Business.Managers.Products
 
     public interface IProductManager
     {
-        List<GetAllProductsDto> GetAllProducts();
-        GetProductByIdDto GetProductById(int id);
-        void CreateProduct(CreateProductDto dto);
-        void UpdateProduct(UpdateProductDto dto);
-        dynamic GetAllBrands();
+        Task<List<GetAllProductsDto>> GetAllProductsAsync();
+        Task<GetProductByIdDto?> GetProductByIdAsync(int id);
+        Task CreateProductAsync(CreateProductDto dto);
+        Task UpdateProductAsync(UpdateProductDto dto);
+        Task DeleteProductAsync(int id);
+        Task<dynamic> GetAllBrandsAsync();
+        Task<int> GetProductStockAsync(int id);
     }
 }
