@@ -1,4 +1,7 @@
 ﻿using System.Diagnostics;
+
+using Business.DTOs.Products;
+
 using Microsoft.AspNetCore.Mvc;
 using Presentation.Models;
 
@@ -10,8 +13,12 @@ public class AdminController : Controller
 
     public IActionResult Index()
     {
-        return View();
+
+        List<GetAllProductsDto> products = new List<GetAllProductsDto>();
+        return View(products);
     }
+
+
 
 
 }
