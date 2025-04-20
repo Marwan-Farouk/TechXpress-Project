@@ -14,7 +14,7 @@
     <div class="hero-content">
         <h1>Discover Amazing Products</h1>
         <p>Shop the latest trends with confidence</p>
-        <a href="pages/products.html" class="cta-button">Shop Now</a>
+        <a href="@Url.Action("Index","Product")" class="cta-button">Shop Now</a>
     </div>
 </div>
 
@@ -37,9 +37,12 @@
                             <span class="rating-count"></span>
                         </div>
                         <p class="product-price">@product.Price</p>
-                        <button class="add-to-cart-btn">
+                        @*<button class="add-to-cart-btn">
                             Add to Cart
-                        </button>
+                        </button>*@
+                        <form asp-action="AddToCart" asp-controller="ShoppingCart" asp-route-id="@product.Id" method="post" style="display:inline;">
+                            <button type="submit" class="add-to-cart-btn">Add To Cart</button>
+                        </form>
                     </div>
                 </div>
             }
@@ -65,24 +68,6 @@
 
 
 
-@section Scripts {
-    <script>
-        // Update cart count on page load
-        document.addEventListener('DOMContentLoaded', function() {
-            updateCartCount();
-        });
-
-        function updateCartCount() {
-            // Get cart from session (simplified example)
-            fetch('/ShoppingCart/GetCartCount')
-                .then(response => response.json())
-                .then(data => {
-                    document.getElementById('cartCount').textContent = data.count;
-                });
-        }
-    </script>
-
-}
 
 
 

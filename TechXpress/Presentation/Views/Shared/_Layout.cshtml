@@ -23,9 +23,9 @@
                     <li><a href="~/Home/Index" class="active">Home</a></li>
                     <li><a href="~/Product/Index">Products</a></li>
                     <li>
-                        <a href="pages/cart.html" class="cart-link">
+                        <a href="ShoppingCart/Index/" class="cart-link">
                             <span class="cart-icon">🛒</span>
-                            <span class="cart-count">0</span>
+                            <span id="cartCount" class="cart-count">0</span> <!-- Default value added -->
                         </a>
                     </li>
                 </ul>
@@ -66,6 +66,15 @@
             </div>
         </footer>
     @await RenderSectionAsync("Scripts", required: false)
-    <script src="~/js/home.js"></script>
+    @section Scripts {
+        <script>
+            // Update cart count on page load
+            document.addEventListener('DOMContentLoaded', async function() {
+                await updateCartCount();
+            });
+
+        </script>
+    }
+    <script src="~/js/home.js" asp-append-version="true"></script>
 </body>
 </html>
