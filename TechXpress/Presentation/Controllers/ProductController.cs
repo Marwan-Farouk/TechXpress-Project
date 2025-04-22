@@ -70,6 +70,7 @@ namespace PresentationLayer.Controllers
         public IActionResult Create()
         {
             ViewBag.Categories = _categoryManager.GetAllCategories();
+            ViewBag.Brands = _brandRepository.GetAll();
             return View();
         }
 
