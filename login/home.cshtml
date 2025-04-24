@@ -1,0 +1,14 @@
+@{
+    ViewData["Title"] = "Home";
+    var username = ViewBag.Username as string;
+}
+
+@if (string.IsNullOrEmpty(username))
+{
+    <p>You are not logged in. <a href="@Url.Action("Login", "Account")">Login here</a>.</p>
+}
+else
+{
+    <h2>Welcome, @username</h2>
+    <a asp-controller="Account" asp-action="Logout">Logout</a>
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" constant="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>log in</title>
+    <link rel="stylesheet' href="css/main.css">
+</head>
+<body>
+<div class="main">
+
+ <h1>Login</h1>  
+ 
+
+
+<br>
+<form action="login.php"method="POST">
+    <form asp-action="Login" method="post">
+    @if (ViewData["UserError"] != null)
+    {
+        <div>@ViewData["UserError"]</div>
+    }
+
+    <input type="text" name="username" id="username" placeholder="username" value="@(Request.Cookies["username"] ?? "")" />
+    
+    @if (ViewData["PassError"] != null)
+    {
+        <div>@ViewData["PassError"]</div>
+    }
+
+    <input type="password" name="password" id="password" placeholder="password" value="@(Request.Cookies["password"] ?? "")" />
+    
+    <label>
+        <input type="checkbox" name="keep" id="keep" value="1" /> keep me signed in
+    </label>
+    
+    <input type="submit" name="submit" id="submit" value="Log in" />
+</form>
+
+<a href="#">Forget password?</a>
+
+<h3>Or</h3>
+
+<a asp-controller="Account" asp-action="Register">Register</a>
+
+
+</div>
+</body>
+</html>                                           
