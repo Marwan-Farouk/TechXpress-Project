@@ -28,6 +28,7 @@ namespace Presentation
             builder.Services.AddScoped<IBrandRepository, BrandRepository>();
             builder.Services.AddScoped<IOrderManager, OrderManager>();
 
+
             var connectionString = builder.Configuration.GetConnectionString("TechXpress");
 
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
