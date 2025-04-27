@@ -46,7 +46,6 @@ namespace Presentation.Controllers
 
                 if (result.Succeeded)
                 {
-                    await _signInManager.SignInAsync(user, isPersistent: true);
 
                     foreach(var address in request.Addresses)
                     {
@@ -59,6 +58,7 @@ namespace Presentation.Controllers
                             ApartmentNumber = address.ApartmentNumber
                         });
                     }
+                    await _signInManager.SignInAsync(user, isPersistent: true);
 
                     return returnUrl == null ? RedirectToAction("Index", "Home") : Redirect(returnUrl);
                 } else
@@ -71,5 +71,40 @@ namespace Presentation.Controllers
             }
             return View(request);
         }
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Login(LoginActionRequest request, string? returnUrl)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.FindByEmailAsync(request.Email);
+                if (user != null)
+                {
+                    var passValid = await _userManager.CheckPasswordAsync(user, request.Password);
+                    if (passValid)
+                    {
+                        await _signInManager.SignInAsync(user, isPersistent: request.RememberMe);
+                        return returnUrl == null ? RedirectToAction("Index", "Home") : Redirect(returnUrl);
+                    }
+                }
+            }
+            ModelState.AddModelError("Invalid Credentials", "Invalid UserName Or Password !");
+            return View(request);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Logout()
+        {
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                await _signInManager.SignOutAsync();
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
     }
 }

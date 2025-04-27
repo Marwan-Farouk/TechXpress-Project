@@ -9,7 +9,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="04a383d8-1f36-4e8f-9583-f3c0a6b15757" name="Changes" comment="" />
+    <list default="true" id="04a383d8-1f36-4e8f-9583-f3c0a6b15757" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/Presentation/ActionRequests/LoginActionRequest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Presentation/Views/User/Login.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.TechXpress/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TechXpress/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Business/Managers/Users/AddressManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Business/Managers/Users/AddressManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Shared/_Layout.cshtml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -50,17 +58,6 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d8d9726f3deb1bbf671f5b791e4dc3e0338219a996f439ad2a69024b825c60/UserManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/Coding/DEPI FullStack .NET/Final Project/Program/TechXpress-Project/TechXpress/DataAccess/Contexts/ApplicationDbContext.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Presentation/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js.map" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://diff.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://diff.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://diff.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://diff.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://diff.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://diff.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
-    <setting file="mock://diff.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://diff.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://diff.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://diff.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
@@ -159,6 +156,7 @@
       <workItem from="1745334766214" duration="1827000" />
       <workItem from="1745693092480" duration="665000" />
       <workItem from="1745693821091" duration="20589000" />
+      <workItem from="1745791205571" duration="6218000" />
     </task>
     <task id="LOCAL-00001" summary="Update Index action to support asynchronous product retrieval">
       <option name="closed" value="true" />
@@ -200,7 +198,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745791140470</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Remove UserPhone entity and related references from the application">
+      <option name="closed" value="true" />
+      <created>1745792296736</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1745792296736</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -243,7 +249,8 @@
     <MESSAGE value="Implement Identity framework with User and Role entities" />
     <MESSAGE value="Add user registration functionality with validation and address support" />
     <MESSAGE value="Add address management functionality with DTOs and repository integration" />
-    <option name="LAST_COMMIT_MESSAGE" value="Add address management functionality with DTOs and repository integration" />
+    <MESSAGE value="Remove UserPhone entity and related references from the application" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove UserPhone entity and related references from the application" />
     <option name="GROUP_MULTIFILE_MERGE_BY_DIRECTORY" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -262,12 +269,17 @@
           <option name="timeStamp" value="3" />
         </breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Presentation/Views/Home/Index.cshtml</url>
-          <line>70</line>
-          <properties isMultiMethodBreakpoint="true">
-            <option name="multiMethodBreakpoint" value="true" />
+          <url>file://$PROJECT_DIR$/Presentation/Controllers/UserController.cs</url>
+          <line>30</line>
+          <properties documentPath="D:\Coding\DEPI FullStack .NET\Final Project\Program\TechXpress-Project\TechXpress\Presentation\Controllers\UserController.cs" containingFunctionPresentation="Method 'Register'">
+            <startOffsets>
+              <option value="965" />
+            </startOffsets>
+            <endOffsets>
+              <option value="966" />
+            </endOffsets>
           </properties>
-          <option name="timeStamp" value="5" />
+          <option name="timeStamp" value="9" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

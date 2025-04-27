@@ -54,7 +54,7 @@ namespace Presentation
 
             builder.Services.ConfigureApplicationCookie(options =>
             {
-                options.Cookie.Expiration = TimeSpan.FromDays(7);
+                options.ExpireTimeSpan = TimeSpan.FromDays(7);
                 options.LoginPath = "/Account/Login";
                 options.AccessDeniedPath = "/Account/AccessDenied";
             });
