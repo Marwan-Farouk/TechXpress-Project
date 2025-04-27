@@ -2,6 +2,7 @@ using Business.Managers.Categories;
 using Business.Managers.Orders;
 using Business.Managers.Products;
 using DataAccess.Contexts;
+using DataAccess.Entities;
 using DataAccess.Repositories.BRAND;
 using DataAccess.Repositories.CATEGORY;
 using DataAccess.Repositories.ORDER;
@@ -39,6 +40,19 @@ namespace Presentation
             //{
             //    options.Cookie.HttpOnly = true;
             //});
+
+            builder.Services.AddIdentity<User, Role>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.User.RequireUniqueEmail = true;
+            }).AddEntityFrameworkStores<ApplicationDbContext>();
+
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = "/Account/Login";
+                options.AccessDeniedPath = "/Account/AccessDenied";
+            });
+
 
             var app = builder.Build();
 

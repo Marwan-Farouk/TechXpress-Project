@@ -18,7 +18,7 @@ namespace DataAccess.Repositories.USER
         }
         public User? GetById(int id)
         {
-            return _context.Users.FirstOrDefault(x => x.Id == id);
+             return _context.Users.FirstOrDefault(x => x.Id == id);
         }
         public List<User> GetAll() 
         {
@@ -36,13 +36,13 @@ namespace DataAccess.Repositories.USER
         }
         public void Delete(int id)
         {
-            var userToDelete = _context.Users.FirstOrDefault(x => x.Id == id);
-            if(userToDelete is not null)
-            {
-
-            _context.Users.Remove(userToDelete);
-            _context.SaveChanges();
-            }
+        //     var userToDelete = _context.Users.FirstOrDefault(x => x.Id == id);
+        //     if(userToDelete is not null)
+        //     {
+        //
+        //     _context.Users.Remove(userToDelete);
+        //     _context.SaveChanges();
+            // }
         }
         public List<User> SearchByEmail(string email)
         {
