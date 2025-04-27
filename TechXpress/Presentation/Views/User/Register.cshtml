@@ -9,25 +9,26 @@
                 </div>
                 <div class="card-body">
                     <form method="post" asp-controller="User" asp-action="Register">
+                        <div class="text-danger" asp-validation-summary="All"></div>
                         <!-- Personal Information Section -->
                         <div class="section mb-4">
                             <h5 class="mb-3 text-primary">Personal Information</h5>
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label asp-for="FirstName" class="form-label">First Name</label>
-                                    <input asp-for="FirstName" class="form-control" required>
-                                    <span asp-validation-for="FirstName"></span>
+                                    <input asp-for="FirstName" class="form-control" >
+                                    <span class="text-danger" asp-validation-for="FirstName"></span>
                                 </div>
                                 <div class="col-md-6">
                                     <label asp-for="LastName" class="form-label">Last Name</label>
-                                    <input asp-for="LastName" class="form-control" required>
-                                    <span asp-validation-for="LastName"></span>
+                                    <input asp-for="LastName" class="form-control" >
+                                    <span class="text-danger" asp-validation-for="LastName"></span>
                                 </div>
                             </div>
                             <div class="mb-3">
                                 <label asp-for="BirthDate" class="form-label">Birth Date</label>
-                                <input asp-for="BirthDate" type="date" class="form-control" required>
-                                <span asp-validation-for="BirthDate"></span>
+                                <input asp-for="BirthDate" type="date" class="form-control" >
+                                <span class="text-danger" asp-validation-for="BirthDate"></span>
                             </div>
                         </div>
 
@@ -36,19 +37,19 @@
                             <h5 class="mb-3 text-primary">Contact Information</h5>
                             <div class="mb-3">
                                 <label asp-for="Email" class="form-label">Email</label>
-                                <input asp-for="Email" type="email" class="form-control" required>
-                                <span asp-validation-for="Email"></span>
+                                <input asp-for="Email" type="email" class="form-control" >
+                                <span class="text-danger" asp-validation-for="Email"></span>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label asp-for="PhoneNumber" class="form-label">Phone Number</label>
-                                    <input asp-for="PhoneNumber" type="tel" class="form-control" required>
-                                    <span asp-validation-for="PhoneNumber"></span>
+                                    <input asp-for="PhoneNumber" type="tel" class="form-control" >
+                                    <span class="text-danger" asp-validation-for="PhoneNumber"></span>
                                 </div>
                                 <div class="col-md-6">
                                     <label asp-for="PhoneNumberConfirm" class="form-label">Confirm Phone Number</label>
-                                    <input asp-for="PhoneNumberConfirm" type="tel" class="form-control" required>
-                                    <span asp-validation-for="PhoneNumberConfirm"></span>
+                                    <input asp-for="PhoneNumberConfirm" type="tel" class="form-control" >
+                                    <span class="text-danger" asp-validation-for="PhoneNumberConfirm"></span>
                                 </div>
                             </div>
                         </div>
@@ -59,13 +60,13 @@
                             <div class="row mb-3">
                                 <div class="col-md-6">
                                     <label asp-for="Password" class="form-label">Password</label>
-                                    <input asp-for="Password" type="password" class="form-control" required>
-                                    <span asp-validation-for="Password"></span>
+                                    <input asp-for="Password" type="password" class="form-control" >
+                                    <span class="text-danger" asp-validation-for="Password"></span>
                                 </div>
                                 <div class="col-md-6">
                                     <label asp-for="ConfirmPassword" class="form-label">Confirm Password</label>
-                                    <input asp-for="ConfirmPassword" type="password" class="form-control" required>
-                                    <span asp-validation-for="ConfirmPassword"></span>
+                                    <input asp-for="ConfirmPassword" type="password" class="form-control" >
+                                    <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
                                 </div>
                             </div>
                         </div>
@@ -83,25 +84,25 @@
                                     <div class="row mb-3">
                                         <div class="col-md-6">
                                             <label class="form-label">Country</label>
-                                            <input name="Addresses[0].Country" class="form-control" required>
+                                            <input name="Addresses[0].Country" class="form-control" >
                                         </div>
                                         <div class="col-md-6">
                                             <label class="form-label">City</label>
-                                            <input name="Addresses[0].City" class="form-control" required>
+                                            <input name="Addresses[0].City" class="form-control" >
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <div class="col-md-4">
                                             <label class="form-label">Street</label>
-                                            <input name="Addresses[0].Street" class="form-control" required>
+                                            <input name="Addresses[0].Street" class="form-control" >
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label">Building No.</label>
-                                            <input name="Addresses[0].BuildingNumber" class="form-control" required>
+                                            <input name="Addresses[0].BuildingNumber" class="form-control" >
                                         </div>
                                         <div class="col-md-4">
                                             <label class="form-label">Apartment No.</label>
-                                            <input name="Addresses[0].ApartmentNumber" class="form-control" required>
+                                            <input name="Addresses[0].ApartmentNumber" class="form-control" >
                                         </div>
                                     </div>
                                 </div>
@@ -118,9 +119,6 @@
     </div>
 </div>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial"/>
-}
     <script>
         let addressIndex = 0;
 
@@ -141,25 +139,25 @@
                 <div class="row mb-3">
                     <div class="col-md-6">
                         <label class="form-label">Country</label>
-                        <input name="Addresses[${addressIndex}].Country" class="form-control" required>
+                        <input name="Addresses[${addressIndex}].Country" class="form-control" >
                     </div>
                     <div class="col-md-6">
                         <label class="form-label">City</label>
-                        <input name="Addresses[${addressIndex}].City" class="form-control" required>
+                        <input name="Addresses[${addressIndex}].City" class="form-control" >
                     </div>
                 </div>
                 <div class="row mb-3">
                     <div class="col-md-4">
                         <label class="form-label">Street</label>
-                        <input name="Addresses[${addressIndex}].Street" class="form-control" required>
+                        <input name="Addresses[${addressIndex}].Street" class="form-control" >
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Building No.</label>
-                        <input name="Addresses[${addressIndex}].BuildingNumber" class="form-control" required>
+                        <input name="Addresses[${addressIndex}].BuildingNumber" class="form-control" >
                     </div>
                     <div class="col-md-4">
                         <label class="form-label">Apartment No.</label>
-                        <input name="Addresses[${addressIndex}].ApartmentNumber" class="form-control" required>
+                        <input name="Addresses[${addressIndex}].ApartmentNumber" class="form-control" >
                     </div>
                 </div>
             `;
@@ -176,3 +174,6 @@
     </script>
 }
 
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}

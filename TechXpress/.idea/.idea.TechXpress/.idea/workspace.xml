@@ -10,16 +10,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="04a383d8-1f36-4e8f-9583-f3c0a6b15757" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Business/DTOs/Users/UserDto.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presentation/ActionRequests/AddAddressActionRequest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presentation/ActionRequests/RegisterActionRequest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presentation/Views/User/Register.cshtml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presentation/wwwroot/css/main.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Business/DTOs/Users/AddressDto.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Business/Managers/Users/AddressManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Business/Managers/Users/IAddressManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TechXpress/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TechXpress/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataAccess/Repositories/User/IUserRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataAccess/Repositories/User/IUserRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataAccess/Repositories/User/UserRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataAccess/Repositories/User/UserRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAccess/Repositories/UserAddress/IUserAddressRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataAccess/Repositories/UserAddress/IUserAddressRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAccess/Repositories/UserAddress/UserAddressRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataAccess/Repositories/UserAddress/UserAddressRepository.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Presentation/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/UserController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Presentation/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Views/User/Register.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/User/Register.cshtml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +167,7 @@
       <workItem from="1745173911446" duration="2646000" />
       <workItem from="1745334766214" duration="1827000" />
       <workItem from="1745693092480" duration="665000" />
-      <workItem from="1745693821091" duration="13341000" />
+      <workItem from="1745693821091" duration="19896000" />
     </task>
     <task id="LOCAL-00001" summary="Update Index action to support asynchronous product retrieval">
       <option name="closed" value="true" />
@@ -194,7 +193,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745760621306</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Add user registration functionality with validation and address support">
+      <option name="closed" value="true" />
+      <created>1745783981064</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1745783981064</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -235,7 +242,8 @@
     <MESSAGE value="Update Index action to support asynchronous product retrieval" />
     <MESSAGE value="Add OrderManager service registration in Program.cs" />
     <MESSAGE value="Implement Identity framework with User and Role entities" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implement Identity framework with User and Role entities" />
+    <MESSAGE value="Add user registration functionality with validation and address support" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add user registration functionality with validation and address support" />
     <option name="GROUP_MULTIFILE_MERGE_BY_DIRECTORY" value="true" />
   </component>
   <component name="XDebuggerManager">

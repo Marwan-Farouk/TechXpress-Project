@@ -1,6 +1,7 @@
 using Business.Managers.Categories;
 using Business.Managers.Orders;
 using Business.Managers.Products;
+using Business.Managers.Users;
 using DataAccess.Contexts;
 using DataAccess.Entities;
 using DataAccess.Repositories.BRAND;
@@ -27,6 +28,7 @@ namespace Presentation
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IBrandRepository, BrandRepository>();
             builder.Services.AddScoped<IOrderManager, OrderManager>();
+            builder.Services.AddScoped<IAddressManager, AddressManager>();
 
 
             var connectionString = builder.Configuration.GetConnectionString("TechXpress");
@@ -50,6 +52,7 @@ namespace Presentation
 
             builder.Services.ConfigureApplicationCookie(options =>
             {
+                options.Cookie.Expiration = TimeSpan.FromDays(7);
                 options.LoginPath = "/Account/Login";
                 options.AccessDeniedPath = "/Account/AccessDenied";
             });
