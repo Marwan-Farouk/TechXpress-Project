@@ -1,9 +1,19 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using Presentation.ViewModel;
+using DataAccess.Contexts;
+using System.Linq;
 
 namespace Presentation.Controllers
 {
     public class UserController : Controller
     {
+        private readonly ApplicationDbContext _context;
+
+        public UserController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Dashboard()
         {
             return View();
@@ -16,7 +26,19 @@ namespace Presentation.Controllers
 
         public IActionResult Profile()
         {
-            return View();
+            var user = _context.Users.FirstOrDefault();
+
+            if (user == null)
+                return RedirectToAction("Login", "Account");
+
+            var model = new UserProfileViewModel
+            {
+                FullName = $"{user.FirstName} {user.LastName}",
+                Email = user.Email,
+                PhoneNumber = user.userPhones?.FirstOrDefault()?.PhoneNumber ?? "Not Provided"
+            };
+
+            return View(model);
         }
 
         public IActionResult Addresses()
