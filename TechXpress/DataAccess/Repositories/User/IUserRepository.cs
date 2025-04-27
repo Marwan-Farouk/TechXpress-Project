@@ -17,7 +17,6 @@ namespace DataAccess.Repositories.USER
         Task<List<User>> SearchByEmailAsync(string email);
         Task<List<User>> SearchByNameAsync(string name);
         Task<List<UserAddress>> GetUserAddressesAsync(int userId);
-        Task<List<UserPhone>> GetUserPhonesAsync(int userId);
         Task<List<Order>> GetUserOrdersAsync(int userId);
         Task<List<Payment>> GetUserPaymentsAsync(int Id);
     }

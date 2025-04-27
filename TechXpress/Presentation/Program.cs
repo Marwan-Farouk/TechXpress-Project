@@ -8,6 +8,7 @@ using DataAccess.Repositories.BRAND;
 using DataAccess.Repositories.CATEGORY;
 using DataAccess.Repositories.ORDER;
 using DataAccess.Repositories.PRODUCT;
+using DataAccess.Repositories.USERADDRESS;
 using Microsoft.EntityFrameworkCore;
 
 namespace Presentation
@@ -29,6 +30,7 @@ namespace Presentation
             builder.Services.AddScoped<IBrandRepository, BrandRepository>();
             builder.Services.AddScoped<IOrderManager, OrderManager>();
             builder.Services.AddScoped<IAddressManager, AddressManager>();
+            builder.Services.AddScoped<IUserAddressRepository, UserAddressRepository>();
 
 
             var connectionString = builder.Configuration.GetConnectionString("TechXpress");

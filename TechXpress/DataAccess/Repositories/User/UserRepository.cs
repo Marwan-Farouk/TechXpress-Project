@@ -65,10 +65,6 @@ namespace DataAccess.Repositories.USER
             return await _context.UserAddresses.Where(x => x.UserId == userId).ToListAsync();
         }
 
-        public async Task<List<UserPhone>> GetUserPhonesAsync(int userId)
-        {
-            return await _context.UserPhones.Where(x => x.UserId == userId).ToListAsync();
-        }
 
         public async Task<List<Order>> GetUserOrdersAsync(int userId)
         {

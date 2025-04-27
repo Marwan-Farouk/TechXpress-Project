@@ -30,9 +30,6 @@ namespace DataAccess.Configurations
             // Relationships
 
             // UserPhone (many) ===> User (one)
-            builder
-                .HasMany(u => u.userPhones)
-                .WithOne(up => up.User);
 
             // UserAddress (many) ===> User (one)
             builder

@@ -13,7 +13,6 @@ namespace DataAccess.Contexts
 
         // public DbSet<User> Users { get; set; }
         public DbSet<UserAddress> UserAddresses { get; set; }
-        public DbSet<UserPhone> UserPhones { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Brand> Brands { get; set; }
         public DbSet<Product> Products { get; set; }

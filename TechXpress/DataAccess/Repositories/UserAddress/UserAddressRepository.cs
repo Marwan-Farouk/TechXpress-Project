@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DataAccess.Repositories.USERADDRESS
 {
-    class UserAddressRepository: IUserAddressRepository
+    public class UserAddressRepository: IUserAddressRepository
     {
         private readonly ApplicationDbContext _context;
         public UserAddressRepository(ApplicationDbContext context)
