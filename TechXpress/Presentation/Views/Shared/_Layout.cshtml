@@ -23,12 +23,22 @@
                     <li><a href="~/Home/Index" class="active">Home</a></li>
                     <li><a href="~/Product/Index">Products</a></li>
                     <li>
-                        <a href="ShoppingCart/Index/" class="cart-link">
+                        <a asp-action="Index" asp-controller="ShoppingCart" class="cart-link">
                             <span class="cart-icon">🛒</span>
                             <span id="cartCount" class="cart-count">0</span> <!-- Default value added -->
                         </a>
                     </li>
                 </ul>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="user-nav">
+                        <a asp-action="Logout" asp-controller="User" class="nav-link">Logout @User.Identity.Name.Split('_')[0]</a>
+                    </div>
+                }
+                else
+                {
+                    <a class="nav-link" asp-action="Login" asp-controller="User">Login</a>
+                }
             </div>
         </nav>
     </header>

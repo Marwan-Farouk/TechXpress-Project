@@ -1,11 +1,14 @@
 using Business.Managers.Categories;
 using Business.Managers.Orders;
 using Business.Managers.Products;
+using Business.Managers.Users;
 using DataAccess.Contexts;
+using DataAccess.Entities;
 using DataAccess.Repositories.BRAND;
 using DataAccess.Repositories.CATEGORY;
 using DataAccess.Repositories.ORDER;
 using DataAccess.Repositories.PRODUCT;
+using DataAccess.Repositories.USERADDRESS;
 using Microsoft.EntityFrameworkCore;
 
 namespace Presentation
@@ -26,6 +29,9 @@ namespace Presentation
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IBrandRepository, BrandRepository>();
             builder.Services.AddScoped<IOrderManager, OrderManager>();
+            builder.Services.AddScoped<IAddressManager, AddressManager>();
+            builder.Services.AddScoped<IUserAddressRepository, UserAddressRepository>();
+
 
             var connectionString = builder.Configuration.GetConnectionString("TechXpress");
 
@@ -39,6 +45,20 @@ namespace Presentation
             //{
             //    options.Cookie.HttpOnly = true;
             //});
+
+            builder.Services.AddIdentity<User, Role>(options =>
+            {
+                options.Password.RequireDigit = true;
+                options.User.RequireUniqueEmail = true;
+            }).AddEntityFrameworkStores<ApplicationDbContext>();
+
+            builder.Services.ConfigureApplicationCookie(options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromDays(7);
+                options.LoginPath = "/Account/Login";
+                options.AccessDeniedPath = "/Account/AccessDenied";
+            });
+
 
             var app = builder.Build();
 
