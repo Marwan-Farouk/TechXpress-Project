@@ -10,13 +10,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="04a383d8-1f36-4e8f-9583-f3c0a6b15757" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Presentation/ActionRequests/LoginActionRequest.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Presentation/Views/User/Login.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Presentation/ActionRequests/CreateRoleActionRequest.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Presentation/Controllers/RoleController.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Presentation/Views/Role/Create.cshtml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Presentation/Views/Role/Index.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TechXpress/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TechXpress/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Business/Managers/Users/AddressManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Business/Managers/Users/AddressManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/UserController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Shared/_Layout.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/AdminController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/AdminController.cs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,8 +54,10 @@
 }</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7d382df578ec93391918cfaa4ce7f4b8f35c9aed1241d6556dc9be26df13c/IdentityUser.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8e25cce28490c87faaf15522967e96692c1829b521f6b7a4fc8bde524eec/IdentityRole.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d8d9726f3deb1bbf671f5b791e4dc3e0338219a996f439ad2a69024b825c60/UserManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/Coding/DEPI FullStack .NET/Final Project/Program/TechXpress-Project/TechXpress/DataAccess/Contexts/ApplicationDbContext.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Coding/DEPI FullStack .NET/Final Project/Program/TechXpress-Project/TechXpress/Presentation/Views/Shared/_Layout.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Presentation/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js.map" root0="FORCE_HIGHLIGHTING" />
     <setting file="mock://diff.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="mock://diff.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
@@ -71,6 +72,9 @@
   &quot;associatedIndex&quot;: 1
 }</component>
   <component name="ProjectId" id="2vpbodG2xaKnIMQs7cxsxWVzOPk" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -156,7 +160,7 @@
       <workItem from="1745334766214" duration="1827000" />
       <workItem from="1745693092480" duration="665000" />
       <workItem from="1745693821091" duration="20589000" />
-      <workItem from="1745791205571" duration="6218000" />
+      <workItem from="1745791205571" duration="9905000" />
     </task>
     <task id="LOCAL-00001" summary="Update Index action to support asynchronous product retrieval">
       <option name="closed" value="true" />
@@ -206,7 +210,15 @@
       <option name="project" value="LOCAL" />
       <updated>1745792296736</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Add user login and logout functionality&#10;&#10;Introduced login and logout endpoints in `UserController` with corresponding views and models. Updated address management logic in `AddressManager` and improved layout for authenticated user navigation. Minor fixes for cookie expiration configuration and updated related project settings.">
+      <option name="closed" value="true" />
+      <created>1745797557500</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1745797557500</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -250,7 +262,8 @@
     <MESSAGE value="Add user registration functionality with validation and address support" />
     <MESSAGE value="Add address management functionality with DTOs and repository integration" />
     <MESSAGE value="Remove UserPhone entity and related references from the application" />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove UserPhone entity and related references from the application" />
+    <MESSAGE value="Add user login and logout functionality&#10;&#10;Introduced login and logout endpoints in `UserController` with corresponding views and models. Updated address management logic in `AddressManager` and improved layout for authenticated user navigation. Minor fixes for cookie expiration configuration and updated related project settings." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add user login and logout functionality&#10;&#10;Introduced login and logout endpoints in `UserController` with corresponding views and models. Updated address management logic in `AddressManager` and improved layout for authenticated user navigation. Minor fixes for cookie expiration configuration and updated related project settings." />
     <option name="GROUP_MULTIFILE_MERGE_BY_DIRECTORY" value="true" />
   </component>
   <component name="XDebuggerManager">
