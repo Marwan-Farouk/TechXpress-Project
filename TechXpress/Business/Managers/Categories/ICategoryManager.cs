@@ -9,10 +9,10 @@ namespace Business.Managers.Categories
 {
     public interface ICategoryManager
     {
-        public List<GetAllCategoriesDto> GetAllCategories();
-        public GetCategoryByIdDto GetCategoryById(int id);
-        public void CreateCategory(CreateCategoryDto dto);
-        public void UpdateCategory(UpdateCategoryDto dto);
-        public void DeleteCategory(int id);
+        Task<List<GetAllCategoriesDto>> GetAllCategoriesAsync();
+        Task<GetCategoryByIdDto> GetCategoryByIdAsync(int id);
+        Task CreateCategoryAsync(CreateCategoryDto dto);
+        Task UpdateCategoryAsync(UpdateCategoryDto dto);
+        Task DeleteCategoryAsync(int id);
     }
 }

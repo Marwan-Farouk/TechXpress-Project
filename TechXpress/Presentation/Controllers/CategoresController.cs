@@ -4,6 +4,7 @@ using Business.Managers.Categories;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BestStoreMVC.Controllers
 {
@@ -16,12 +17,11 @@ namespace BestStoreMVC.Controllers
             _categoryManager = categoryManager;
         }
 
-        public IActionResult Index(string searchString, string stockFilter)
+        // GET: /Categores/Index
+        public async Task<IActionResult> Index(string searchString, string stockFilter)
         {
-            // Get all categories from the manager
-            var allCategories = _categoryManager.GetAllCategories();
+            var allCategories = await _categoryManager.GetAllCategoriesAsync();
 
-            // Filter by search string
             if (!string.IsNullOrEmpty(searchString))
             {
                 allCategories = allCategories
@@ -29,7 +29,6 @@ namespace BestStoreMVC.Controllers
                     .ToList();
             }
 
-            // Filter by stock status
             if (!string.IsNullOrEmpty(stockFilter))
             {
                 switch (stockFilter)
@@ -43,26 +42,24 @@ namespace BestStoreMVC.Controllers
                 }
             }
 
-            // Map to ViewModel
-            var categories = allCategories
-                .Select(c => new CategoryViewModel
-                {
-                    Id = c.Id,
-                    Name = c.Name,
-                    Description = c.Description,
-                    Stock = c.Stock
-                }).ToList();
+            var categories = allCategories.Select(c => new CategoryViewModel
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Description = c.Description,
+                Stock = c.Stock
+            }).ToList();
 
-            // Pass the search and filter values to the view
             ViewData["CurrentFilter"] = searchString;
             ViewData["StockFilter"] = stockFilter;
 
             return View(categories);
         }
 
-        public IActionResult Details(int id)
+        // GET: /Categores/Details/5
+        public async Task<IActionResult> Details(int id)
         {
-            var category = _categoryManager.GetCategoryById(id);
+            var category = await _categoryManager.GetCategoryByIdAsync(id);
             if (category == null) return NotFound();
 
             var viewModel = new CategoryViewModel
@@ -76,36 +73,38 @@ namespace BestStoreMVC.Controllers
             return View(viewModel);
         }
 
+        // GET: /Categores/Create
         public IActionResult Create()
         {
             return View(new CategoryViewModel());
         }
 
+        // POST: /Categores/Create
         [HttpPost]
-        public IActionResult Create(CategoryViewModel categoryViewModel)
+        public async Task<IActionResult> Create(CategoryViewModel categoryViewModel)
         {
             if (!ModelState.IsValid)
             {
                 return View(categoryViewModel);
             }
 
-            _categoryManager.CreateCategory(new CreateCategoryDto
+            await _categoryManager.CreateCategoryAsync(new CreateCategoryDto
             {
                 Name = categoryViewModel.Name,
                 Description = categoryViewModel.Description,
                 Stock = categoryViewModel.Stock
             });
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
-        [HttpGet]
-        public IActionResult Edit(int id)
+        // GET: /Categores/Edit/5
+        public async Task<IActionResult> Edit(int id)
         {
-            var category = _categoryManager.GetCategoryById(id);
+            var category = await _categoryManager.GetCategoryByIdAsync(id);
             if (category == null)
             {
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
 
             var viewModel = new CategoryViewModel
@@ -119,15 +118,16 @@ namespace BestStoreMVC.Controllers
             return View(viewModel);
         }
 
+        // POST: /Categores/Edit
         [HttpPost]
-        public IActionResult Edit(CategoryViewModel categoryViewModel)
+        public async Task<IActionResult> Edit(CategoryViewModel categoryViewModel)
         {
             if (!ModelState.IsValid)
             {
                 return View(categoryViewModel);
             }
 
-            _categoryManager.UpdateCategory(new UpdateCategoryDto
+            await _categoryManager.UpdateCategoryAsync(new UpdateCategoryDto
             {
                 Id = categoryViewModel.Id,
                 Name = categoryViewModel.Name,
@@ -135,13 +135,14 @@ namespace BestStoreMVC.Controllers
                 Stock = categoryViewModel.Stock
             });
 
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult Delete(int id)
+        // GET: /Categores/Delete/5
+        public async Task<IActionResult> Delete(int id)
         {
-            _categoryManager.DeleteCategory(id);
-            return RedirectToAction("Index");
+            await _categoryManager.DeleteCategoryAsync(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

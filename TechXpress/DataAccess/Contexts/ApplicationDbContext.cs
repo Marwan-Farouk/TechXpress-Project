@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 
 namespace DataAccess.Contexts
 {
-    public class ApplicationDbContext : IdentityDbContext<User,Role,int>
+    public class ApplicationDbContext : IdentityDbContext<User, Role, int>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         { }

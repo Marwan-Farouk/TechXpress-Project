@@ -2,48 +2,49 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using DataAccess.Repositories.CATEGORY;
 using Business.Mappings;
+
 namespace Business.Managers.Categories
 {
     public class CategoryManager : ICategoryManager
     {
         private readonly ICategoryRepository _categoryRepository;
+
         public CategoryManager(ICategoryRepository categoryRepository)
         {
             _categoryRepository = categoryRepository;
         }
 
-        public void CreateCategory(CreateCategoryDto dto)
+        public async Task CreateCategoryAsync(CreateCategoryDto dto)
         {
             var category = dto.ToEntity();
-            //category.Id = _categoryRepository.GetMaxId() + 1;
-            _categoryRepository.Add(category);
+            //category.Id = await _categoryRepository.GetMaxIdAsync() + 1; // إذا كان لديك هذا الأسلوب
+            await _categoryRepository.AddAsync(category);
         }
 
-        public void DeleteCategory(int id)
+        public async Task DeleteCategoryAsync(int id)
         {
-            _categoryRepository.Delete(id);
+            await _categoryRepository.DeleteAsync(id);
         }
 
-        public List<GetAllCategoriesDto> GetAllCategories()
+        public async Task<List<GetAllCategoriesDto>> GetAllCategoriesAsync()
         {
-            var categories = _categoryRepository.GetAll();
+            var categories = await _categoryRepository.GetAllAsync();
             return categories.ToDto();
         }
 
-        public GetCategoryByIdDto GetCategoryById(int id)
+        public async Task<GetCategoryByIdDto> GetCategoryByIdAsync(int id)
         {
-            var category = _categoryRepository.GetById(id);
-            return category.ToDto();
+            var category = await _categoryRepository.GetByIdAsync(id);
+            return category?.ToDto(); // تجنب NullReferenceException باستخدام ?
         }
 
-        public void UpdateCategory(UpdateCategoryDto dto)
+        public async Task UpdateCategoryAsync(UpdateCategoryDto dto)
         {
             var category = dto.ToEntity();
-            _categoryRepository.Update(category);
+            await _categoryRepository.UpdateAsync(category);
         }
     }
 }

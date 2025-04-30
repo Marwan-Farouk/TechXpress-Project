@@ -46,7 +46,7 @@ namespace PresentationLayer.Controllers
                 products = products.Where(p => p.BrandId == brandId.Value).ToList();
             }
 
-            ViewBag.Categories = _categoryManager.GetAllCategories();
+            ViewBag.Categories = _categoryManager.GetAllCategoriesAsync();
             ViewBag.Brands = _brandRepository.GetAll();
             return View(products);
         }
@@ -69,7 +69,7 @@ namespace PresentationLayer.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            ViewBag.Categories = _categoryManager.GetAllCategories();
+            ViewBag.Categories = _categoryManager.GetAllCategoriesAsync();
             ViewBag.Brands = _brandRepository.GetAll();
             return View();
         }
@@ -81,7 +81,7 @@ namespace PresentationLayer.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Categories = _categoryManager.GetAllCategories();
+                ViewBag.Categories = _categoryManager.GetAllCategoriesAsync();
                 return View(model);
             }
 
@@ -118,7 +118,7 @@ namespace PresentationLayer.Controllers
                 ExistingImage = product.Image
             };
 
-            ViewBag.Categories = _categoryManager.GetAllCategories();
+            ViewBag.Categories = _categoryManager.GetAllCategoriesAsync();
             return View(editProductDto);
         }
 
@@ -129,7 +129,7 @@ namespace PresentationLayer.Controllers
         {
             if (!ModelState.IsValid)
             {
-                ViewBag.Categories = _categoryManager.GetAllCategories();
+                ViewBag.Categories = _categoryManager.GetAllCategoriesAsync();
                 return View(model);
             }
 

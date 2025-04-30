@@ -3,7 +3,7 @@ using Business.Managers.Users;
 using DataAccess.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.ActionRequests;
+using Presentation.ActionRequests.User;
 
 namespace Presentation.Controllers
 {
