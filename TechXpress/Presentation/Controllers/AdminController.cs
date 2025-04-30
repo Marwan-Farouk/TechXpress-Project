@@ -43,11 +43,11 @@ public class AdminController : Controller
         return View(model);
     }
     [HttpPost]
-    public async Task<IActionResult> AssignUserRole(UserAddressViewModel request)
+    public async Task<IActionResult> AssignUserRole(UserRoleViewModel request)
     {
         if (ModelState.IsValid) {
-            var user = await _userManager.FindByIdAsync(request.Id.ToString());
-            var role = await _roleManager.FindByIdAsync(request.Id.ToString());
+            var user = await _userManager.FindByIdAsync(request.UserId.ToString());
+            var role = await _roleManager.FindByIdAsync(request.RoleId.ToString());
             if (user == null || role == null)
             {
                 ModelState.AddModelError("Invalid data", "Invalid role or user");
@@ -77,47 +77,67 @@ public class AdminController : Controller
     [HttpGet]
     public async Task<IActionResult> ListUserRoles()
     {
-        var users = _userManager.Users.ToList();
-
+        // Use ToListAsync() for async database operations
+        var users = await _userManager.Users.ToListAsync();
         var userRolesList = new List<UserRolesViewModel>();
 
         foreach (var user in users)
         {
             var userRolesVM = new UserRolesViewModel
             {
-                //UserId = user.Id,
+                UserId = user.Id, // Uncommented this as it's needed for the form
                 UserName = user.UserName,
-                Roles = await _userManager.GetRolesAsync(user)
+                Roles = (await _userManager.GetRolesAsync(user)).ToList()
             };
             userRolesList.Add(userRolesVM);
         }
 
-        ViewBag.AllRoles = _roleManager.Roles
+        // Use async version and cache the roles
+        ViewBag.AllRoles = await _roleManager.Roles
             .Select(role => role.Name)
-            .ToList();
+            .ToListAsync();
 
         return View(userRolesList);
-
     }
+
     [HttpPost]
+    [ValidateAntiForgeryToken] // Add this for security
     public async Task<IActionResult> EditUserRoles(string userId, List<string> roles)
     {
-        var user = await _userManager.FindByIdAsync(userId);
+        if (string.IsNullOrEmpty(userId))
+        {
+            return BadRequest("User ID is required");
+        }
 
+        var user = await _userManager.FindByIdAsync(userId);
         if (user == null)
         {
             return NotFound();
         }
 
-        var currentRoles = await _userManager.GetRolesAsync(user);
-        var rolesToAdd = roles.Except(currentRoles).ToList();
-        var rolesToRemove = currentRoles.Except(roles).ToList();
+        try
+        {
+            var currentRoles = await _userManager.GetRolesAsync(user);
+            var rolesToAdd = roles.Except(currentRoles).ToList();
+            var rolesToRemove = currentRoles.Except(roles).ToList();
 
-        await _userManager.AddToRolesAsync(user, rolesToAdd);
+            if (rolesToRemove.Any())
+            {
+                await _userManager.RemoveFromRolesAsync(user, rolesToRemove);
+            }
 
-        await _userManager.RemoveFromRolesAsync(user, rolesToRemove);
+            if (rolesToAdd.Any())
+            {
+                await _userManager.AddToRolesAsync(user, rolesToAdd);
+            }
+
+            TempData["SuccessMessage"] = "Roles updated successfully";
+        }
+        catch (Exception ex)
+        {
+            TempData["ErrorMessage"] = $"Error updating roles: {ex.Message}";
+        }
 
         return RedirectToAction(nameof(ListUserRoles));
-
     }
 }

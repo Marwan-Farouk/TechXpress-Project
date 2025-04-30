@@ -68,5 +68,10 @@ namespace DataAccess.Repositories.BRAND
                 .ToList();
         
         }
+
+        public Task<dynamic> GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

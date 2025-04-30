@@ -29,6 +29,11 @@ namespace Business.Managers.Categories
             await _categoryRepository.DeleteAsync(id);
         }
 
+        public dynamic GetAllAsync()
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<List<GetAllCategoriesDto>> GetAllCategoriesAsync()
         {
             var categories = await _categoryRepository.GetAllAsync();

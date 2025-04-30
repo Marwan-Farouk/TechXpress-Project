@@ -16,6 +16,6 @@ namespace DataAccess.Repositories.BRAND
         void Delete(int id);
         List<Brand> SearchByName(string name);
         List<Product> GetProductsByBrandId(int brandId);
-
+        Task<dynamic> GetAllAsync();
     }
 }
