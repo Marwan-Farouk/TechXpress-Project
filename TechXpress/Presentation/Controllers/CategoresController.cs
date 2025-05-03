@@ -16,7 +16,7 @@ namespace BestStoreMVC.Controllers
         {
             _categoryManager = categoryManager;
         }
-
+        [HttpGet]
         // GET: /Categores/Index
         public async Task<IActionResult> Index(string searchString, string stockFilter)
         {
@@ -55,7 +55,7 @@ namespace BestStoreMVC.Controllers
 
             return View(categories);
         }
-
+        [HttpGet]
         // GET: /Categores/Details/5
         public async Task<IActionResult> Details(int id)
         {
@@ -72,7 +72,7 @@ namespace BestStoreMVC.Controllers
 
             return View(viewModel);
         }
-
+        [HttpGet]
         // GET: /Categores/Create
         public IActionResult Create()
         {
@@ -97,7 +97,7 @@ namespace BestStoreMVC.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
+        [HttpGet]
         // GET: /Categores/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
@@ -137,7 +137,7 @@ namespace BestStoreMVC.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
+        [HttpGet]
         // GET: /Categores/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
