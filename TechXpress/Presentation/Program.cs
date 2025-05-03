@@ -1,4 +1,5 @@
-﻿using Business.Managers.Categories;
+﻿using Business.Managers.Brand;
+using Business.Managers.Categories;
 using Business.Managers.Orders;
 using Business.Managers.Products;
 using DataAccess.Contexts;
@@ -38,6 +39,7 @@ namespace Presentation
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IBrandRepository, BrandRepository>();
             builder.Services.AddScoped<IOrderManager, OrderManager>();
+            builder.Services.AddScoped<IBrandManager, BrandManager>();
 
             var connectionString = builder.Configuration.GetConnectionString("TechXpress");
 

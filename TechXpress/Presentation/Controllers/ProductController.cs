@@ -1,4 +1,5 @@
 ﻿using Business.DTOs.Products;
+using Business.Managers.Brand;
 using Business.Managers.Categories;
 using Business.Managers.Products;
 using DataAccess.Contexts;
@@ -12,13 +13,13 @@ namespace PresentationLayer.Controllers
     {
         private readonly IProductManager _productManager;
         private readonly ICategoryManager _categoryManager;
-        private readonly IBrandRepository _brandRepository;
+        private readonly IBrandManager _brandManager;
 
-        public ProductController(IProductManager productManager, ICategoryManager categoryManager,IBrandRepository brandRepository)
+        public ProductController(IProductManager productManager, ICategoryManager categoryManager,IBrandManager brandManager)
         {
             _productManager = productManager;
             _categoryManager = categoryManager;
-            _brandRepository = brandRepository;
+            _brandManager = brandManager;
         }
 
         // 📌 List all products
@@ -47,7 +48,7 @@ namespace PresentationLayer.Controllers
             }
 
             ViewBag.Categories = _categoryManager.GetAllCategories();
-            ViewBag.Brands = _brandRepository.GetAll();
+            ViewBag.Brands = _brandManager.GetAll();
             return View(products);
         }
 
@@ -70,6 +71,7 @@ namespace PresentationLayer.Controllers
         public IActionResult Create()
         {
             ViewBag.Categories = _categoryManager.GetAllCategories();
+            ViewBag.Brands = _brandManager.GetAll();
             return View();
         }
 
@@ -81,6 +83,7 @@ namespace PresentationLayer.Controllers
             if (!ModelState.IsValid)
             {
                 ViewBag.Categories = _categoryManager.GetAllCategories();
+                ViewBag.Brands = _brandManager.GetAll();
                 return View(model);
             }
 
@@ -118,6 +121,7 @@ namespace PresentationLayer.Controllers
             };
 
             ViewBag.Categories = _categoryManager.GetAllCategories();
+            ViewBag.Brands = _brandManager.GetAll();
             return View(editProductDto);
         }
 
@@ -129,6 +133,7 @@ namespace PresentationLayer.Controllers
             if (!ModelState.IsValid)
             {
                 ViewBag.Categories = _categoryManager.GetAllCategories();
+                ViewBag.Brands = _brandManager.GetAll();
                 return View(model);
             }
 
