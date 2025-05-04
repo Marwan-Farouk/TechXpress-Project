@@ -1,9 +1,14 @@
 ﻿@using Business.DTOs.Products
+@using Business.DTOs.Categories
+@using Business.DTOs.Brand
 @model List<GetAllProductsDto>
 
 @{
     ViewData["Title"] = "Product List";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+
+    var brands = ViewBag.Brands as List<BrandDto>;
+    var categories = ViewBag.Categories as List<GetAllCategoriesDto>;
 }
 
 <h2>Product List</h2>
@@ -17,17 +22,23 @@
 
     <select name="categoryId" class="form-control">
         <option value="">All Categories</option>
-        @foreach (var category in ViewBag.Categories)
+        @if (categories != null)
         {
-            <option value="@category.Id" selected="@(Context.Request.Query["categoryId"] == category.Id.ToString())">@category.Name</option>
+            foreach (var category in categories)
+            {
+                <option value="@category.Id" selected="@(Context.Request.Query["categoryId"] == category.Id.ToString())">@category.Name</option>
+            }
         }
     </select>
 
     <select name="brandId" class="form-control">
         <option value="">All Brands</option>
-        @foreach (var brand in ViewBag.Brands)
+        @if (brands != null)
         {
-            <option value="@brand.Id" selected="@(Context.Request.Query["brandId"] == brand.Id.ToString())">@brand.Name</option>
+            foreach (var brand in brands)
+            {
+                <option value="@brand.Id" selected="@(Context.Request.Query["brandId"] == brand.Id.ToString())">@brand.Name</option>
+            }
         }
     </select>
 

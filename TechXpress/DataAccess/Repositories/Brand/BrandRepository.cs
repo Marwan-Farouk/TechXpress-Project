@@ -25,8 +25,7 @@ namespace DataAccess.Repositories.BRAND
 
         public async Task<IEnumerable<Brand>> GetAllAsync()
         {
-            return await _context.Brands
-                .ToListAsync();
+            return await _context.Brands.ToListAsync();
         }
 
         public async Task AddAsync(Brand brand)

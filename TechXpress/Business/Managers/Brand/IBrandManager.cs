@@ -10,10 +10,11 @@ namespace Business.Managers.Brand
 {
     public interface IBrandManager
     {
-       public BrandDto? GetById(int id);
-        public List<BrandDto> GetAll();
-        public int Create(CreateBrandDto dto);
-        public void Update(UpdateBrandDto dto);
-        public void Delete(int id);
+        Task<BrandDto?> GetByIdAsync(int id); // Updated to async
+        Task<List<BrandDto>> GetAllAsync();  // Added missing async method
+        Task<int> CreateAsync(CreateBrandDto dto); // Updated to async
+        Task UpdateAsync(UpdateBrandDto dto); // Updated to async
+        Task DeleteAsync(int id); // Updated to async
+        Task CreateAsync(string name);
     }
 }

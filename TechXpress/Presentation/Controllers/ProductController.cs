@@ -15,7 +15,7 @@ namespace PresentationLayer.Controllers
         private readonly ICategoryManager _categoryManager;
         private readonly IBrandManager _brandManager;
 
-        public ProductController(IProductManager productManager, ICategoryManager categoryManager,IBrandManager brandManager)
+        public ProductController(IProductManager productManager, ICategoryManager categoryManager, IBrandManager brandManager)
         {
             _productManager = productManager;
             _categoryManager = categoryManager;
@@ -25,6 +25,7 @@ namespace PresentationLayer.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(string search, int? categoryId, int? brandId)
         {
+            ViewBag.Brands = await _brandManager.GetAllAsync();
             // Get products (already properly awaited)
             var products = await _productManager.GetAllProductsAsync();
 
@@ -43,52 +44,34 @@ namespace PresentationLayer.Controllers
             if (brandId.HasValue)
                 products = products.Where(p => p.BrandId == brandId.Value).ToList();
 
-
-            ViewBag.Categories = _categoryManager.GetAllCategories();
-            ViewBag.Brands = _brandManager.GetAll();
+            // Use the correct method to fetch categories asynchronously
+            ViewBag.Categories = await _categoryManager.GetAllCategoriesAsync();
+            ViewBag.Brands = _brandManager.GetAllAsync();
             return View(products);
         }
 
         [HttpGet]
-        public async Task<IActionResult> Details(int id)
-        {
-            var product = await _productManager.GetProductByIdAsync(id);
-            if (product == null) return NotFound();
-            return View(product);
-        }
-
-        [HttpPost]
-        public IActionResult AddToCart(int id)
-        {
-            return RedirectToAction("AddToCart", "ShoppingCart", new { productId = id });
-        }
-
-        // 📌 Show create form
-        
-        [HttpGet]
         public async Task<IActionResult> Create()
         {
-
-            ViewBag.Categories = _categoryManager.GetAllCategories();
-            ViewBag.Brands = _brandManager.GetAll();
+            // Use the correct method to fetch categories asynchronously
+            ViewBag.Categories = await _categoryManager.GetAllCategoriesAsync();
+            ViewBag.Brands = _brandManager.GetAllAsync();
 
             return View();
         }
 
-        // 📌 Handle create form submission
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateProductRequest model)
         {
             if (!ModelState.IsValid)
             {
-            
-                ViewBag.Categories = _categoryManager.GetAllCategories();
-                ViewBag.Brands = _brandManager.GetAll();
+                // Use the correct method to fetch categories asynchronously
+                ViewBag.Categories = await _categoryManager.GetAllCategoriesAsync();
+                ViewBag.Brands = _brandManager.GetAllAsync();
 
-                ViewBag.Categories = _categoryManager.GetAllCategoriesAsync();
                 return View(model);
-                         }
+            }
 
             await _productManager.CreateProductAsync(new CreateProductDto
             {
@@ -104,7 +87,6 @@ namespace PresentationLayer.Controllers
             return RedirectToAction("Index");
         }
 
-        // 📌 Show edit form
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -123,24 +105,22 @@ namespace PresentationLayer.Controllers
                 ExistingImage = product.Image
             };
 
-            ViewBag.Categories = _categoryManager.GetAllCategories();
-            ViewBag.Brands = _brandManager.GetAll();
+            // Use the correct method to fetch categories asynchronously
+            ViewBag.Categories = await _categoryManager.GetAllCategoriesAsync();
+            ViewBag.Brands = _brandManager.GetAllAsync();
 
             return View(editProductDto);
         }
 
-        // 📌 Handle edit form submission
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(UpdateProductRequest model)
         {
             if (!ModelState.IsValid)
             {
-            
-                ViewBag.Categories = _categoryManager.GetAllCategories();
-                ViewBag.Brands = _brandManager.GetAll();
-
-                ViewBag.Categories = _categoryManager.GetAllCategoriesAsync();
+                // Use the correct method to fetch categories asynchronously
+                ViewBag.Categories = await _categoryManager.GetAllCategoriesAsync();
+                ViewBag.Brands = _brandManager.GetAllAsync();
 
                 return View(model);
             }
@@ -156,7 +136,7 @@ namespace PresentationLayer.Controllers
                 BrandId = model.BrandId
             });
 
-            return RedirectToAction(nameof(Details), new { id = model.Id });
+            return RedirectToAction(nameof(Index));
         }
     }
 }

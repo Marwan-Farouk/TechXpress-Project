@@ -21,7 +21,7 @@ namespace Business.Managers.Brand
 
         public BrandDto? GetById(int id)
         {
-            var brand = _brandRepository.GetById(id);
+            var brand = _brandRepository.GetByIdAsync(id).Result; // Synchronous call for interface compliance
             return brand == null ? null : new BrandDto
             {
                 Id = brand.Id,
@@ -31,12 +31,12 @@ namespace Business.Managers.Brand
 
         public List<BrandDto> GetAll()
         {
-            return _brandRepository.GetAll()
-                .Select(b => new BrandDto
-                {
-                    Id = b.Id,
-                    Name = b.Name
-                }).ToList();
+            var brands = _brandRepository.GetAllAsync().Result; // Synchronous call for interface compliance
+            return brands.Select(b => new BrandDto
+            {
+                Id = b.Id,
+                Name = b.Name
+            }).ToList();
         }
 
         public int Create(CreateBrandDto dto)
@@ -48,24 +48,24 @@ namespace Business.Managers.Brand
                 Products = new List<Product>()
             };
 
-            _brandRepository.Add(brand);
+            _brandRepository.AddAsync(brand).Wait(); // Synchronous call for interface compliance
             return brand.Id;
         }
 
         public void Update(UpdateBrandDto dto)
         {
-            var brand = _brandRepository.GetById(dto.Id);
+            var brand = _brandRepository.GetByIdAsync(dto.Id).Result; // Synchronous call for interface compliance
             if (brand == null) throw new Exception("Brand not found");
 
             brand.Name = dto.Name;
             brand.Description = dto.Description;
 
-            _brandRepository.Update(brand);
+            _brandRepository.UpdateAsync(brand).Wait(); // Synchronous call for interface compliance
         }
 
         public void Delete(int id)
         {
-            var brand = _brandRepository.GetById(id);
+            var brand = _brandRepository.GetByIdAsync(id).Result; // Synchronous call for interface compliance
             if (brand == null) return;
 
             if (brand.Products?.Any() == true)
@@ -73,7 +73,46 @@ namespace Business.Managers.Brand
                 throw new InvalidOperationException("Cannot delete brand with associated products");
             }
 
-            _brandRepository.Delete(id);
+            _brandRepository.DeleteAsync(id).Wait(); // Synchronous call for interface compliance
+        }
+
+        public Task<BrandDto?> GetByIdAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<List<BrandDto>> GetAllAsync()
+        {
+            var brands = await _brandRepository.GetAllAsync();
+
+            var brandDtos = brands.Select(b => new BrandDto
+            {
+                Id = b.Id,
+                Name = b.Name
+                
+            }).ToList();
+
+            return brandDtos;
+        }
+
+        public Task<int> CreateAsync(CreateBrandDto dto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task UpdateAsync(UpdateBrandDto dto)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task DeleteAsync(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task CreateAsync(string name)
+        {
+            throw new NotImplementedException();
         }
     }
 }
