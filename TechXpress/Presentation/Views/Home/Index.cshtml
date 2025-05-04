@@ -14,10 +14,7 @@
     <div class="hero-content">
         <h1>Discover Amazing Products</h1>
         <p>Shop the latest trends with confidence</p>
-        <a href="@Url.Action("Index","Product")" class="cta-button">Shop Now</a>
-        <a href="@Url.Action("Login", "Account")" class="cta-button secondary-btn">Login</a>
-        <a href="@Url.Action("Register", "Account")" class="cta-button secondary-btn">Register</a>
-        
+        <a asp-action="Index" asp-controller="Product" class="cta-button">Shop Now</a>
     </div>
 </div>
 

@@ -19,9 +19,9 @@ namespace Business.Managers.Brand
             _brandRepository = brandRepository;
         }
 
-        public BrandDto? GetById(int id)
+        public async Task<BrandDto?> GetById(int id)
         {
-            var brand = _brandRepository.GetById(id);
+            var brand = await _brandRepository.GetByIdAsync(id);
             return brand == null ? null : new BrandDto
             {
                 Id = brand.Id,
@@ -29,17 +29,17 @@ namespace Business.Managers.Brand
             };
         }
 
-        public List<BrandDto> GetAll()
+        public async Task<List<BrandDto>> GetAll()
         {
-            return _brandRepository.GetAll()
-                .Select(b => new BrandDto
+            var brands = await _brandRepository.GetAllAsync();
+            return brands.Select(b => new BrandDto
                 {
                     Id = b.Id,
                     Name = b.Name
                 }).ToList();
         }
 
-        public int Create(CreateBrandDto dto)
+        public async Task<int> Create(CreateBrandDto dto)
         {
             var brand = new DataAccess.Entities.Brand()
             {
@@ -48,24 +48,24 @@ namespace Business.Managers.Brand
                 Products = new List<Product>()
             };
 
-            _brandRepository.Add(brand);
+            await _brandRepository.AddAsync(brand);
             return brand.Id;
         }
 
-        public void Update(UpdateBrandDto dto)
+        public async Task Update(UpdateBrandDto dto)
         {
-            var brand = _brandRepository.GetById(dto.Id);
+            var brand = await _brandRepository.GetByIdAsync(dto.Id);
             if (brand == null) throw new Exception("Brand not found");
 
             brand.Name = dto.Name;
             brand.Description = dto.Description;
 
-            _brandRepository.Update(brand);
+             await _brandRepository.UpdateAsync(brand);
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
-            var brand = _brandRepository.GetById(id);
+            var brand = await _brandRepository.GetByIdAsync(id);
             if (brand == null) return;
 
             if (brand.Products?.Any() == true)
@@ -73,7 +73,7 @@ namespace Business.Managers.Brand
                 throw new InvalidOperationException("Cannot delete brand with associated products");
             }
 
-            _brandRepository.Delete(id);
+            await _brandRepository.DeleteAsync(id);
         }
     }
 }

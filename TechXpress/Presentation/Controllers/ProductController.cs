@@ -45,7 +45,7 @@ namespace PresentationLayer.Controllers
 
 
             ViewBag.Categories = await _categoryManager.GetAllCategoriesAsync();
-            ViewBag.Brands = _brandManager.GetAll();
+            ViewBag.Brands = await _brandManager.GetAll();
             return View(products);
         }
 
