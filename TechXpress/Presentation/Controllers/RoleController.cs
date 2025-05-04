@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Presentation.ActionRequests;
+using Presentation.ActionRequests.User;
 
 namespace Presentation.Controllers;
 

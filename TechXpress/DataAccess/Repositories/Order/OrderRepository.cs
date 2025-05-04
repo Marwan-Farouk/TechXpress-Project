@@ -83,9 +83,11 @@ namespace DataAccess.Repositories.ORDER
             await _context.SaveChangesAsync();
         }
 
-        public Task<List<Order>> GetOrdersByUserIdAndStatus(int userId, string status)
+        public async Task<List<Order>> GetOrdersByUserIdAndStatusAsync(int userId, string status)
         {
-            throw new NotImplementedException();
+            return await _context.Orders
+                .Where(o => o.UserId == userId && o.Status.ToLower() == status.ToLower())
+                .ToListAsync();
         }
     }
 }

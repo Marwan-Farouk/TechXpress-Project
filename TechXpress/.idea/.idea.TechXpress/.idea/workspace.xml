@@ -11,6 +11,7 @@
   <component name="ChangeListManager">
     <list default="true" id="04a383d8-1f36-4e8f-9583-f3c0a6b15757" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TechXpress/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TechXpress/.idea/workspace.xml" afterDir="false" />
+
       <change beforePath="$PROJECT_DIR$/Business/DTOs/Products/UpdateProductDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Business/DTOs/Products/UpdateProductDto.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Business/Managers/Users/AddressManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Business/Managers/Users/AddressManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Business/Mappings/ProductMappings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Business/Mappings/ProductMappings.cs" afterDir="false" />
@@ -76,6 +77,9 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7d382df578ec93391918cfaa4ce7f4b8f35c9aed1241d6556dc9be26df13c/IdentityUser.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8e25cce28490c87faaf15522967e96692c1829b521f6b7a4fc8bde524eec/IdentityRole.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d8d9726f3deb1bbf671f5b791e4dc3e0338219a996f439ad2a69024b825c60/UserManager.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Coding/DEPI FullStack .NET/Final Project/Program/TechXpress-Project/TechXpress/Presentation/Controllers/CategoresController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock://D:/Coding/DEPI FullStack .NET/Final Project/Program/TechXpress-Project/TechXpress/Presentation/Controllers/CategoresController.cs" root0="SKIP_HIGHLIGHTING" />
+
     <setting file="file://$PROJECT_DIR$/Presentation/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js.map" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
@@ -110,7 +114,7 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;ml.llm.AIAssistantPromptsLibrary&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.Presentation: https">
     <configuration name="Presentation: IIS Express" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Presentation/Presentation.csproj" />
@@ -182,8 +186,10 @@
       <workItem from="1745693092480" duration="665000" />
       <workItem from="1745693821091" duration="20589000" />
       <workItem from="1745791205571" duration="9905000" />
+
       <workItem from="1746305792996" duration="7846000" />
       <workItem from="1746367317895" duration="528000" />
+
     </task>
     <task id="LOCAL-00001" summary="Update Index action to support asynchronous product retrieval">
       <option name="closed" value="true" />
@@ -265,7 +271,7 @@
                   <entry key="branch">
                     <value>
                       <list>
-                        <option value="main" />
+                        <option value="yousef_branch" />
                       </list>
                     </value>
                   </entry>
@@ -304,6 +310,7 @@
           <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
           <option name="timeStamp" value="3" />
         </breakpoint>
+        
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Presentation/Controllers/ShoppingCartController.cs</url>
           <line>113</line>

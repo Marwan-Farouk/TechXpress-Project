@@ -1,9 +1,9 @@
 ﻿using DataAccess.Contexts;
 using DataAccess.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Repositories.CATEGORY
@@ -17,49 +17,58 @@ namespace DataAccess.Repositories.CATEGORY
             _context = context;
         }
 
-        public Category? GetById(int id)
+        public async Task<Category> GetByIdAsync(int id)
         {
-            return _context.Categories.FirstOrDefault(b => b.Id == id);
-        }
-         public List<Category> GetAll()
-        {
-            return _context.Categories.ToList();
-        }
-        public void Add(Category category)
-        {
-            _context.Categories.Add(category);
-            _context.SaveChanges();
+            return await _context.Categories.FindAsync(id);
         }
 
-        public void Update(Category category)
+        public async Task<List<Category>> GetAllAsync()
+        {
+            return await _context.Categories.ToListAsync();
+        }
+
+        public async Task AddAsync(Category category)
+        {
+            await _context.Categories.AddAsync(category);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(Category category)
         {
             _context.Categories.Update(category);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            var cat = _context.Categories.Find(id);
-            if (cat is not null)
+            var cat = await _context.Categories.FindAsync(id);
+            if (cat != null)
             {
-            _context.Categories.Remove(cat);
-            _context.SaveChanges();
-
-            } 
-        }
-        public List<Category> SearchByName(string name)
-        {
-            return _context.Categories.Where(b => b.Name.Contains(name)).ToList();
+                _context.Categories.Remove(cat);
+                await _context.SaveChangesAsync();
+            }
         }
 
-        public List<Product> GetProductsByCategoryId(int categoryId)
+        public async Task<List<Category>> SearchByNameAsync(string name)
         {
-            return _context.Products.Where(p => p.CategoryId == categoryId).ToList();
+            return await _context.Categories
+                .Where(b => b.Name.Contains(name))
+                .ToListAsync();
         }
-        public int GetMaxId()
+
+        public async Task<List<Product>> GetProductsByCategoryIdAsync(int categoryId)
         {
-            if (_context.Categories.ToList().Count == 0) return 0;
-            return _context.Categories.Max(c => c.Id);
+            return await _context.Products
+                .Where(p => p.CategoryId == categoryId)
+                .ToListAsync();
+        }
+
+        public async Task<int> GetMaxIdAsync()
+        {
+            if (!await _context.Categories.AnyAsync())
+                return 0;
+
+            return await _context.Categories.MaxAsync(c => c.Id);
         }
     }
 }

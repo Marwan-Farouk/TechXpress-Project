@@ -143,6 +143,7 @@ namespace Business.Managers.Orders
             }).ToList();
 
             await _orderRepository.UpdateAsync(order);
+            await _orderRepository.SaveChangesAsync(); // مهم لتؤكد على الحفظ الفوري
         }
 
         // Delete an order
