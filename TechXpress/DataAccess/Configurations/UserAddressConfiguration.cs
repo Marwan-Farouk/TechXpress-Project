@@ -19,12 +19,12 @@ namespace DataAccess.Configurations
             // Table name
             builder.ToTable("UserAddresses");
             // Primary key
-            builder.HasKey(ua => new { ua.UserId, ua.AddressId });
+            builder.HasKey(ua =>  ua.AddressId );
             // Column Data Types
             builder.Property(ua => ua.UserId) // FK userId
                 .HasColumnType("int");
             builder.Property(ua => ua.AddressId) // addressId
-                .HasColumnType("int");
+                .HasColumnType("int").UseIdentityColumn(1, 1);
             builder.Property(ua => ua.Country) // country
                 .HasColumnType("nvarchar(max)").IsRequired();
             builder.Property(ua => ua.City) // city

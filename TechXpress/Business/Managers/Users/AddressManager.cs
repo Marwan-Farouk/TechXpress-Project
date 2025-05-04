@@ -15,7 +15,7 @@ public class AddressManager : IAddressManager
     {
         var userAddress = addressDto.ToEntity();
         userAddress.UserId = userId;
-        userAddress.AddressId = await _userAddressRepository.GetMaxId() + 1;
+        // userAddress.AddressId = await _userAddressRepository.GetMaxId() + 1;
         await _userAddressRepository.Add(userAddress);
     }
     public async Task DeleteAddress(int userId, int addressId)
