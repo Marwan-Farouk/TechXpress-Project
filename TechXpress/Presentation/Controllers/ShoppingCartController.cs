@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Presentation.ViewModels;
 using System.Text.Json;
 using System.Threading.Tasks;
+using DataAccess.Repositories.USERADDRESS;
+using Microsoft.AspNetCore.Identity;
 
 namespace Presentation.Controllers
 {
@@ -15,11 +17,15 @@ namespace Presentation.Controllers
         private const string CartCookieKey = "ShoppingCart";
         private readonly IOrderRepository _orderRepository;
         private readonly IProductManager _productManager;
+        private readonly UserManager<User> _userManager;
+        private readonly IUserAddressRepository _userAddressRepo;
 
-        public ShoppingCartController(IOrderRepository orderRepository, IProductManager productManager)
+        public ShoppingCartController(IOrderRepository orderRepository, IProductManager productManager,UserManager<User> userManager,IUserAddressRepository userAddressRepo)
         {
             _orderRepository = orderRepository;
             _productManager = productManager;
+            _userManager = userManager;
+            _userAddressRepo = userAddressRepo;
         }
 
         // ======== Manage Cart via Cookies ========
@@ -82,23 +88,58 @@ namespace Presentation.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Checkout()
+        {
+            var cart = GetCart();
+            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+
+            var userAddresses = await _userAddressRepo.GetAddressesByUserId(user.Id);
+
+            var addressesVm = userAddresses.Select(address => new UserAddressViewModel()
+            {
+                Id = address.AddressId,
+                AddressLine = $"{address.Street} - {address.BuildingNumber} - {address.ApartmentNumber}",
+                City = address.City,
+                Country = address.Country
+            }).ToList();
+            
+            var checkoutVm = new CheckoutViewModel { Cart = cart , UserAddresses = addressesVm };
+            
+            return View(checkoutVm);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Checkout(int addressId)
         {
             var cart = GetCart();
 
+            // Store products in dictionary to avoid tracking conflicts
+            var productDict = new Dictionary<int, GetProductByIdDto>();
+            
+            // First check for sufficient stock for all items
             foreach (var item in cart.Items)
             {
                 var product = await _productManager.GetProductByIdAsync(item.ProductId);
+                if (product == null)
+                {
+                    return BadRequest($"Product with ID {item.ProductId} not found");
+                }
+                
                 if (product.Stock < item.Quantity)
                 {
                     return BadRequest($"Insufficient stock for product: {product.Name}");
                 }
+                
+                // Store product for later use
+                productDict[item.ProductId] = product;
             }
-
+        
+            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+        
             var order = new Order
             {
-                UserId = 1, // Replace with actual user ID
+                UserId = user.Id,
                 AddressId = addressId,
                 OrderDate = DateTime.UtcNow,
                 TotalAmount = cart.TotalAmount,
@@ -111,23 +152,24 @@ namespace Presentation.Controllers
                     Discount = 0
                 }).ToList()
             };
-
+        
             await _orderRepository.AddAsync(order);
-
-            // Deduct stock
+        
+            // Deduct stock using the cached product data
             foreach (var item in cart.Items)
             {
-                var product = await _productManager.GetProductByIdAsync(item.ProductId);
-                product.Stock -= item.Quantity;
+                var product = productDict[item.ProductId];
+                var updatedStock = product.Stock - item.Quantity;
+                
                 await _productManager.UpdateProductAsync(new UpdateProductDto
                 {
                     Id = product.Id,
                     Name = product.Name,
                     Description = product.Description,
                     Price = product.Price,
-                    Stock = product.Stock,
+                    Stock = updatedStock,
                     BrandId = product.BrandId,
-                    CategoryId = product.CategoryId
+                    CategoryId = product.CategoryId,
                 });
             }
 
@@ -138,7 +180,7 @@ namespace Presentation.Controllers
         public async Task<IActionResult> OrderConfirmed(int orderId)
         {
             var order = await _orderRepository.GetByIdAsync(orderId);
-            return View(order);
+            return View("OrderConfirmation",order);
         }
 
         [HttpGet]

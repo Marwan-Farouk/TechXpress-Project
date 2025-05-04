@@ -16,7 +16,10 @@ namespace Business.Mappings
                 Description = createProductDto.Description,
                 Price = createProductDto.Price,
                 Stock = createProductDto.Stock,
-                Image = createProductDto.Image != null ? SaveImage(createProductDto.Image) : null
+                Image = createProductDto.Image != null ? SaveImage(createProductDto.Image) : null,
+                BrandId = createProductDto.BrandId,
+                CategoryId = createProductDto.CategoryId,
+                DateAdded = createProductDto.DateAdded
             };
         }
 
@@ -28,7 +31,11 @@ namespace Business.Mappings
                 Name = updateProductDto.Name,
                 Description = updateProductDto.Description,
                 Price = updateProductDto.Price,
-                Stock = updateProductDto.Stock
+                Stock = updateProductDto.Stock,
+                BrandId = updateProductDto.BrandId,
+                CategoryId = updateProductDto.CategoryId,
+                // Image here is the string path/name, not an IFormFile
+                Image = updateProductDto.Image
             };
         }
 
@@ -43,7 +50,9 @@ namespace Business.Mappings
                 Price = product.Price,
                 Image = product.Image,
                 Stock = product.Stock,
-                DateAdded = product.DateAdded
+                DateAdded = product.DateAdded,
+                BrandId = product.BrandId,
+                CategoryId = product.CategoryId
             };
         }
 
@@ -55,8 +64,8 @@ namespace Business.Mappings
                 Name = product.Name,
                 Price = product.Price,
                 Image = product.Image, Stock = product.Stock,
-                BrandId = (int)product.BrandId,
-                CategoryId = (int)product.CategoryId,
+                BrandId = product.BrandId,
+                CategoryId = product.CategoryId,
                 DateAdded = product.DateAdded,
                 Description = product.Description,
             }).ToList();

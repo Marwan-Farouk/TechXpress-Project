@@ -11,8 +11,31 @@
   <component name="ChangeListManager">
     <list default="true" id="04a383d8-1f36-4e8f-9583-f3c0a6b15757" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TechXpress/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TechXpress/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Shared/_Layout.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/appsettings.Development.json" afterDir="false" />
+
+      <change beforePath="$PROJECT_DIR$/Business/DTOs/Products/UpdateProductDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Business/DTOs/Products/UpdateProductDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Business/Managers/Users/AddressManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Business/Managers/Users/AddressManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Business/Mappings/ProductMappings.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Business/Mappings/ProductMappings.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAccess/Configurations/OrderConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataAccess/Configurations/OrderConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAccess/Configurations/UserAddressConfiguration.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataAccess/Configurations/UserAddressConfiguration.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAccess/Entities/Product.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataAccess/Entities/Product.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAccess/Migrations/20250306224947_Inital-Create-First-6-tabs.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAccess/Migrations/20250306224947_Inital-Create-First-6-tabs.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAccess/Migrations/20250307151956_Add-Restof-Columns.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAccess/Migrations/20250307151956_Add-Restof-Columns.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAccess/Migrations/20250314183847_product-image-nullable.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAccess/Migrations/20250314183847_product-image-nullable.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAccess/Migrations/20250324203102_added-configurations.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAccess/Migrations/20250324203102_added-configurations.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAccess/Migrations/20250427131751_IdentityMigration.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAccess/Migrations/20250427221426_updatePhoneNumbers.Designer.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAccess/Migrations/20250427221426_updatePhoneNumbers.cs" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAccess/Migrations/ApplicationDbContextModelSnapshot.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataAccess/Migrations/ApplicationDbContextModelSnapshot.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAccess/Repositories/Product/ProductRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataAccess/Repositories/Product/ProductRepository.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/ProductController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/ProductController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/ShoppingCartController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/ShoppingCartController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Views/ShoppingCart/Checkout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/ShoppingCart/Checkout.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Views/ShoppingCart/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/ShoppingCart/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Views/User/Register.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/User/Register.cshtml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -50,16 +73,18 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/294078ecfce6fdb942ecfee089f09717de7a6fcfe5efd9fdb6f4f93c0fb4813/ActionMethodExecutor.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7d382df578ec93391918cfaa4ce7f4b8f35c9aed1241d6556dc9be26df13c/IdentityUser.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8e25cce28490c87faaf15522967e96692c1829b521f6b7a4fc8bde524eec/IdentityRole.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d8d9726f3deb1bbf671f5b791e4dc3e0338219a996f439ad2a69024b825c60/UserManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/Coding/DEPI FullStack .NET/Final Project/Program/TechXpress-Project/TechXpress/Presentation/Controllers/CategoresController.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/Coding/DEPI FullStack .NET/Final Project/Program/TechXpress-Project/TechXpress/Presentation/Controllers/CategoresController.cs" root0="SKIP_HIGHLIGHTING" />
+
     <setting file="file://$PROJECT_DIR$/Presentation/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js.map" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="SWEA" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
@@ -72,21 +97,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.Presentation: https.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "yousef__branch",
-    "ignore.virus.scanning.warn.message": "true",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "editor.preferences.inline.completion",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.Presentation: https.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;marwan-shopping-cart&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;ml.llm.AIAssistantPromptsLibrary&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }]]></component>
   <component name="RunManager" selected=".NET Launch Settings Profile.Presentation: https">
@@ -124,17 +150,23 @@
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Presentation/Presentation.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net8.0" />
       <option name="LAUNCH_PROFILE_NAME" value="https" />
-      <option name="USE_EXTERNAL_CONSOLE" value="0" />
+      <option name="USE_EXTERNAL_CONSOLE" value="1" />
       <option name="USE_MONO" value="0" />
       <option name="RUNTIME_ARGUMENTS" value="" />
       <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
       <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
       <option name="SEND_DEBUG_REQUEST" value="1" />
       <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
+      <option name="RUNTIME_TYPE" value="coreclr" />
       <method v="2">
         <option name="Build" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue=".NET Launch Settings Profile.Presentation: http" />
+      <item itemvalue=".NET Launch Settings Profile.Presentation: https" />
+      <item itemvalue=".NET Launch Settings Profile.Presentation: IIS Express" />
+    </list>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -154,7 +186,10 @@
       <workItem from="1745693092480" duration="665000" />
       <workItem from="1745693821091" duration="20589000" />
       <workItem from="1745791205571" duration="9905000" />
-      <workItem from="1746369367695" duration="642000" />
+
+      <workItem from="1746305792996" duration="7846000" />
+      <workItem from="1746367317895" duration="528000" />
+
     </task>
     <task id="LOCAL-00001" summary="Update Index action to support asynchronous product retrieval">
       <option name="closed" value="true" />
@@ -275,6 +310,72 @@
           <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
           <option name="timeStamp" value="3" />
         </breakpoint>
+        
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Presentation/Controllers/ShoppingCartController.cs</url>
+          <line>113</line>
+          <properties documentPath="D:\Coding\DEPI FullStack .NET\Final Project\Program\TechXpress-Project\TechXpress\Presentation\Controllers\ShoppingCartController.cs" containingFunctionPresentation="Method 'Checkout'">
+            <startOffsets>
+              <option value="3994" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3995" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Presentation/Controllers/ShoppingCartController.cs</url>
+          <line>92</line>
+          <properties documentPath="D:\Coding\DEPI FullStack .NET\Final Project\Program\TechXpress-Project\TechXpress\Presentation\Controllers\ShoppingCartController.cs" containingFunctionPresentation="Method 'Checkout'">
+            <startOffsets>
+              <option value="3162" />
+            </startOffsets>
+            <endOffsets>
+              <option value="3163" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Presentation/Controllers/ShoppingCartController.cs</url>
+          <line>175</line>
+          <properties documentPath="D:\Coding\DEPI FullStack .NET\Final Project\Program\TechXpress-Project\TechXpress\Presentation\Controllers\ShoppingCartController.cs" containingFunctionPresentation="Method 'Checkout'">
+            <startOffsets>
+              <option value="6325" />
+            </startOffsets>
+            <endOffsets>
+              <option value="6337" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="17" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Presentation/Controllers/ShoppingCartController.cs</url>
+          <line>137</line>
+          <properties documentPath="D:\Coding\DEPI FullStack .NET\Final Project\Program\TechXpress-Project\TechXpress\Presentation\Controllers\ShoppingCartController.cs" containingFunctionPresentation="Method 'Checkout'">
+            <startOffsets>
+              <option value="4905" />
+            </startOffsets>
+            <endOffsets>
+              <option value="4983" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="18" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Presentation/Controllers/ShoppingCartController.cs</url>
+          <line>163</line>
+          <properties documentPath="D:\Coding\DEPI FullStack .NET\Final Project\Program\TechXpress-Project\TechXpress\Presentation\Controllers\ShoppingCartController.cs" containingFunctionPresentation="Method 'Checkout'">
+            <startOffsets>
+              <option value="5880" />
+            </startOffsets>
+            <endOffsets>
+              <option value="6297" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="19" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

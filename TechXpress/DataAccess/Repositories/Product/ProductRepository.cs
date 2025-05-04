@@ -29,15 +29,42 @@ namespace DataAccess.Repositories.PRODUCT
 
         public async Task AddAsync(Product product)
         {
-            product.BrandId = 1; // to be updated
-            product.CategoryId = 2; // to be updated
             await _context.Products.AddAsync(product);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(Product product)
         {
-            _context.Products.Update(product);
+            // Find the product entity that's already being tracked (if any)
+            var existingProduct = await _context.Products.FindAsync(product.Id);
+            
+            if (existingProduct != null)
+            {
+                // Preserve the image path string if not provided in the update
+                // This is important because Image here is a string path, not an IFormFile
+                if (string.IsNullOrEmpty(product.Image))
+                {
+                    product.Image = existingProduct.Image;
+                }
+                
+                // Update the properties of the tracked entity
+                _context.Entry(existingProduct).CurrentValues.SetValues(product);
+            }
+            else
+            {
+                // If the entity isn't tracked yet, first get it to ensure we have the image path
+                var dbProduct = await _context.Products.AsNoTracking().FirstOrDefaultAsync(p => p.Id == product.Id);
+                
+                if (dbProduct != null && string.IsNullOrEmpty(product.Image))
+                {
+                    // Keep the existing image path string from the database
+                    product.Image = dbProduct.Image;
+                }
+                
+                // Attach and mark as modified
+                _context.Entry(product).State = EntityState.Modified;
+            }
+            
             await _context.SaveChangesAsync();
         }
 

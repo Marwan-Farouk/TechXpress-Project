@@ -83,7 +83,7 @@ namespace PresentationLayer.Controllers
             {
                 ViewBag.Categories = _categoryManager.GetAllCategoriesAsync();
                 return View(model);
-            }
+                         }
 
             await _productManager.CreateProductAsync(new CreateProductDto
             {
@@ -118,7 +118,10 @@ namespace PresentationLayer.Controllers
                 ExistingImage = product.Image
             };
 
-            ViewBag.Categories = await _categoryManager.GetAllCategoriesAsync();
+            ViewBag.Categories = _categoryManager.GetAllCategories();
+            ViewBag.Brands = _brandRepository.GetAll();
+
+
             return View(editProductDto);
         }
 
