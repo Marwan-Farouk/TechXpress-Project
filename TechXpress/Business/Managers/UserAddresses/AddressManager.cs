@@ -27,6 +27,13 @@ public class AddressManager : IAddressManager
         return await _userAddressRepository.GetAddressesByUserId(userId);
     }
 
+    public async Task<List<AddressDto>> GetAddressesByUserId(int id)
+    {
+        var addresses = await _userAddressRepository.GetAddressesByUserId(id);
+        var dtos = addresses.Select(address => address.ToDto()).ToList();
+        return dtos;
+    }
+
     public async Task<List<AddressDto>> GetAllAddresses()
     {
         var addressesList = await _userAddressRepository.GetAll();

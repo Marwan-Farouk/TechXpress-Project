@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Presentation.ViewModels;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Business.Managers.Users;
 using DataAccess.Repositories.USERADDRESS;
 using Microsoft.AspNetCore.Identity;
 
@@ -17,15 +18,15 @@ namespace Presentation.Controllers
         private const string CartCookieKey = "ShoppingCart";
         private readonly IOrderRepository _orderRepository;
         private readonly IProductManager _productManager;
-        private readonly UserManager<User> _userManager;
-        private readonly IUserAddressRepository _userAddressRepo;
+        private readonly IUserManager _userManager;
+        private readonly IAddressManager _addressManager;
 
-        public ShoppingCartController(IOrderRepository orderRepository, IProductManager productManager,UserManager<User> userManager,IUserAddressRepository userAddressRepo)
+        public ShoppingCartController(IOrderRepository orderRepository, IProductManager productManager,IUserManager userManager,IAddressManager addressManager)
         {
             _orderRepository = orderRepository;
             _productManager = productManager;
             _userManager = userManager;
-            _userAddressRepo = userAddressRepo;
+            _addressManager = addressManager;
         }
 
         // ======== Manage Cart via Cookies ========
@@ -94,11 +95,11 @@ namespace Presentation.Controllers
             var cart = GetCart();
             var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
 
-            var userAddresses = await _userAddressRepo.GetAddressesByUserId(user.Id);
+            var userAddresses = await _addressManager.GetAddressesByUserId(user.Id);
 
             var addressesVm = userAddresses.Select(address => new UserAddressViewModel()
             {
-                Id = address.AddressId,
+                Id = address.Id,
                 AddressLine = $"{address.Street} - {address.BuildingNumber} - {address.ApartmentNumber}",
                 City = address.City,
                 Country = address.Country

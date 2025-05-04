@@ -2,6 +2,7 @@
 using Business.Managers.Categories;
 using Business.Managers.Orders;
 using Business.Managers.Products;
+using Business.Managers.Roles;
 using Business.Managers.Users;
 using DataAccess.Contexts;
 using DataAccess.Entities;
@@ -45,6 +46,8 @@ namespace Presentation
             builder.Services.AddScoped<IBrandManager, BrandManager>();
             builder.Services.AddScoped<IAddressManager, AddressManager>();
             builder.Services.AddScoped<IUserAddressRepository, UserAddressRepository>();
+            builder.Services.AddScoped<IUserManager, UserManager>();
+            builder.Services.AddScoped<IRoleManager, RoleManager>();
 
 
             var connectionString = builder.Configuration.GetConnectionString("TechXpress");

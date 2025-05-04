@@ -1,7 +1,9 @@
 ﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using Business.DTOs.Products;
-using DataAccess.Entities;
+using Business.Managers.Roles;
+using Business.Managers.Users;
+using DataAccess.Entities; /////////////////
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,10 +16,10 @@ namespace Presentation.Controllers;
 
 public class AdminController : Controller
 {
-    private readonly UserManager<User> _userManager;
-    private readonly RoleManager<Role> _roleManager;
+    private readonly IUserManager _userManager;
+    private readonly IRoleManager _roleManager;
 
-    public AdminController(UserManager<User> userManager,RoleManager<Role> roleManager)
+    public AdminController(IUserManager userManager,IRoleManager roleManager)
     {
         _userManager = userManager;
         _roleManager = roleManager;
@@ -33,8 +35,8 @@ public class AdminController : Controller
     [HttpGet]
     public async Task<IActionResult> AssignUserRole()
     {
-        var users = _userManager.Users.ToList();
-        var roles = _roleManager.Roles.ToList();
+        var users = _userManager.GetUsers();
+        var roles = _roleManager.GetRoles();
 
         var model = new UserRoleViewModel
         {
@@ -71,7 +73,7 @@ public class AdminController : Controller
     [HttpGet]
     public async Task<IActionResult> ListUsers()
     {
-        var users = _userManager.Users.ToList();
+        var users = _userManager.GetUsers();
         return View(users);
     }
 
@@ -79,7 +81,7 @@ public class AdminController : Controller
     public async Task<IActionResult> ListUserRoles()
     {
         // Use ToListAsync() for async database operations
-        var users = await _userManager.Users.ToListAsync();
+        var users = _userManager.GetUsers();
         var userRolesList = new List<UserRolesViewModel>();
 
         foreach (var user in users)
@@ -94,9 +96,8 @@ public class AdminController : Controller
         }
 
         // Use async version and cache the roles
-        ViewBag.AllRoles = await _roleManager.Roles
-            .Select(role => role.Name)
-            .ToListAsync();
+        ViewBag.AllRoles = _roleManager.GetRoles()
+            .Select(role => role.Name);
 
         return View(userRolesList);
     }

@@ -1,4 +1,5 @@
-﻿using DataAccess.Entities;
+﻿using Business.Managers.Roles;
+using DataAccess.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -9,17 +10,17 @@ namespace Presentation.Controllers;
 
 public class RoleController : Controller
 {
-    private readonly RoleManager<Role> _roleManager;
+    private readonly IRoleManager _roleManager;
 
-    public RoleController(RoleManager<Role> roleManager)
+    public RoleController(IRoleManager roleManager)
     {
         _roleManager = roleManager;
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
     {
-        var roles = await _roleManager.Roles.ToListAsync();
+        var roles = _roleManager.GetRoles();
         return View(roles);
     }
 

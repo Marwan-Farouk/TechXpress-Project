@@ -4,6 +4,7 @@ namespace Business.DTOs.Users;
 
 public class AddressDto
 {
+    public int Id { get; set; }
     public string Country { get; set; }
     public string City { get; set; }
     public string Street { get; set; }
@@ -17,6 +18,7 @@ public static class AddressDtoExtensions
     {
         return new AddressDto
         {
+            Id = address.AddressId,
             Country = address.Country,
             City = address.City,
             Street = address.Street,
@@ -29,6 +31,7 @@ public static class AddressDtoExtensions
     {
         return new UserAddress
         {
+            AddressId = dto.Id,
             Country = dto.Country,
             City = dto.City,
             Street = dto.Street,

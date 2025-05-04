@@ -9,7 +9,6 @@ public interface IAddressManager
     Task DeleteAddress(int userId, int addressId);
     Task<List<AddressDto>> GetAllAddresses();
     Task<List<UserAddress>> GetAddresses(int userId);
-
-
+    Task<List<AddressDto>> GetAddressesByUserId(int id);
 
 }

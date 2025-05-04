@@ -9,14 +9,12 @@ namespace Presentation.Controllers
 {
     public class UserController : Controller
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        private readonly IUserManager _userManager;
         private readonly IAddressManager _addressManager;
 
-        public UserController(UserManager<User> userManager,SignInManager<User> signInManager,IAddressManager addressManager)
+        public UserController(IUserManager userManager,IAddressManager addressManager)
         {
             _userManager = userManager;
-            _signInManager = signInManager;
             _addressManager = addressManager;
         }
 
@@ -42,7 +40,7 @@ namespace Presentation.Controllers
                     PhoneNumber = request.PhoneNumber
                 };
 
-                var result = await _userManager.CreateAsync(user, request.Password);
+                var result = await _userManager.CreateUserAsync(user, request.Password);
 
                 if (result.Succeeded)
                 {
@@ -57,7 +55,7 @@ namespace Presentation.Controllers
                             ApartmentNumber = address.ApartmentNumber
                         });
                     }
-                    await _signInManager.SignInAsync(user, isPersistent: true);
+                    await _userManager.SignInAsync(user, rememberMe: true);
 
                     return returnUrl == null ? RedirectToAction("Index", "Home") : Redirect(returnUrl);
                 } else
@@ -87,7 +85,7 @@ namespace Presentation.Controllers
                     var passValid = await _userManager.CheckPasswordAsync(user, request.Password);
                     if (passValid)
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: request.RememberMe);
+                        await _userManager.SignInAsync(user, rememberMe: request.RememberMe);
                         return returnUrl == null ? RedirectToAction("Index", "Home") : Redirect(returnUrl);
                     }
                 }
@@ -100,7 +98,7 @@ namespace Presentation.Controllers
         {
             if (HttpContext.User.Identity.IsAuthenticated)
             {
-                await _signInManager.SignOutAsync();
+                await _userManager.SignOutAsync();
             }
             return RedirectToAction("Index", "Home");
         }

@@ -9,16 +9,26 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0144a7ca-394c-49d4-bda6-fae20b1a3b16" name="Changes" comment="Use asynchronous method for fetching categories&#10;&#10;Replaced synchronous calls to `_categoryManager.GetAllCategories` with the asynchronous `GetAllCategoriesAsync` in multiple actions within `ProductController`. This improves performance and better aligns with asynchronous programming practices.">
+    <list default="true" id="0144a7ca-394c-49d4-bda6-fae20b1a3b16" name="Changes" comment="Remove AccountController and related Account views&#10;&#10;Deleted `Register` and `Login` functionalities, including the `AccountController` and corresponding Razor views (`Register.cshtml` and `Login.cshtml`). Updated `Home/Index` to remove links to Account actions, reflecting the elimination of account-related features.">
+      <change afterPath="$PROJECT_DIR$/Business/Managers/Roles/IRoleManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Business/Managers/Roles/RoleManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Business/Managers/Users/IUserManager.cs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Business/Managers/Users/UserManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TechXpress/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TechXpress/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Business/Managers/Brand/BrandManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Business/Managers/Brand/BrandManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Business/Managers/Brand/IBrandManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Business/Managers/Brand/IBrandManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/AccountController.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/ProductController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/ProductController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Views/Home/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Home/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Views/Role/Create.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Role/Create.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Views/Role/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Role/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Views/Shared/_AdminLayout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Shared/_AdminLayout.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Business/Business.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Business/Business.csproj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Business/DTOs/Users/AddressDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Business/DTOs/Users/AddressDto.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Business/Managers/Users/AddressManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Business/Managers/UserAddresses/AddressManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Business/Managers/Users/IAddressManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Business/Managers/UserAddresses/IAddressManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/AdminController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/AdminController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/RoleController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/RoleController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/ShoppingCartController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/ShoppingCartController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Program.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Views/Admin/AssignUserRole.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Admin/AssignUserRole.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Views/Admin/EditUser.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Admin/EditUser.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Views/Admin/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Admin/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Views/Admin/ListUserRoles.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Admin/ListUserRoles.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Views/Admin/ListUsers.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Admin/ListUsers.cshtml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +59,7 @@
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d8d9726f3deb1bbf671f5b791e4dc3e0338219a996f439ad2a69024b825c60/UserManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="mock://D:/Coding/DEPI FullStack .NET/Final Project/Program/TechXpress-Project/TechXpress/Business/Managers/Brand/BrandManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Presentation/Controllers/RoleController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/Coding/DEPI FullStack .NET/Final Project/Program/TechXpress-Project/TechXpress/Presentation/Views/Shared/_AdminLayout.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Presentation/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js.map" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="false" />
@@ -111,9 +122,17 @@
       <option name="presentableId" value="Default" />
       <updated>1746380796664</updated>
       <workItem from="1746380805834" duration="445000" />
-      <workItem from="1746389950058" duration="762000" />
+      <workItem from="1746389950058" duration="8105000" />
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Remove AccountController and related Account views&#10;&#10;Deleted `Register` and `Login` functionalities, including the `AccountController` and corresponding Razor views (`Register.cshtml` and `Login.cshtml`). Updated `Home/Index` to remove links to Account actions, reflecting the elimination of account-related features.">
+      <option name="closed" value="true" />
+      <created>1746390931199</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1746390931199</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -123,25 +142,8 @@
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Use asynchronous method for fetching categories&#10;&#10;Replaced synchronous calls to `_categoryManager.GetAllCategories` with the asynchronous `GetAllCategoriesAsync` in multiple actions within `ProductController`. This improves performance and better aligns with asynchronous programming practices." />
-    <option name="LAST_COMMIT_MESSAGE" value="Use asynchronous method for fetching categories&#10;&#10;Replaced synchronous calls to `_categoryManager.GetAllCategories` with the asynchronous `GetAllCategoriesAsync` in multiple actions within `ProductController`. This improves performance and better aligns with asynchronous programming practices." />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="DotNet Breakpoints">
-          <url>file://$PROJECT_DIR$/Presentation/Controllers/ProductController.cs</url>
-          <line>26</line>
-          <properties documentPath="D:\Coding\DEPI FullStack .NET\Final Project\Program\TechXpress-Project\TechXpress\Presentation\Controllers\ProductController.cs" containingFunctionPresentation="Method 'Index'">
-            <startOffsets>
-              <option value="929" />
-            </startOffsets>
-            <endOffsets>
-              <option value="930" />
-            </endOffsets>
-          </properties>
-          <option name="timeStamp" value="10" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Remove AccountController and refactor ProductController.&#10;&#10;Deleted AccountController as part of the cleanup. Updated ProductController to leverage asynchronous methods for better performance. Simplified navigation links in Home/Index view, removing references to the AccountController." />
+    <MESSAGE value="Remove AccountController and related Account views&#10;&#10;Deleted `Register` and `Login` functionalities, including the `AccountController` and corresponding Razor views (`Register.cshtml` and `Login.cshtml`). Updated `Home/Index` to remove links to Account actions, reflecting the elimination of account-related features." />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove AccountController and related Account views&#10;&#10;Deleted `Register` and `Login` functionalities, including the `AccountController` and corresponding Razor views (`Register.cshtml` and `Login.cshtml`). Updated `Home/Index` to remove links to Account actions, reflecting the elimination of account-related features." />
   </component>
 </project>
