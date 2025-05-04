@@ -46,7 +46,6 @@ namespace Presentation.Controllers
 
                 if (result.Succeeded)
                 {
-
                     foreach(var address in request.Addresses)
                     {
                         await _addressManager.AddAddress(user.Id, new AddressDto

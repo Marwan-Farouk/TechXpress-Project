@@ -1,4 +1,5 @@
 ﻿using Business.DTOs.Products;
+using Business.Managers.Brand;
 using Business.Managers.Categories;
 using Business.Managers.Products;
 using DataAccess.Contexts;
@@ -12,13 +13,13 @@ namespace PresentationLayer.Controllers
     {
         private readonly IProductManager _productManager;
         private readonly ICategoryManager _categoryManager;
-        private readonly IBrandRepository _brandRepository;
+        private readonly IBrandManager _brandManager;
 
-        public ProductController(IProductManager productManager, ICategoryManager categoryManager,IBrandRepository brandRepository)
+        public ProductController(IProductManager productManager, ICategoryManager categoryManager,IBrandManager brandManager)
         {
             _productManager = productManager;
             _categoryManager = categoryManager;
-            _brandRepository = brandRepository;
+            _brandManager = brandManager;
         }
 
         [HttpGet]
@@ -42,10 +43,9 @@ namespace PresentationLayer.Controllers
             if (brandId.HasValue)
                 products = products.Where(p => p.BrandId == brandId.Value).ToList();
 
-            // 🔥 Critical fix: Properly await all async calls
-            ViewBag.Categories = await _categoryManager.GetAllCategoriesAsync();
-            ViewBag.Brands = await _brandRepository.GetAllAsync(); // Ensure this exists
 
+            ViewBag.Categories = _categoryManager.GetAllCategories();
+            ViewBag.Brands = _brandManager.GetAll();
             return View(products);
         }
 
@@ -68,9 +68,10 @@ namespace PresentationLayer.Controllers
         [HttpGet]
         public async Task<IActionResult> Create()
         {
-            // 🔥 Critical fix: Add await here
-            ViewBag.Categories = await _categoryManager.GetAllCategoriesAsync();
-            ViewBag.Brands = await _brandRepository.GetAllAsync();
+
+            ViewBag.Categories = _categoryManager.GetAllCategories();
+            ViewBag.Brands = _brandManager.GetAll();
+
             return View();
         }
 
@@ -81,6 +82,10 @@ namespace PresentationLayer.Controllers
         {
             if (!ModelState.IsValid)
             {
+            
+                ViewBag.Categories = _categoryManager.GetAllCategories();
+                ViewBag.Brands = _brandManager.GetAll();
+
                 ViewBag.Categories = _categoryManager.GetAllCategoriesAsync();
                 return View(model);
                          }
@@ -119,8 +124,7 @@ namespace PresentationLayer.Controllers
             };
 
             ViewBag.Categories = _categoryManager.GetAllCategories();
-            ViewBag.Brands = _brandRepository.GetAll();
-
+            ViewBag.Brands = _brandManager.GetAll();
 
             return View(editProductDto);
         }
@@ -132,7 +136,12 @@ namespace PresentationLayer.Controllers
         {
             if (!ModelState.IsValid)
             {
+            
+                ViewBag.Categories = _categoryManager.GetAllCategories();
+                ViewBag.Brands = _brandManager.GetAll();
+
                 ViewBag.Categories = _categoryManager.GetAllCategoriesAsync();
+
                 return View(model);
             }
 
