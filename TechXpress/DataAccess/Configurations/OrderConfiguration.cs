@@ -46,7 +46,7 @@ namespace DataAccess.Configurations
             builder
                 .HasOne(o => o.Address)
                 .WithMany(ua => ua.Orders)
-                .HasForeignKey(o => new { o.AddressId, o.UserId });
+                .HasForeignKey(o => o.AddressId);
             // Payment (one) ===> Order (one)
             builder
                 .HasOne(o => o.Payment)

@@ -102,9 +102,9 @@ namespace DataAccess.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("AddressId");
 
-                    b.HasIndex("AddressId", "UserId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Orders", (string)null);
                 });
@@ -327,11 +327,11 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataAccess.Entities.UserAddress", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("AddressId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("AddressId")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AddressId"));
 
                     b.Property<string>("ApartmentNumber")
                         .IsRequired()
@@ -353,7 +353,12 @@ namespace DataAccess.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId", "AddressId");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AddressId");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("UserAddresses", (string)null);
                 });
@@ -463,16 +468,16 @@ namespace DataAccess.Migrations
 
             modelBuilder.Entity("DataAccess.Entities.Order", b =>
                 {
+                    b.HasOne("DataAccess.Entities.UserAddress", "Address")
+                        .WithMany("Orders")
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DataAccess.Entities.User", "User")
                         .WithMany("Orders")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("DataAccess.Entities.UserAddress", "Address")
-                        .WithMany("Orders")
-                        .HasForeignKey("AddressId", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Address");
