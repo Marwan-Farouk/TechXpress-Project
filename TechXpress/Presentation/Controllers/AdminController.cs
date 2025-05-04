@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Presentation.ActionRequests.Admin;
 using Presentation.Models;
 using Presentation.ViewModel.Admin;
 
@@ -140,4 +141,61 @@ public class AdminController : Controller
 
         return RedirectToAction(nameof(ListUserRoles));
     }
+    [HttpGet]
+    public async Task<IActionResult> EditUser(int id)
+    {
+        // جلب بيانات المستخدم
+        var user = await _userManager.FindByIdAsync(id.ToString());
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        var model = new EditUserViewModel
+        {
+            Id = user.Id,
+            FirstName = user.FirstName,
+            LastName = user.LastName,
+            Email = user.Email,
+            BirthDate = user.BirthDate
+        };
+
+        return View(model);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public async Task<IActionResult> EditUser(UpdateUserActionRequest request)
+    {
+        if (ModelState.IsValid)
+        {
+            var user = await _userManager.FindByIdAsync(request.Id.ToString());
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            // تحديث بيانات المستخدم
+            user.FirstName = request.FirstName;
+            user.LastName = request.LastName;
+            user.Email = request.Email;
+            user.BirthDate = request.BirthDate;
+
+            var result = await _userManager.UpdateAsync(user);
+
+            if (result.Succeeded)
+            {
+                TempData["SuccessMessage"] = "User data updated successfully!";
+                return RedirectToAction(nameof(ListUsers));
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(error.Code, error.Description);
+            }
+        }
+
+        return View(request);
+    }
+    
 }
