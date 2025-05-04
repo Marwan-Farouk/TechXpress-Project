@@ -1,3 +1,4 @@
+﻿using Business.Managers.Brand;
 using Business.Managers.Categories;
 using Business.Managers.Orders;
 using Business.Managers.Products;
@@ -22,6 +23,18 @@ namespace Presentation
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+            // ✅ إضافة دعم الكاش المؤقت للجلسات
+            builder.Services.AddDistributedMemoryCache();
+
+            // ✅ تفعيل الجلسة
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(30); // مدة الجلسة
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
+            // ✅ إضافة الخدمات الخاصة بالبزنس
             builder.Services.AddScoped<IProductManager, ProductManager>();
             builder.Services.AddScoped<IProductRepository, ProductRepository>();
             builder.Services.AddScoped<ICategoryManager, CategoryManager>();
@@ -29,6 +42,7 @@ namespace Presentation
             builder.Services.AddScoped<IOrderRepository, OrderRepository>();
             builder.Services.AddScoped<IBrandRepository, BrandRepository>();
             builder.Services.AddScoped<IOrderManager, OrderManager>();
+            builder.Services.AddScoped<IBrandManager, BrandManager>();
             builder.Services.AddScoped<IAddressManager, AddressManager>();
             builder.Services.AddScoped<IUserAddressRepository, UserAddressRepository>();
 
@@ -38,13 +52,9 @@ namespace Presentation
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
             {
                 options
-                .UseSqlServer(connectionString)
-                .LogTo(Console.WriteLine, LogLevel.Information);
+                    .UseSqlServer(connectionString)
+                    .LogTo(Console.WriteLine, LogLevel.Information);
             });
-            //builder.Services.AddSession(options =>
-            //{
-            //    options.Cookie.HttpOnly = true;
-            //});
 
             builder.Services.AddIdentity<User, Role>(options =>
             {
@@ -66,7 +76,6 @@ namespace Presentation
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -79,7 +88,7 @@ namespace Presentation
 
             app.UseAuthorization();
 
-            //app.UseSession();
+            app.UseAuthorization();
 
             app.MapControllerRoute(
                 name: "default",
