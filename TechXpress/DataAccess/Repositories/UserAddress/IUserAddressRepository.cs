@@ -7,15 +7,16 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories.USERADDRESS
 {
-    interface IUserAddressRepository
+    public interface IUserAddressRepository
     {
-        UserAddress GetById(int userId, int addressId);
-        List<UserAddress> GetAll();
-        void Add(UserAddress userAddress);
-        void Update(UserAddress userAddress);
-        void Delete(int userId, int addressId);
-        List<UserAddress> GetAddressesByUserId(int userId);
-        List<UserAddress> SearchByCity(string city);
-        List<Order> GetOrdersByAddress(int userId, int addressId);
+        Task<UserAddress?> GetById(int userId, int addressId);
+        Task<List<UserAddress>> GetAll();
+        Task Add(UserAddress userAddress);
+        Task Update(UserAddress userAddress);
+        Task Delete(int userId, int addressId);
+        Task<List<UserAddress>> GetAddressesByUserId(int userId);
+        Task<List<UserAddress>> SearchByCity(string city);
+        Task<List<Order>?> GetOrdersByAddress(int userId, int addressId);
+        Task<int> GetMaxId();
     }
 }

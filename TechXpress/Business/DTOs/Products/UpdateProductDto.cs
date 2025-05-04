@@ -14,8 +14,10 @@ namespace Business.DTOs.Products
         public string Description { get; set; }
         public decimal Price { get; set; }
         public int Stock { get; set; }
-        public IFormFile? Image { get; set; }
+        // public IFormFile? Image { get; set; }
         public int BrandId { get; set; }
         public int CategoryId { get; set; }
+        // This is the string path/name of the image file, not the actual file
+        public string Image { get; set; }
     }
 }

@@ -1,0 +1,26 @@
+﻿@using Presentation.ActionRequests.User
+@model CreateRoleActionRequest
+
+
+<h1>Create Role</h1>
+
+<form asp-action="Create" method="post">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="Name" class="control-label"></label>
+        <input asp-for="Name" class="form-control"/>
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Create" class="btn btn-outline-primary" />
+    </div>
+
+    <div>
+        <a asp-action="Index">Back To Role List</a>
+    </div>
+</form>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}

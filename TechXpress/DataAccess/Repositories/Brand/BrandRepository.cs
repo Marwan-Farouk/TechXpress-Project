@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace DataAccess.Repositories.BRAND
@@ -18,55 +17,64 @@ namespace DataAccess.Repositories.BRAND
             _context = context;
         }
 
-        public Brand? GetById(int id)
+        public async Task<Brand?> GetByIdAsync(int id)
         {
-            return _context.Brands.FirstOrDefault(b => b.Id == id);
+            return await _context.Brands
+                .FirstOrDefaultAsync(b => b.Id == id);
         }
 
-        public List<Brand> GetAll()
+        public async Task<IEnumerable<Brand>> GetAllAsync()
         {
-            return _context.Brands.ToList();
+            return await _context.Brands
+                .ToListAsync();
         }
 
-        public void Add(Brand brand)
+        public async Task AddAsync(Brand brand)
         {
             if (brand == null)
             {
                 throw new ArgumentNullException(nameof(brand));
             }
-            _context.Brands.Add(brand);
-            _context.SaveChanges();
+
+            await _context.Brands.AddAsync(brand);
+            await _context.SaveChangesAsync();
         }
-        public void Update(Brand brand)
+
+        public async Task UpdateAsync(Brand brand)
         {
             if (brand == null)
             {
                 throw new ArgumentNullException(nameof(brand));
             }
+
             _context.Brands.Update(brand);
-            _context.SaveChanges();
-        }  
-        
-        public void Delete(int id)
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(int id)
         {
-        var brand = _context.Brands.FirstOrDefault(b => b.Id == id);
+            var brand = await _context.Brands
+                .FirstOrDefaultAsync(b => b.Id == id);
+
             if (brand != null)
             {
                 _context.Brands.Remove(brand);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
         }
-        public List<Brand> SearchByName(string name)
+
+        public async Task<IEnumerable<Brand>> SearchByNameAsync(string name)
         {
-            return _context.Brands.Where(b => b.Name.Contains(name)).ToList();
+            return await _context.Brands
+                .Where(b => b.Name.Contains(name))
+                .ToListAsync();
         }
 
-        public List<Product> GetProductsByBrandId(int brandId)
+        public async Task<IEnumerable<Product>> GetProductsByBrandIdAsync(int brandId)
         {
-            return _context.Products
+            return await _context.Products
                 .Where(p => p.BrandId == brandId)
-                .ToList();
-        
+                .ToListAsync();
         }
     }
 }

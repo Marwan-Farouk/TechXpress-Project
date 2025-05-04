@@ -1,4 +1,4 @@
-﻿using DataAccess.Entities;
+using DataAccess.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,16 +9,15 @@ namespace DataAccess.Repositories.USER
 {
     interface IUserRepository
     {
-        User GetById(int id);
-        List<User> GetAll();
-        void Add(User user);
-        void Update(User user);
-        void Delete(int id);
-        List<User> SearchByEmail(string email);
-        List<User> SearchByName(string name);
-        List<UserAddress> GetUserAddresses(int userId);
-        List<UserPhone> GetUserPhones(int userId);
-        List<Order> GetUserOrders(int userId);
-        List<Payment> GetUserPayments(int Id);
+        Task<User?> GetByIdAsync(int id);
+        Task<List<User>> GetAllAsync();
+        Task AddAsync(User user);
+        Task UpdateAsync(User user);
+        Task DeleteAsync(int id);
+        Task<List<User>> SearchByEmailAsync(string email);
+        Task<List<User>> SearchByNameAsync(string name);
+        Task<List<UserAddress>> GetUserAddressesAsync(int userId);
+        Task<List<Order>> GetUserOrdersAsync(int userId);
+        Task<List<Payment>> GetUserPaymentsAsync(int Id);
     }
 }

@@ -1,0 +1,42 @@
+﻿@using Presentation.ViewModel.Admin
+@model List<UserRolesViewModel>
+
+@{
+    ViewData["Title"] = "Users and Their Roles";
+}
+
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>Username</th>
+            <th>Current Roles</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@string.Join(", ", user.Roles)</td>
+                <td>
+                    <form asp-action="EditUserRoles" method="post">
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" name="userId" value="@user.UserId" />
+
+                        <div class="form-group">
+                            <select name="roles" multiple class="form-control">
+                                @foreach (var role in ViewBag.AllRoles as List<string> ?? new List<string>())
+                                {
+                                    <option value="@role" selected="@(user.Roles.Contains(role))">@role</option>
+                                }
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary btn-sm">Update Roles</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

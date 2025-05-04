@@ -2,19 +2,20 @@
 
 <h2>Checkout</h2>
 
-<form asp-action="PlaceOrder" method="post">
+<form asp-action="Checkout" asp-controller="ShoppingCart" method="post">
     <div class="row">
         <div class="col-md-8">
             <h4>Shipping Address</h4>
 
             <div class="form-group">
                 <label>Select Address:</label>
-                <select asp-for="Cart.AddressId" class="form-control">
+                <select id="addressSelect" class="form-control" onchange="updateAddressId()">
                     @foreach (var address in Model.UserAddresses)
                     {
                         <option value="@address.Id">@address.AddressLine, @address.City, @address.Country</option>
                     }
                 </select>
+                <input type="hidden" id="addressId" name="addressId" value="@(Model.UserAddresses.FirstOrDefault()?.Id ?? 0)" />
             </div>
 
             <h4>Order Summary</h4>
@@ -53,3 +54,15 @@
         <a asp-action="Index" class="btn btn-secondary">Back to Cart</a>
     </div>
 </form>
+    
+    <script>
+    function updateAddressId() {
+        var selectedAddress = document.getElementById('addressSelect').value;
+        document.getElementById('addressId').value = selectedAddress;
+    }
+    
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', function() {
+        updateAddressId();
+    });
+    </script>

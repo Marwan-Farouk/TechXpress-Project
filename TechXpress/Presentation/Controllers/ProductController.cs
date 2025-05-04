@@ -22,30 +22,27 @@ namespace PresentationLayer.Controllers
             _brandManager = brandManager;
         }
 
-        // 📌 List all products
         [HttpGet]
         public async Task<IActionResult> Index(string search, int? categoryId, int? brandId)
         {
+            // Get products (already properly awaited)
             var products = await _productManager.GetAllProductsAsync();
 
-            // 🔍 Apply search filter
+            // Apply filters (sync operations are fine here)
             if (!string.IsNullOrEmpty(search))
             {
-                products = products.Where(p => p.Name.Contains(search, StringComparison.OrdinalIgnoreCase) ||
-                                               p.Description.Contains(search, StringComparison.OrdinalIgnoreCase)).ToList();
+                products = products.Where(p =>
+                    p.Name.Contains(search, StringComparison.OrdinalIgnoreCase) ||
+                    p.Description.Contains(search, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
             }
 
-            // 🔍 Apply category filter
             if (categoryId.HasValue)
-            {
                 products = products.Where(p => p.CategoryId == categoryId.Value).ToList();
-            }
 
-            // 🔍 Apply brand filter
             if (brandId.HasValue)
-            {
                 products = products.Where(p => p.BrandId == brandId.Value).ToList();
-            }
+
 
             ViewBag.Categories = _categoryManager.GetAllCategories();
             ViewBag.Brands = _brandManager.GetAll();
@@ -67,11 +64,14 @@ namespace PresentationLayer.Controllers
         }
 
         // 📌 Show create form
+        
         [HttpGet]
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+
             ViewBag.Categories = _categoryManager.GetAllCategories();
             ViewBag.Brands = _brandManager.GetAll();
+
             return View();
         }
 
@@ -82,10 +82,13 @@ namespace PresentationLayer.Controllers
         {
             if (!ModelState.IsValid)
             {
+            
                 ViewBag.Categories = _categoryManager.GetAllCategories();
                 ViewBag.Brands = _brandManager.GetAll();
+
+                ViewBag.Categories = _categoryManager.GetAllCategoriesAsync();
                 return View(model);
-            }
+                         }
 
             await _productManager.CreateProductAsync(new CreateProductDto
             {
@@ -122,6 +125,7 @@ namespace PresentationLayer.Controllers
 
             ViewBag.Categories = _categoryManager.GetAllCategories();
             ViewBag.Brands = _brandManager.GetAll();
+
             return View(editProductDto);
         }
 
@@ -132,8 +136,12 @@ namespace PresentationLayer.Controllers
         {
             if (!ModelState.IsValid)
             {
+            
                 ViewBag.Categories = _categoryManager.GetAllCategories();
                 ViewBag.Brands = _brandManager.GetAll();
+
+                ViewBag.Categories = _categoryManager.GetAllCategoriesAsync();
+
                 return View(model);
             }
 

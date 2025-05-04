@@ -1,5 +1,6 @@
-﻿using DataAccess.Contexts;
+using DataAccess.Contexts;
 using DataAccess.Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace DataAccess.Repositories.USER
 {
-    class UserRepository:IUserRepository
+    class UserRepository : IUserRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -16,56 +17,63 @@ namespace DataAccess.Repositories.USER
         {
             _context = context;
         }
-        public User? GetById(int id)
+
+        public async Task<User?> GetByIdAsync(int id)
         {
-            return _context.Users.FirstOrDefault(x => x.Id == id);
+            return await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
         }
-        public List<User> GetAll() 
+
+        public async Task<List<User>> GetAllAsync()
         {
-            return _context.Users.ToList();
+            return await _context.Users.ToListAsync();
         }
-        public void Add(User user)
+
+        public async Task AddAsync(User user)
         {
-            _context.Users.Add(user);
-            _context.SaveChanges();
-        }   
-        public void Update(User user)
+            await _context.Users.AddAsync(user);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(User user)
         {
             _context.Users.Update(user);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
-        public void Delete(int id)
-        {
-            var userToDelete = _context.Users.FirstOrDefault(x => x.Id == id);
-            if(userToDelete is not null)
-            {
 
-            _context.Users.Remove(userToDelete);
-            _context.SaveChanges();
+        public async Task DeleteAsync(int id)
+        {
+            var userToDelete = await _context.Users.FirstOrDefaultAsync(x => x.Id == id);
+            if (userToDelete is not null)
+            {
+                _context.Users.Remove(userToDelete);
+                await _context.SaveChangesAsync();
             }
         }
-        public List<User> SearchByEmail(string email)
+
+        public async Task<List<User>> SearchByEmailAsync(string email)
         {
-            return _context.Users.Where(x => x.Email.Contains(email)).ToList();
+            return await _context.Users.Where(x => x.Email.Contains(email)).ToListAsync();
         }
 
-        public List<User> SearchByName(string name)
+        public async Task<List<User>> SearchByNameAsync(string name)
         {
-            return _context.Users.Where(x => (x.FirstName+" "+x.LastName).Contains(name)).ToList();
+            return await _context.Users.Where(x => (x.FirstName + " " + x.LastName).Contains(name)).ToListAsync();
         }
 
-        public List<UserAddress> GetUserAddresses(int userId)
+        public async Task<List<UserAddress>> GetUserAddressesAsync(int userId)
         {
-            return _context.UserAddresses.Where(x => x.UserId == userId).ToList();
-
+            return await _context.UserAddresses.Where(x => x.UserId == userId).ToListAsync();
         }
 
-        public List<UserPhone> GetUserPhones(int userId)
+
+        public async Task<List<Order>> GetUserOrdersAsync(int userId)
         {
-            return _context.UserPhones.Where(x => x.UserId == userId).ToList();
+            return await _context.Orders.Where(x => x.UserId == userId).ToListAsync();
         }
 
-        public List<Order> GetUserOrders(int userId) => _context.Orders.Where(x => x.UserId == userId).ToList();
-        public List<Payment> GetUserPayments(int Id) => _context.Payments.Where(x => x.Id == Id).ToList();
+        public async Task<List<Payment>> GetUserPaymentsAsync(int Id)
+        {
+            return await _context.Payments.Where(x => x.Id == Id).ToListAsync();
+        }
     }
 }

@@ -1,0 +1,180 @@
+@using Presentation.ActionRequests.User
+@model RegisterActionRequest
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="text-center mb-0">Create Account</h3>
+                </div>
+                <div class="card-body">
+                    <form method="post" asp-controller="User" asp-action="Register">
+                        <div class="text-danger" asp-validation-summary="All"></div>
+                        <!-- Personal Information Section -->
+                        <div class="section mb-4">
+                            <h5 class="mb-3 text-primary">Personal Information</h5>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label asp-for="FirstName" class="form-label">First Name</label>
+                                    <input asp-for="FirstName" class="form-control" >
+                                    <span class="text-danger" asp-validation-for="FirstName"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="LastName" class="form-label">Last Name</label>
+                                    <input asp-for="LastName" class="form-control" >
+                                    <span class="text-danger" asp-validation-for="LastName"></span>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label asp-for="BirthDate" class="form-label">Birth Date</label>
+                                <input asp-for="BirthDate" type="date" class="form-control" >
+                                <span class="text-danger" asp-validation-for="BirthDate"></span>
+                            </div>
+                        </div>
+
+                        <!-- Contact Information Section -->
+                        <div class="section mb-4">
+                            <h5 class="mb-3 text-primary">Contact Information</h5>
+                            <div class="mb-3">
+                                <label asp-for="Email" class="form-label">Email</label>
+                                <input asp-for="Email" type="email" class="form-control" >
+                                <span class="text-danger" asp-validation-for="Email"></span>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label asp-for="PhoneNumber" class="form-label">Phone Number</label>
+                                    <input asp-for="PhoneNumber" type="tel" class="form-control" >
+                                    <span class="text-danger" asp-validation-for="PhoneNumber"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="PhoneNumberConfirm" class="form-label">Confirm Phone Number</label>
+                                    <input asp-for="PhoneNumberConfirm" type="tel" class="form-control" >
+                                    <span class="text-danger" asp-validation-for="PhoneNumberConfirm"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Security Section -->
+                        <div class="section mb-4">
+                            <h5 class="mb-3 text-primary">Security</h5>
+                            <div class="row mb-3">
+                                <div class="col-md-6">
+                                    <label asp-for="Password" class="form-label">Password</label>
+                                    <input asp-for="Password" type="password" class="form-control" >
+                                    <span class="text-danger" asp-validation-for="Password"></span>
+                                </div>
+                                <div class="col-md-6">
+                                    <label asp-for="ConfirmPassword" class="form-label">Confirm Password</label>
+                                    <input asp-for="ConfirmPassword" type="password" class="form-control">
+                                    <span class="text-danger" asp-validation-for="ConfirmPassword"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Address Section -->
+                        <div class="section mb-4">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h5 class="mb-0 text-primary">Address Information</h5>
+                                <button type="button" class="btn btn-outline-primary btn-sm" onclick="addAddress()">
+                                    <i class="bi bi-plus-lg"></i> Add Address
+                                </button>
+                            </div>
+                            <div id="addresses-container">
+                                <div class="address-form" data-address-index="0">
+                                    <div class="row mb-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label">Country</label>
+                                            <input name="Addresses[0].Country" class="form-control" >
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label">City</label>
+                                            <input name="Addresses[0].City" class="form-control" >
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-md-4">
+                                            <label class="form-label">Street</label>
+                                            <input name="Addresses[0].Street" class="form-control" >
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">Building No.</label>
+                                            <input name="Addresses[0].BuildingNumber" class="form-control" >
+                                        </div>
+                                        <div class="col-md-4">
+                                            <label class="form-label">Apartment No.</label>
+                                            <input name="Addresses[0].ApartmentNumber" class="form-control" >
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary px-5">Create Account</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script>
+        let addressIndex = 0;
+
+        function addAddress() {
+            addressIndex++;
+            const container = document.getElementById('addresses-container');
+            const newAddress = document.createElement('div');
+            newAddress.className = 'address-form mt-3 pt-3 border-top';
+            newAddress.setAttribute('data-address-index', addressIndex);
+
+            newAddress.innerHTML = `
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="mb-0">Additional Address</h6>
+                    <button type="button" class="btn btn-outline-danger btn-sm" onclick="removeAddress(${addressIndex})">
+                        <i class="bi bi-trash"></i> Remove
+                    </button>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label class="form-label">Country</label>
+                        <input name="Addresses[${addressIndex}].Country" class="form-control" >
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label">City</label>
+                        <input name="Addresses[${addressIndex}].City" class="form-control" >
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-4">
+                        <label class="form-label">Street</label>
+                        <input name="Addresses[${addressIndex}].Street" class="form-control" >
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Building No.</label>
+                        <input name="Addresses[${addressIndex}].BuildingNumber" class="form-control" >
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label">Apartment No.</label>
+                        <input name="Addresses[${addressIndex}].ApartmentNumber" class="form-control" >
+                    </div>
+                </div>
+            `;
+
+            container.appendChild(newAddress);
+        }
+
+        function removeAddress(index) {
+            const addressToRemove = document.querySelector(`[data-address-index="${index}"]`);
+            if (addressToRemove) {
+                addressToRemove.remove();
+            }
+        }
+    </script>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial"/>
+}

@@ -1,5 +1,6 @@
 ﻿@using BestStoreMVC.ViewModels;
 @model CategoryViewModel
+
 @{
     ViewData["Title"] = "New Category";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -8,51 +9,43 @@
 <div class="container my-5">
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card shadow border-0">
-                <div class="card-header bg-primary text-white">
-                    <h3 class="mb-0 d-flex align-items-center">
-                        <i class="fas fa-box me-3"></i>New Category
-                    </h3>
+            <div class="card shadow border-0 rounded-3">
+                <div class="card-header bg-primary text-white d-flex align-items-center">
+                    <i class="fas fa-box fa-lg me-2"></i>
+                    <h4 class="mb-0">New Category</h4>
                 </div>
-                <div class="card-body">
+                <div class="card-body p-4">
                     <form method="post" enctype="multipart/form-data">
-                        <div class="mb-4">
-                            <label asp-for="Name" class="form-label d-flex justify-content-between">
-                                <span class="d-flex align-items-center">
-                                    <i class="fas fa-tag me-2 text-primary"></i>Category Name
-                                </span>
-                                <span asp-validation-for="Name" class="text-danger small"></span>
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label fw-medium">
+                                <i class="fas fa-tag text-primary me-1"></i>Category Name
                             </label>
-                            <input asp-for="Name" class="form-control form-control-lg rounded-pill border-2">
+                            <input asp-for="Name" class="form-control form-control-lg" />
+                            <span asp-validation-for="Name" class="text-danger small d-block mt-1"></span>
                         </div>
 
-                        <div class="mb-4">
-                            <label asp-for="Description" class="form-label d-flex justify-content-between">
-                                <span class="d-flex align-items-center">
-                                    <i class="fas fa-align-left me-2 text-primary"></i>Description
-                                </span>
-                                <span asp-validation-for="Description" class="text-danger small"></span>
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label fw-medium">
+                                <i class="fas fa-align-left text-primary me-1"></i>Description
                             </label>
-                            <textarea asp-for="Description" class="form-control rounded-3" rows="4"></textarea>
+                            <textarea asp-for="Description" class="form-control" rows="4"></textarea>
+                            <span asp-validation-for="Description" class="text-danger small d-block mt-1"></span>
                         </div>
 
-                        <div class="mb-4">
-                            <label asp-for="Stock" class="form-label d-flex justify-content-between">
-                                <span class="d-flex align-items-center">
-                                    <i class="fas fa-boxes me-2 text-primary"></i>Stock Quantity
-                                </span>
-                                <span asp-validation-for="Stock" class="text-danger small"></span>
+                        <div class="mb-3">
+                            <label asp-for="Stock" class="form-label fw-medium">
+                                <i class="fas fa-boxes text-primary me-1"></i>Stock Quantity
                             </label>
-                            <input asp-for="Stock" class="form-control form-control-lg rounded-pill border-2">
+                            <input asp-for="Stock" class="form-control form-control-lg" />
+                            <span asp-validation-for="Stock" class="text-danger small d-block mt-1"></span>
                         </div>
 
-                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-5">
-                            <a asp-controller="Categores" asp-action="Index"
-                               class="btn btn-lg btn-outline-secondary rounded-pill me-md-3">
-                                <i class="fas fa-arrow-left me-2"></i>Cancel
+                        <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-4">
+                            <a asp-controller="Categories" asp-action="Index" class="btn btn-outline-secondary px-4 me-md-2">
+                                <i class="fas fa-arrow-left me-1"></i> Cancel
                             </a>
-                            <button type="submit" class="btn btn-lg btn-primary rounded-pill">
-                                <i class="fas fa-save me-2"></i>Create Category
+                            <button type="submit" class="btn btn-primary px-4">
+                                <i class="fas fa-plus-circle me-1"></i> Create Category
                             </button>
                         </div>
                     </form>
@@ -61,3 +54,8 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+}
