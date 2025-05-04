@@ -55,7 +55,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="main" />
+        <entry key="$PROJECT_DIR$/.." value="yousef_branch" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -103,7 +103,7 @@
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;marwan-shopping-cart&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
@@ -310,7 +310,7 @@
           <properties exception="System.Threading.ThreadAbortException" breakIfHandledByOtherCode="false" displayValue="System.Threading.ThreadAbortException" />
           <option name="timeStamp" value="3" />
         </breakpoint>
-        
+
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
           <url>file://$PROJECT_DIR$/Presentation/Controllers/ShoppingCartController.cs</url>
           <line>113</line>
@@ -351,6 +351,10 @@
           <option name="timeStamp" value="17" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Presentation/Views/Home/Index.cshtml</url>
+          <line>70</line>
+          <properties isMultiMethodBreakpoint="true">
+            <option name="multiMethodBreakpoint" value="true" />
           <url>file://$PROJECT_DIR$/Presentation/Controllers/ShoppingCartController.cs</url>
           <line>137</line>
           <properties documentPath="D:\Coding\DEPI FullStack .NET\Final Project\Program\TechXpress-Project\TechXpress\Presentation\Controllers\ShoppingCartController.cs" containingFunctionPresentation="Method 'Checkout'">
@@ -361,6 +365,7 @@
               <option value="4983" />
             </endOffsets>
           </properties>
+          <option name="timeStamp" value="5" />
           <option name="timeStamp" value="18" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="DotNet Breakpoints">

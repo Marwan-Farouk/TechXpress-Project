@@ -118,8 +118,9 @@ namespace PresentationLayer.Controllers
                 ExistingImage = product.Image
             };
 
-            ViewBag.Categories = _categoryManager.GetAllCategories();
-            ViewBag.Brands = _brandRepository.GetAll();
+            ViewBag.Categories = await
+                _categoryManager.GetAllCategoriesAsync();
+            ViewBag.Brands = await _brandRepository.GetAllAsync();
 
 
             return View(editProductDto);
