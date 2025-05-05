@@ -1,11 +1,12 @@
-﻿using BestStoreMVC.ViewModels;
-using Business.DTOs.Categories;
+﻿using Business.DTOs.Categories;
 using Business.Managers.Categories;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Presentation.ViewModel.Category;
+using BestStoreMVC.ViewModels;
 
 namespace BestStoreMVC.Controllers
 {
@@ -145,6 +146,47 @@ namespace BestStoreMVC.Controllers
         {
             await _categoryManager.DeleteCategoryAsync(id);
             return RedirectToAction(nameof(Index));
+        }
+        [HttpGet]
+        public async Task<IActionResult> ShopByCategory(string? searchString, string? stockFilter)
+        {
+            var allCategories = await _categoryManager.GetAllCategoriesAsync();
+
+            // فلترة بالاسم
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                allCategories = allCategories
+                    .Where(c => c.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+
+            // فلترة بالمخزون
+            if (!string.IsNullOrEmpty(stockFilter))
+            {
+                switch (stockFilter)
+                {
+                    case "inStock":
+                        allCategories = allCategories.Where(c => c.Stock > 0).ToList();
+                        break;
+                    case "outOfStock":
+                        allCategories = allCategories.Where(c => c.Stock == 0).ToList();
+                        break;
+                }
+            }
+
+            // تحويل لـ ViewModel
+            var categories = allCategories.Select(c => new CategoryViewModel
+            {
+                Id = c.Id,
+                Name = c.Name,
+                Description = c.Description,
+                Stock = c.Stock
+            }).ToList();
+
+            ViewData["CurrentFilter"] = searchString;
+            ViewData["StockFilter"] = stockFilter;
+
+            return View(categories);
         }
     }
 }

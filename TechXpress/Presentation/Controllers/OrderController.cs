@@ -38,5 +38,32 @@ namespace Presentation.Controllers
 
             return View(orderViewModels);
         }
+        [Authorize(Roles = "Admin, Customer")]
+        public async Task<IActionResult> OrderDetails(int id)
+        {
+            var order = await _orderManager.GetOrderByIdAsync(id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            var orderViewModel = new OrderViewModel
+            {
+                Id = order.Id,
+                OrderDate = order.OrderDate,
+                TotalAmount = order.TotalAmount,
+                Status = order.Status,
+                OrderItems = order.OrderItems.Select(item => new OrderDetailsViewModel
+                {
+                    ProductId = item.ProductId,
+                    ProductName = item.ProductName,
+                    Quantity = item.Quantity,
+                    UnitPrice = item.UnitPrice
+                }).ToList()
+            };
+
+            return View(orderViewModel);
+        }
+
     }
 }

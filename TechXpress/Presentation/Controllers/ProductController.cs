@@ -7,6 +7,7 @@ using DataAccess.Repositories.BRAND;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Presentation.ViewModel.Category;
 
 namespace PresentationLayer.Controllers
 {
@@ -72,7 +73,7 @@ namespace PresentationLayer.Controllers
         {
 
             ViewBag.Categories = await _categoryManager.GetAllCategoriesAsync();
-            ViewBag.Brands = _brandManager.GetAll();
+            ViewBag.Brands = await _brandManager.GetAll();
 
             return View();
         }
@@ -87,7 +88,7 @@ namespace PresentationLayer.Controllers
             {
             
                 ViewBag.Categories = await _categoryManager.GetAllCategoriesAsync();
-                ViewBag.Brands = _brandManager.GetAll();
+                ViewBag.Brands = await _brandManager.GetAll();
 
                 ViewBag.Categories = _categoryManager.GetAllCategoriesAsync();
                 return View(model);
@@ -128,7 +129,7 @@ namespace PresentationLayer.Controllers
             };
 
             ViewBag.Categories = await _categoryManager.GetAllCategoriesAsync();
-            ViewBag.Brands = _brandManager.GetAll();
+            ViewBag.Brands = await _brandManager.GetAll();
 
             return View(editProductDto);
         }
@@ -143,7 +144,7 @@ namespace PresentationLayer.Controllers
             {
             
                 ViewBag.Categories = await _categoryManager.GetAllCategoriesAsync();
-                ViewBag.Brands = _brandManager.GetAll();
+                ViewBag.Brands = await  _brandManager.GetAll();
 
                 ViewBag.Categories = _categoryManager.GetAllCategoriesAsync();
 
@@ -162,6 +163,22 @@ namespace PresentationLayer.Controllers
             });
 
             return RedirectToAction(nameof(Details), new { id = model.Id });
+        }
+        public async Task<IActionResult> CategoryProducts(int categoryId)
+        {
+            var products = await _productManager.GetProductsByCategoryAsync(categoryId);
+            var category = await _categoryManager.GetCategoryByIdAsync(categoryId);
+
+            if (category == null)
+                return NotFound();
+
+            var viewModel = new CategoryProductsViewModel
+            {
+                Category = category,
+                Products = products
+            };
+
+            return View(viewModel);
         }
     }
 }

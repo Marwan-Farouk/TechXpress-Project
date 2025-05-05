@@ -54,5 +54,22 @@ namespace Business.Managers.Products
             var product = await _productRepository.GetByIdAsync(id);
             return product?.Stock ?? 0;
         }
+        public async Task<List<GetAllProductsDto>> GetProductsByCategoryAsync(int categoryId)
+        {
+            var products = await _productRepository.GetAllAsync();
+
+            var result = products.Select(p => new GetAllProductsDto
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Description = p.Description,
+                Price = p.Price,
+                Image = p.Image,
+                CategoryId = p.CategoryId,
+                BrandId = p.BrandId
+            }).ToList();
+
+            return result;
+        }
     }
 }

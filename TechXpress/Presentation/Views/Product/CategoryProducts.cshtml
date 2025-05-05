@@ -1,0 +1,32 @@
+﻿@using Presentation.ViewModel.Category
+@model CategoryProductsViewModel
+
+@{
+    ViewData["Title"] = $"Products in {Model.Category.Name}";
+}
+
+<div class="container py-5">
+    <h2 class="mb-4 text-center">Products in <span class="text-primary">@Model.Category.Name</span></h2>
+
+    <div class="row">
+        @foreach (var product in Model.Products)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm">
+                    <img src="@(string.IsNullOrEmpty(product.Image) ? "/images/no-image.png" : Url.Content($"~/{product.Image}"))"
+                         class="card-img-top" style="object-fit: cover; height: 200px;" />
+                    <div class="card-body text-center">
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="card-text fw-bold text-success">$@product.Price</p>
+
+                        <form asp-action="AddToCart" asp-controller="ShoppingCart" asp-route-id="@product.Id" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-primary add-to-cart-btn">
+                                <i class="fas fa-cart-plus"></i> Add To Cart
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

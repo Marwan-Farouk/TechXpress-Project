@@ -6,6 +6,7 @@ using DataAccess.Repositories.ORDER;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ViewModels;
 using System.Text.Json;
+using System.Linq;
 using System.Threading.Tasks;
 using Business.Managers.Users;
 using DataAccess.Repositories.USERADDRESS;
@@ -17,12 +18,13 @@ namespace Presentation.Controllers
     public class ShoppingCartController : Controller
     {
         private const string CartCookieKey = "ShoppingCart";
-        private readonly IOrderRepository _orderRepository; //================❌❌================//
+        private readonly IOrderRepository _orderRepository;
         private readonly IProductManager _productManager;
         private readonly IUserManager _userManager;
         private readonly IAddressManager _addressManager;
 
-        public ShoppingCartController(IOrderRepository orderRepository, IProductManager productManager,IUserManager userManager,IAddressManager addressManager)
+        public ShoppingCartController(IOrderRepository orderRepository, IProductManager productManager,
+            IUserManager userManager, IAddressManager addressManager)
         {
             _orderRepository = orderRepository;
             _productManager = productManager;
@@ -58,6 +60,7 @@ namespace Presentation.Controllers
             return View("Index", cart);
         }
 
+        // Add to Cart
         [HttpPost]
         [Authorize(Roles = "Admin, Customer")]
         public async Task<IActionResult> AddToCart(int id, int quantity = 1)
@@ -92,6 +95,49 @@ namespace Presentation.Controllers
             return RedirectToAction("Index");
         }
 
+        // Remove from Cart
+        [HttpPost]
+        [Authorize(Roles = "Admin, Customer")]
+        public IActionResult RemoveFromCart(int productId)
+        {
+            var cart = GetCart();
+
+            var itemToRemove = cart.Items.FirstOrDefault(i => i.ProductId == productId);
+            if (itemToRemove != null)
+            {
+                cart.Items.Remove(itemToRemove);
+                cart.TotalAmount = cart.Items.Sum(i => i.SubTotal);
+                SaveCart(cart);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        // Update Quantity
+        [HttpPost]
+        [Authorize(Roles = "Admin, Customer")]
+        public async Task<IActionResult> UpdateQuantity(int productId, int quantity)
+        {
+            var cart = GetCart();
+            var itemToUpdate = cart.Items.FirstOrDefault(i => i.ProductId == productId);
+            if (itemToUpdate != null)
+            {
+                var product = await _productManager.GetProductByIdAsync(productId);
+                if (product == null || product.Stock < quantity)
+                {
+                    return BadRequest("Product not available or insufficient stock.");
+                }
+
+                itemToUpdate.Quantity = quantity;
+                cart.TotalAmount = cart.Items.Sum(i => i.SubTotal);
+                cart.TotalAmount = cart.Items.Sum(i => i.SubTotal);
+                SaveCart(cart);
+            }
+
+            return RedirectToAction("Index");
+        }
+
+        // Checkout
         [HttpGet]
         [Authorize(Roles = "Admin, Customer")]
         public async Task<IActionResult> Checkout()
@@ -100,7 +146,6 @@ namespace Presentation.Controllers
             var user = await _userManager.FindByNameAsync(HttpContext.User.Identity!.Name!);
 
             var userAddresses = await _addressManager.GetAddressesByUserId(user!.Id);
-
             var addressesVm = userAddresses.Select(address => new UserAddressViewModel()
             {
                 Id = address.Id,
@@ -108,9 +153,8 @@ namespace Presentation.Controllers
                 City = address.City,
                 Country = address.Country
             }).ToList();
-            
-            var checkoutVm = new CheckoutViewModel { Cart = cart , UserAddresses = addressesVm };
-            
+
+            var checkoutVm = new CheckoutViewModel { Cart = cart, UserAddresses = addressesVm };
             return View(checkoutVm);
         }
 
@@ -119,30 +163,8 @@ namespace Presentation.Controllers
         public async Task<IActionResult> Checkout(int addressId)
         {
             var cart = GetCart();
-
-            // Store products in dictionary to avoid tracking conflicts
-            var productDict = new Dictionary<int, GetProductByIdDto>();
-            
-            // First check for sufficient stock for all items
-            foreach (var item in cart.Items)
-            {
-                var product = await _productManager.GetProductByIdAsync(item.ProductId);
-                if (product == null)
-                {
-                    return BadRequest($"Product with ID {item.ProductId} not found");
-                }
-                
-                if (product.Stock < item.Quantity)
-                {
-                    return BadRequest($"Insufficient stock for product: {product.Name}");
-                }
-                
-                // Store product for later use
-                productDict[item.ProductId] = product;
-            }
-        
             var user = await _userManager.FindByNameAsync(HttpContext.User.Identity!.Name!);
-        
+
             var order = new Order
             {
                 UserId = user!.Id,
@@ -158,15 +180,13 @@ namespace Presentation.Controllers
                     Discount = 0
                 }).ToList()
             };
-        
+
             await _orderRepository.AddAsync(order);
-        
-            // Deduct stock using the cached product data
+
             foreach (var item in cart.Items)
             {
-                var product = productDict[item.ProductId];
+                var product = await _productManager.GetProductByIdAsync(item.ProductId);
                 var updatedStock = product.Stock - item.Quantity;
-                
                 await _productManager.UpdateProductAsync(new UpdateProductDto
                 {
                     Id = product.Id,
@@ -188,32 +208,7 @@ namespace Presentation.Controllers
         public async Task<IActionResult> OrderConfirmed(int orderId)
         {
             var order = await _orderRepository.GetByIdAsync(orderId);
-            return View("OrderConfirmation",order);
-        }
-
-        [HttpGet]
-        public IActionResult GetCartCount()
-        {
-            var cart = GetCart();
-            return Json(new { count = cart.Items.Sum(i => i.Quantity) });
-        }
-
-        [HttpPost]
-        [Authorize(Roles = "Admin, Customer")]
-        public IActionResult RemoveFromCart(int productId)
-        {
-            var cart = GetCart();
-
-            // Find the item to remove
-            var itemToRemove = cart.Items.FirstOrDefault(i => i.ProductId == productId);
-            if (itemToRemove != null)
-            {
-                cart.Items.Remove(itemToRemove);
-                cart.TotalAmount = cart.Items.Sum(i => i.SubTotal); // Recalculate total amount
-                SaveCart(cart); // Save updated cart
-            }
-
-            return RedirectToAction("Index");
+            return View("OrderConfirmation", order);
         }
     }
 }
