@@ -1,5 +1,6 @@
 ﻿using Business.Managers.Roles;
 using DataAccess.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using Presentation.ActionRequests.User;
 
 namespace Presentation.Controllers;
 
+[Authorize(Roles = "Admin")]
 public class RoleController : Controller
 {
     private readonly IRoleManager _roleManager;

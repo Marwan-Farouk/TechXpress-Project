@@ -69,7 +69,7 @@ namespace Presentation
             {
                 options.ExpireTimeSpan = TimeSpan.FromDays(7);
                 options.LoginPath = "/User/Login";
-                options.AccessDeniedPath = "/Account/AccessDenied";
+                options.AccessDeniedPath = "/User/AccessDenied";
             });
 
 

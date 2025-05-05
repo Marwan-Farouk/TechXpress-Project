@@ -9,26 +9,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0144a7ca-394c-49d4-bda6-fae20b1a3b16" name="Changes" comment="Remove AccountController and related Account views&#10;&#10;Deleted `Register` and `Login` functionalities, including the `AccountController` and corresponding Razor views (`Register.cshtml` and `Login.cshtml`). Updated `Home/Index` to remove links to Account actions, reflecting the elimination of account-related features.">
-      <change afterPath="$PROJECT_DIR$/Business/Managers/Roles/IRoleManager.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Business/Managers/Roles/RoleManager.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Business/Managers/Users/IUserManager.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Business/Managers/Users/UserManager.cs" afterDir="false" />
+    <list default="true" id="0144a7ca-394c-49d4-bda6-fae20b1a3b16" name="Changes" comment="Refactor user and role management to improve modularity&#10;&#10;Replaced direct usage of Identity managers with custom interfaces (`IUserManager`, `IRoleManager`) across controllers and services. Standardized user and role operations while enhancing maintainability. Updated views to use consistent layouts and addressed minor issues in DTO mappings.">
+      <change afterPath="$PROJECT_DIR$/Presentation/Views/User/AccessDenied.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TechXpress/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TechXpress/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Business/Business.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/Business/Business.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Business/DTOs/Users/AddressDto.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Business/DTOs/Users/AddressDto.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Business/Managers/Users/AddressManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Business/Managers/UserAddresses/AddressManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Business/Managers/Users/IAddressManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Business/Managers/UserAddresses/IAddressManager.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Presentation/Controllers/AdminController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/AdminController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/CategoresController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/CategoresController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/OrderController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/OrderController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/ProductController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/ProductController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Presentation/Controllers/RoleController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/RoleController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Presentation/Controllers/ShoppingCartController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/ShoppingCartController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Presentation/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/UserController.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Presentation/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Views/Admin/AssignUserRole.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Admin/AssignUserRole.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Views/Admin/EditUser.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Admin/EditUser.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Views/Admin/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Admin/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Views/Admin/ListUserRoles.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Admin/ListUserRoles.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Views/Admin/ListUsers.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Admin/ListUsers.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Views/Product/Create.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Product/Create.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Views/Product/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Product/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Shared/_Layout.cshtml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -74,21 +68,38 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;.NET Launch Settings Profile.HTTPS.executor&quot;: &quot;Debug&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    ".NET Launch Settings Profile.HTTP.executor": "Debug",
+    ".NET Launch Settings Profile.HTTPS.executor": "Debug",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
-  <component name="RunManager">
+}]]></component>
+  <component name="RunManager" selected=".NET Launch Settings Profile.HTTPS">
+    <configuration name="HTTP" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
+      <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Presentation/Presentation.csproj" />
+      <option name="LAUNCH_PROFILE_TFM" value="net8.0" />
+      <option name="LAUNCH_PROFILE_NAME" value="http" />
+      <option name="USE_EXTERNAL_CONSOLE" value="1" />
+      <option name="USE_MONO" value="0" />
+      <option name="RUNTIME_ARGUMENTS" value="" />
+      <option name="GENERATE_APPLICATIONHOST_CONFIG" value="1" />
+      <option name="SHOW_IIS_EXPRESS_OUTPUT" value="0" />
+      <option name="SEND_DEBUG_REQUEST" value="1" />
+      <option name="ADDITIONAL_IIS_EXPRESS_ARGUMENTS" value="" />
+      <option name="RUNTIME_TYPE" value="coreclr" />
+      <method v="2">
+        <option name="Build" />
+      </method>
+    </configuration>
     <configuration name="HTTPS" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Presentation/Presentation.csproj" />
       <option name="LAUNCH_PROFILE_TFM" value="net8.0" />
@@ -105,6 +116,10 @@
         <option name="Build" />
       </method>
     </configuration>
+    <list>
+      <item itemvalue=".NET Launch Settings Profile.HTTPS" />
+      <item itemvalue=".NET Launch Settings Profile.HTTP" />
+    </list>
   </component>
   <component name="TaskManager">
     <task id="LOCAL-00001" summary="Use asynchronous method for fetching categories&#10;&#10;Replaced synchronous calls to `_categoryManager.GetAllCategories` with the asynchronous `GetAllCategoriesAsync` in multiple actions within `ProductController`. This improves performance and better aligns with asynchronous programming practices.">
@@ -122,7 +137,7 @@
       <option name="presentableId" value="Default" />
       <updated>1746380796664</updated>
       <workItem from="1746380805834" duration="445000" />
-      <workItem from="1746389950058" duration="8105000" />
+      <workItem from="1746389950058" duration="11486000" />
     </task>
     <task id="LOCAL-00002" summary="Remove AccountController and related Account views&#10;&#10;Deleted `Register` and `Login` functionalities, including the `AccountController` and corresponding Razor views (`Register.cshtml` and `Login.cshtml`). Updated `Home/Index` to remove links to Account actions, reflecting the elimination of account-related features.">
       <option name="closed" value="true" />
@@ -132,7 +147,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746390931199</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Refactor user and role management to improve modularity&#10;&#10;Replaced direct usage of Identity managers with custom interfaces (`IUserManager`, `IRoleManager`) across controllers and services. Standardized user and role operations while enhancing maintainability. Updated views to use consistent layouts and addressed minor issues in DTO mappings.">
+      <option name="closed" value="true" />
+      <created>1746398309821</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1746398309821</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -140,10 +163,22 @@
   </component>
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="false" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Use asynchronous method for fetching categories&#10;&#10;Replaced synchronous calls to `_categoryManager.GetAllCategories` with the asynchronous `GetAllCategoriesAsync` in multiple actions within `ProductController`. This improves performance and better aligns with asynchronous programming practices." />
     <MESSAGE value="Remove AccountController and refactor ProductController.&#10;&#10;Deleted AccountController as part of the cleanup. Updated ProductController to leverage asynchronous methods for better performance. Simplified navigation links in Home/Index view, removing references to the AccountController." />
     <MESSAGE value="Remove AccountController and related Account views&#10;&#10;Deleted `Register` and `Login` functionalities, including the `AccountController` and corresponding Razor views (`Register.cshtml` and `Login.cshtml`). Updated `Home/Index` to remove links to Account actions, reflecting the elimination of account-related features." />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove AccountController and related Account views&#10;&#10;Deleted `Register` and `Login` functionalities, including the `AccountController` and corresponding Razor views (`Register.cshtml` and `Login.cshtml`). Updated `Home/Index` to remove links to Account actions, reflecting the elimination of account-related features." />
+    <MESSAGE value="Refactor user and role management to improve modularity&#10;&#10;Replaced direct usage of Identity managers with custom interfaces (`IUserManager`, `IRoleManager`) across controllers and services. Standardized user and role operations while enhancing maintainability. Updated views to use consistent layouts and addressed minor issues in DTO mappings." />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor user and role management to improve modularity&#10;&#10;Replaced direct usage of Identity managers with custom interfaces (`IUserManager`, `IRoleManager`) across controllers and services. Standardized user and role operations while enhancing maintainability. Updated views to use consistent layouts and addressed minor issues in DTO mappings." />
   </component>
 </project>

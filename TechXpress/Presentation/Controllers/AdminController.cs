@@ -3,7 +3,8 @@ using System.Threading.Tasks;
 using Business.DTOs.Products;
 using Business.Managers.Roles;
 using Business.Managers.Users;
-using DataAccess.Entities; /////////////////
+using DataAccess.Entities;
+using Microsoft.AspNetCore.Authorization; /////////////////
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -14,6 +15,8 @@ using Presentation.ViewModel.Admin;
 
 namespace Presentation.Controllers;
 
+
+[Authorize(Roles = "Admin")]
 public class AdminController : Controller
 {
     private readonly IUserManager _userManager;
@@ -198,5 +201,6 @@ public class AdminController : Controller
 
         return View(request);
     }
-    
+
+
 }

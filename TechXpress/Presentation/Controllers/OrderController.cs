@@ -1,9 +1,11 @@
 ﻿using Business.Managers.Orders;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ViewModels;
 
 namespace Presentation.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class OrderController : Controller
     {
         private readonly IOrderManager _orderManager;

@@ -1,6 +1,7 @@
 using Business.DTOs.Users;
 using Business.Managers.Users;
 using DataAccess.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Presentation.ActionRequests.User;
@@ -102,6 +103,10 @@ namespace Presentation.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
-
+        [HttpGet]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
     }
 }

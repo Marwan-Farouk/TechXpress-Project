@@ -9,6 +9,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Business.Managers.Users;
 using DataAccess.Repositories.USERADDRESS;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
 namespace Presentation.Controllers
@@ -50,6 +51,7 @@ namespace Presentation.Controllers
         }
 
         // ======== Actions ========
+        [Authorize(Roles = "Admin, Customer")]
         public IActionResult Index()
         {
             var cart = GetCart();
@@ -57,6 +59,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin, Customer")]
         public async Task<IActionResult> AddToCart(int id, int quantity = 1)
         {
             var cart = GetCart();
@@ -90,6 +93,7 @@ namespace Presentation.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin, Customer")]
         public async Task<IActionResult> Checkout()
         {
             var cart = GetCart();
@@ -111,6 +115,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin, Customer")]
         public async Task<IActionResult> Checkout(int addressId)
         {
             var cart = GetCart();
@@ -178,6 +183,8 @@ namespace Presentation.Controllers
             return RedirectToAction("OrderConfirmed", new { orderId = order.Id });
         }
 
+        [HttpGet]
+        [Authorize(Roles = "Admin, Customer")]
         public async Task<IActionResult> OrderConfirmed(int orderId)
         {
             var order = await _orderRepository.GetByIdAsync(orderId);
@@ -192,6 +199,7 @@ namespace Presentation.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin, Customer")]
         public IActionResult RemoveFromCart(int productId)
         {
             var cart = GetCart();

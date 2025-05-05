@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BestStoreMVC.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CategoresController : Controller
     {
         private readonly ICategoryManager _categoryManager;

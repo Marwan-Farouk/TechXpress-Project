@@ -6,6 +6,7 @@ using DataAccess.Contexts;
 using DataAccess.Repositories.BRAND;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PresentationLayer.Controllers
 {
@@ -58,14 +59,15 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin, Customer")]
         public IActionResult AddToCart(int id)
         {
             return RedirectToAction("AddToCart", "ShoppingCart", new { productId = id });
         }
 
         // 📌 Show create form
-        
         [HttpGet]
+        [Authorize(Roles = "Seller, Admin")]
         public async Task<IActionResult> Create()
         {
 
@@ -77,6 +79,7 @@ namespace PresentationLayer.Controllers
 
         // 📌 Handle create form submission
         [HttpPost]
+        [Authorize(Roles = "Seller, Admin")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateProductRequest model)
         {
@@ -88,7 +91,7 @@ namespace PresentationLayer.Controllers
 
                 ViewBag.Categories = _categoryManager.GetAllCategoriesAsync();
                 return View(model);
-                         }
+            }
 
             await _productManager.CreateProductAsync(new CreateProductDto
             {
@@ -106,6 +109,7 @@ namespace PresentationLayer.Controllers
 
         // 📌 Show edit form
         [HttpGet]
+        [Authorize(Roles = "Seller, Admin")]
         public async Task<IActionResult> Edit(int id)
         {
             var product = await _productManager.GetProductByIdAsync(id);
@@ -132,6 +136,7 @@ namespace PresentationLayer.Controllers
         // 📌 Handle edit form submission
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Seller, Admin")]
         public async Task<IActionResult> Edit(UpdateProductRequest model)
         {
             if (!ModelState.IsValid)

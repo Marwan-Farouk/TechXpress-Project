@@ -38,7 +38,9 @@
                 }
                 else
                 {
+                    <div class="user-nav">
                     <a class="nav-link" asp-action="Login" asp-controller="User">Login</a>
+                    </div>
                 }
             </div>
         </nav>
@@ -77,15 +79,12 @@
             </div>
         </footer>
     @await RenderSectionAsync("Scripts", required: false)
-    @section Scripts {
-        <script>
-            // Update cart count on page load
-            document.addEventListener('DOMContentLoaded', async function() {
-                await updateCartCount();
-            });
-
-        </script>
-    }
+            <script>
+        // Update cart count on page load
+        document.addEventListener('DOMContentLoaded', async function() {
+            await updateCartCount();
+        });
+            </script>
     <script src="~/js/home.js" asp-append-version="true"></script>
 </body>
 </html>
