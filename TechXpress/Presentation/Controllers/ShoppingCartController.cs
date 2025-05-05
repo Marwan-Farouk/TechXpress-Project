@@ -17,7 +17,7 @@ namespace Presentation.Controllers
     public class ShoppingCartController : Controller
     {
         private const string CartCookieKey = "ShoppingCart";
-        private readonly IOrderRepository _orderRepository;
+        private readonly IOrderRepository _orderRepository; //================❌❌================//
         private readonly IProductManager _productManager;
         private readonly IUserManager _userManager;
         private readonly IAddressManager _addressManager;
@@ -97,9 +97,9 @@ namespace Presentation.Controllers
         public async Task<IActionResult> Checkout()
         {
             var cart = GetCart();
-            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity!.Name!);
 
-            var userAddresses = await _addressManager.GetAddressesByUserId(user.Id);
+            var userAddresses = await _addressManager.GetAddressesByUserId(user!.Id);
 
             var addressesVm = userAddresses.Select(address => new UserAddressViewModel()
             {
@@ -141,11 +141,11 @@ namespace Presentation.Controllers
                 productDict[item.ProductId] = product;
             }
         
-            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity.Name);
+            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity!.Name!);
         
             var order = new Order
             {
-                UserId = user.Id,
+                UserId = user!.Id,
                 AddressId = addressId,
                 OrderDate = DateTime.UtcNow,
                 TotalAmount = cart.TotalAmount,

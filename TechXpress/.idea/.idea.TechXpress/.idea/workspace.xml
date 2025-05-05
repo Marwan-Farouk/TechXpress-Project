@@ -9,20 +9,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0144a7ca-394c-49d4-bda6-fae20b1a3b16" name="Changes" comment="Refactor user and role management to improve modularity&#10;&#10;Replaced direct usage of Identity managers with custom interfaces (`IUserManager`, `IRoleManager`) across controllers and services. Standardized user and role operations while enhancing maintainability. Updated views to use consistent layouts and addressed minor issues in DTO mappings.">
-      <change afterPath="$PROJECT_DIR$/Presentation/Views/User/AccessDenied.cshtml" afterDir="false" />
+    <list default="true" id="0144a7ca-394c-49d4-bda6-fae20b1a3b16" name="Changes" comment="Add Access Denied page and update layout for role-based views&#10;&#10;- Introduced a new AccessDenied.cshtml view for unauthorized access handling.&#10;- Updated _Layout.cshtml to conditionally render the layout based on user roles.&#10;- Modified multiple views to use the appropriate layout depending on user roles.&#10;- Added authorization attributes to several controllers to enforce role-based access.">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TechXpress/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TechXpress/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/AdminController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/AdminController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/CategoresController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/CategoresController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/OrderController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/OrderController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/ProductController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/ProductController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/RoleController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/RoleController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/DataAccess/Repositories/Order/OrderRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataAccess/Repositories/Order/OrderRepository.cs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Presentation/Controllers/ShoppingCartController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/ShoppingCartController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/UserController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Views/Product/Create.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Product/Create.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Views/Product/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Product/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Views/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Shared/_Layout.cshtml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,12 +38,11 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///AIAssistantSnippet.." root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7d382df578ec93391918cfaa4ce7f4b8f35c9aed1241d6556dc9be26df13c/IdentityUser.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8e25cce28490c87faaf15522967e96692c1829b521f6b7a4fc8bde524eec/IdentityRole.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d8d9726f3deb1bbf671f5b791e4dc3e0338219a996f439ad2a69024b825c60/UserManager.cs" root0="SKIP_HIGHLIGHTING" />
-    <setting file="mock://D:/Coding/DEPI FullStack .NET/Final Project/Program/TechXpress-Project/TechXpress/Business/Managers/Brand/BrandManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Presentation/Controllers/RoleController.cs" root0="FORCE_HIGHLIGHTING" />
-    <setting file="mock://D:/Coding/DEPI FullStack .NET/Final Project/Program/TechXpress-Project/TechXpress/Presentation/Views/Shared/_AdminLayout.cshtml" root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Presentation/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js.map" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="false" />
@@ -68,21 +57,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.HTTP.executor": "Debug",
-    ".NET Launch Settings Profile.HTTPS.executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.HTTP.executor&quot;: &quot;Debug&quot;,
+    &quot;.NET Launch Settings Profile.HTTPS.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.HTTPS">
     <configuration name="HTTP" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Presentation/Presentation.csproj" />
@@ -137,7 +126,8 @@
       <option name="presentableId" value="Default" />
       <updated>1746380796664</updated>
       <workItem from="1746380805834" duration="445000" />
-      <workItem from="1746389950058" duration="11486000" />
+      <workItem from="1746389950058" duration="12850000" />
+      <workItem from="1746454896368" duration="2736000" />
     </task>
     <task id="LOCAL-00002" summary="Remove AccountController and related Account views&#10;&#10;Deleted `Register` and `Login` functionalities, including the `AccountController` and corresponding Razor views (`Register.cshtml` and `Login.cshtml`). Updated `Home/Index` to remove links to Account actions, reflecting the elimination of account-related features.">
       <option name="closed" value="true" />
@@ -155,7 +145,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746398309821</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Add Access Denied page and update layout for role-based views&#10;&#10;- Introduced a new AccessDenied.cshtml view for unauthorized access handling.&#10;- Updated _Layout.cshtml to conditionally render the layout based on user roles.&#10;- Modified multiple views to use the appropriate layout depending on user roles.&#10;- Added authorization attributes to several controllers to enforce role-based access.">
+      <option name="closed" value="true" />
+      <created>1746406893309</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1746406893309</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -179,6 +177,7 @@
     <MESSAGE value="Remove AccountController and refactor ProductController.&#10;&#10;Deleted AccountController as part of the cleanup. Updated ProductController to leverage asynchronous methods for better performance. Simplified navigation links in Home/Index view, removing references to the AccountController." />
     <MESSAGE value="Remove AccountController and related Account views&#10;&#10;Deleted `Register` and `Login` functionalities, including the `AccountController` and corresponding Razor views (`Register.cshtml` and `Login.cshtml`). Updated `Home/Index` to remove links to Account actions, reflecting the elimination of account-related features." />
     <MESSAGE value="Refactor user and role management to improve modularity&#10;&#10;Replaced direct usage of Identity managers with custom interfaces (`IUserManager`, `IRoleManager`) across controllers and services. Standardized user and role operations while enhancing maintainability. Updated views to use consistent layouts and addressed minor issues in DTO mappings." />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor user and role management to improve modularity&#10;&#10;Replaced direct usage of Identity managers with custom interfaces (`IUserManager`, `IRoleManager`) across controllers and services. Standardized user and role operations while enhancing maintainability. Updated views to use consistent layouts and addressed minor issues in DTO mappings." />
+    <MESSAGE value="Add Access Denied page and update layout for role-based views&#10;&#10;- Introduced a new AccessDenied.cshtml view for unauthorized access handling.&#10;- Updated _Layout.cshtml to conditionally render the layout based on user roles.&#10;- Modified multiple views to use the appropriate layout depending on user roles.&#10;- Added authorization attributes to several controllers to enforce role-based access." />
+    <option name="LAST_COMMIT_MESSAGE" value="Add Access Denied page and update layout for role-based views&#10;&#10;- Introduced a new AccessDenied.cshtml view for unauthorized access handling.&#10;- Updated _Layout.cshtml to conditionally render the layout based on user roles.&#10;- Modified multiple views to use the appropriate layout depending on user roles.&#10;- Added authorization attributes to several controllers to enforce role-based access." />
   </component>
 </project>

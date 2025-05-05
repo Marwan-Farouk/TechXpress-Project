@@ -32,6 +32,7 @@ namespace DataAccess.Repositories.ORDER
             return await _context.Orders
                 .Include(o => o.User)
                 .Include(o => o.OrderItems)
+                    .ThenInclude(oi => oi.Product)
                 .ToListAsync();
         }
 
