@@ -47,6 +47,8 @@ namespace Business.Managers.Orders
                 OrderDate = order.OrderDate,
                 TotalAmount = order.TotalAmount,
                 Status = order.Status,
+                UserName = order.User?.UserName ?? "Unknown",// 👈 استرجاع اسم المستخدم
+
                 OrderItems = order.OrderItems.Select(item => new GetOrderDetailsDto
                 {
                     ProductId = item.ProductId,
@@ -56,6 +58,7 @@ namespace Business.Managers.Orders
                 }).ToList()
             }).ToList();
         }
+
 
         // Retrieve an order by ID
         public async Task<GetOrderDto> GetOrderByIdAsync(int id)

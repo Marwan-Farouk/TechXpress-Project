@@ -38,6 +38,7 @@ namespace Presentation.Controllers
 
             return View(orderViewModels);
         }
+        [HttpGet]
         [Authorize(Roles = "Admin, Customer")]
         public async Task<IActionResult> OrderDetails(int id)
         {
@@ -63,6 +64,13 @@ namespace Presentation.Controllers
             };
 
             return View(orderViewModel);
+        }
+        [HttpGet]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> AdminOrders()
+        {
+            var orders = await _orderManager.GetAllOrdersAsync();
+            return View(orders);
         }
 
     }
