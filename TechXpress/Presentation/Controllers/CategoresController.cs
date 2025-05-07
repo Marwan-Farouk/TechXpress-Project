@@ -10,7 +10,6 @@ using BestStoreMVC.ViewModels;
 
 namespace BestStoreMVC.Controllers
 {
-    [Authorize(Roles = "Admin")]
     public class CategoresController : Controller
     {
         private readonly ICategoryManager _categoryManager;
@@ -20,6 +19,7 @@ namespace BestStoreMVC.Controllers
             _categoryManager = categoryManager;
         }
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         // GET: /Categores/Index
         public async Task<IActionResult> Index(string searchString, string stockFilter)
         {
@@ -58,6 +58,7 @@ namespace BestStoreMVC.Controllers
 
             return View(categories);
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         // GET: /Categores/Details/5
         public async Task<IActionResult> Details(int id)
@@ -76,6 +77,7 @@ namespace BestStoreMVC.Controllers
             return View(viewModel);
         }
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         // GET: /Categores/Create
         public IActionResult Create()
         {
@@ -84,6 +86,7 @@ namespace BestStoreMVC.Controllers
 
         // POST: /Categores/Create
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create(CategoryViewModel categoryViewModel)
         {
             if (!ModelState.IsValid)
@@ -100,6 +103,7 @@ namespace BestStoreMVC.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         // GET: /Categores/Edit/5
         public async Task<IActionResult> Edit(int id)
@@ -123,6 +127,7 @@ namespace BestStoreMVC.Controllers
 
         // POST: /Categores/Edit
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(CategoryViewModel categoryViewModel)
         {
             if (!ModelState.IsValid)
@@ -141,6 +146,7 @@ namespace BestStoreMVC.Controllers
             return RedirectToAction(nameof(Index));
         }
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         // GET: /Categores/Delete/5
         public async Task<IActionResult> Delete(int id)
         {

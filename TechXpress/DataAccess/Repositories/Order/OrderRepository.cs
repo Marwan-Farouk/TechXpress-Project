@@ -24,6 +24,7 @@ namespace DataAccess.Repositories.ORDER
                 .Include(o => o.User)
                 .Include(o => o.Address)
                 .Include(o => o.OrderItems)
+                    .ThenInclude(oi => oi.Product)
                 .FirstOrDefaultAsync(o => o.Id == id))!;
         }
 
