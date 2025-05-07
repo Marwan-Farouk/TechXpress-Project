@@ -1,8 +1,20 @@
-﻿<div class="text-center">
-    <h2>Order Confirmation</h2>
-    <div class="alert alert-success">
-        <p>Thank you for your order!</p>
-        <p>Your order has been received and is being processed.</p>
-    </div>
-    <a asp-controller="Home" asp-action="Index" class="btn btn-primary">Continue Shopping</a>
-</div>
+﻿@model DataAccess.Entities.Order
+
+<h2>Order Confirmation</h2>
+
+<p>Order ID: <strong>@Model.Id</strong></p>
+<p>Status: <strong>@Model.Status</strong></p>
+<p>Total Amount: <strong>@Model.TotalAmount EGP</strong></p>
+<p>Order Date: <strong>@Model.OrderDate.ToString("dd/MM/yyyy HH:mm")</strong></p>
+
+<h4>Order Items:</h4>
+<ul>
+    @foreach (var item in Model.OrderItems)
+    {
+        <li>
+            Product: @item.Product.Name - Quantity: @item.Quantity - Price: @item.UnitPrice EGP
+        </li>
+    }
+</ul>
+
+<a class="btn btn-primary" href="@Url.Action("Index", "Home")">Continue Shopping</a>

@@ -9,10 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0144a7ca-394c-49d4-bda6-fae20b1a3b16" name="Changes" comment="Add Access Denied page and update layout for role-based views&#10;&#10;- Introduced a new AccessDenied.cshtml view for unauthorized access handling.&#10;- Updated _Layout.cshtml to conditionally render the layout based on user roles.&#10;- Modified multiple views to use the appropriate layout depending on user roles.&#10;- Added authorization attributes to several controllers to enforce role-based access.">
+    <list default="true" id="0144a7ca-394c-49d4-bda6-fae20b1a3b16" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TechXpress/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TechXpress/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataAccess/Repositories/Order/OrderRepository.cs" beforeDir="false" afterPath="$PROJECT_DIR$/DataAccess/Repositories/Order/OrderRepository.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/ShoppingCartController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/ShoppingCartController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/CategoresController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/CategoresController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Views/Shared/_UserLayout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Shared/_UserLayout.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/appsettings.Development.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -38,7 +40,7 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
-    <setting file="mock:///AIAssistantSnippet.." root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/294078ecfce6fdb942ecfee089f09717de7a6fcfe5efd9fdb6f4f93c0fb4813/ActionMethodExecutor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7d382df578ec93391918cfaa4ce7f4b8f35c9aed1241d6556dc9be26df13c/IdentityUser.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8e25cce28490c87faaf15522967e96692c1829b521f6b7a4fc8bde524eec/IdentityRole.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d8d9726f3deb1bbf671f5b791e4dc3e0338219a996f439ad2a69024b825c60/UserManager.cs" root0="SKIP_HIGHLIGHTING" />
@@ -63,12 +65,13 @@
     &quot;.NET Launch Settings Profile.HTTPS.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;yousef__branch&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors.Color Scheme Font&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
@@ -128,6 +131,7 @@
       <workItem from="1746380805834" duration="445000" />
       <workItem from="1746389950058" duration="12850000" />
       <workItem from="1746454896368" duration="2736000" />
+      <workItem from="1746576317906" duration="1716000" />
     </task>
     <task id="LOCAL-00002" summary="Remove AccountController and related Account views&#10;&#10;Deleted `Register` and `Login` functionalities, including the `AccountController` and corresponding Razor views (`Register.cshtml` and `Login.cshtml`). Updated `Home/Index` to remove links to Account actions, reflecting the elimination of account-related features.">
       <option name="closed" value="true" />
@@ -179,5 +183,50 @@
     <MESSAGE value="Refactor user and role management to improve modularity&#10;&#10;Replaced direct usage of Identity managers with custom interfaces (`IUserManager`, `IRoleManager`) across controllers and services. Standardized user and role operations while enhancing maintainability. Updated views to use consistent layouts and addressed minor issues in DTO mappings." />
     <MESSAGE value="Add Access Denied page and update layout for role-based views&#10;&#10;- Introduced a new AccessDenied.cshtml view for unauthorized access handling.&#10;- Updated _Layout.cshtml to conditionally render the layout based on user roles.&#10;- Modified multiple views to use the appropriate layout depending on user roles.&#10;- Added authorization attributes to several controllers to enforce role-based access." />
     <option name="LAST_COMMIT_MESSAGE" value="Add Access Denied page and update layout for role-based views&#10;&#10;- Introduced a new AccessDenied.cshtml view for unauthorized access handling.&#10;- Updated _Layout.cshtml to conditionally render the layout based on user roles.&#10;- Modified multiple views to use the appropriate layout depending on user roles.&#10;- Added authorization attributes to several controllers to enforce role-based access." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Presentation/Controllers/ShoppingCartController.cs</url>
+          <line>163</line>
+          <properties documentPath="D:\Coding\DEPI FullStack .NET\Final Project\Program\TechXpress-Project\TechXpress\Presentation\Controllers\ShoppingCartController.cs" containingFunctionPresentation="Method 'Checkout'">
+            <startOffsets>
+              <option value="5757" />
+            </startOffsets>
+            <endOffsets>
+              <option value="5758" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Presentation/Controllers/ShoppingCartController.cs</url>
+          <line>208</line>
+          <properties documentPath="D:\Coding\DEPI FullStack .NET\Final Project\Program\TechXpress-Project\TechXpress\Presentation\Controllers\ShoppingCartController.cs" containingFunctionPresentation="Method 'OrderConfirmed'">
+            <startOffsets>
+              <option value="7408" />
+            </startOffsets>
+            <endOffsets>
+              <option value="7409" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Presentation/Controllers/ShoppingCartController.cs</url>
+          <line>201</line>
+          <properties documentPath="D:\Coding\DEPI FullStack .NET\Final Project\Program\TechXpress-Project\TechXpress\Presentation\Controllers\ShoppingCartController.cs" containingFunctionPresentation="Method 'Checkout'">
+            <startOffsets>
+              <option value="7159" />
+            </startOffsets>
+            <endOffsets>
+              <option value="7171" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

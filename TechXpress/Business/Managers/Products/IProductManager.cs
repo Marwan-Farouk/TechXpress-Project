@@ -17,5 +17,6 @@ namespace Business.Managers.Products
         Task DeleteProductAsync(int id);
         Task<dynamic> GetAllBrandsAsync();
         Task<int> GetProductStockAsync(int id);
+        Task<List<GetAllProductsDto>> GetProductsByCategoryAsync(int categoryId);
     }
 }
