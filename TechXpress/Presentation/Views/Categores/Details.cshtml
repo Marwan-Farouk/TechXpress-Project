@@ -47,7 +47,16 @@
                         }
                         <div class="input-group">
                             <input value="@Model.Stock" class="form-control bg-light" readonly />
-                            <span class="input-group-text @badgeClass text-white">@Model.Stock > 0 ? "In Stock" : "Out of Stock"</span>
+
+                            @if (Model.Stock > 0)
+                            {
+                                <span class="input-group-text @badgeClass text-white">In Stock</span>
+                            }
+                            else
+                            {
+                                <span class="input-group-text @badgeClass text-white"> Out of Stock</span>
+                            }
+
                         </div>
                     </div>
 
