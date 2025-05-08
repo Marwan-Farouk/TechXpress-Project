@@ -47,7 +47,7 @@ namespace Business.Managers.Orders
                 OrderDate = order.OrderDate,
                 TotalAmount = order.TotalAmount,
                 Status = order.Status,
-                UserName = order.User?.UserName ?? "Unknown",// 👈 استرجاع اسم المستخدم
+
 
                 OrderItems = order.OrderItems.Select(item => new GetOrderDetailsDto
                 {
