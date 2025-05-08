@@ -1,0 +1,15 @@
+﻿@using Presentation.ViewModel.Brand
+@model BrandViewModel
+@{
+    ViewData["Title"] = "Brand Details";
+    Layout = "_AdminLayout";
+}
+
+<h2>Brand Details</h2>
+
+<div>
+    <h4>@Model.Name</h4>
+    <p><strong>Description:</strong> @Model.Description</p>
+</div>
+
+<a asp-action="Index" class="btn btn-secondary">Back to List</a>
