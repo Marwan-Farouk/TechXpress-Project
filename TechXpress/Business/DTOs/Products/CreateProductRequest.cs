@@ -1,19 +1,15 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
-
 namespace Business.DTOs.Products
 {
-    public class UpdateProductRequest
+    public class CreateProductRequest
     {
-        [Required]
-        public int Id { get; set; }  
-
         [Required]
         public string Name { get; set; }
 
@@ -33,13 +29,6 @@ namespace Business.DTOs.Products
         [Required]
         public int BrandId { get; set; }
 
-        [Required]
-        public string CategoryName { get; set; }
-
         public IFormFile? Image { get; set; }
-        
-
-        public string? ExistingImage { get; set; }
     }
 }
-

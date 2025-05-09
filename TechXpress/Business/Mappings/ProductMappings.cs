@@ -63,11 +63,13 @@ namespace Business.Mappings
                 Id = product.Id,
                 Name = product.Name,
                 Price = product.Price,
-                Image = product.Image, Stock = product.Stock,
+                Image = product.Image,
+                Stock = product.Stock,
                 BrandId = product.BrandId,
                 CategoryId = product.CategoryId,
                 DateAdded = product.DateAdded,
                 Description = product.Description,
+
             }).ToList();
         }
 

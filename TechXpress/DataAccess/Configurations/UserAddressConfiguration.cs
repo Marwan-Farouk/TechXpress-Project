@@ -21,10 +21,10 @@ namespace DataAccess.Configurations
             // Primary key
             builder.HasKey(ua =>  ua.AddressId );
             // Column Data Types
-            builder.Property(ua => ua.UserId) // FK userId
-                .HasColumnType("int");
             builder.Property(ua => ua.AddressId) // addressId
                 .HasColumnType("int").UseIdentityColumn(1, 1);
+            builder.Property(ua => ua.UserId) // FK userId
+                .HasColumnType("int");
             builder.Property(ua => ua.Country) // country
                 .HasColumnType("nvarchar(max)").IsRequired();
             builder.Property(ua => ua.City) // city

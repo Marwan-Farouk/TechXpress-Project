@@ -1,5 +1,7 @@
-﻿using Business.DTOs.Products;
+﻿using Business.DTOs.Categories;
+using Business.DTOs.Products;
 using Business.Mappings;
+using DataAccess.Entities;
 using DataAccess.Repositories.PRODUCT;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -65,8 +67,12 @@ namespace Business.Managers.Products
                 Description = p.Description,
                 Price = p.Price,
                 Image = p.Image,
+                Stock = p.Stock,
                 CategoryId = p.CategoryId,
-                BrandId = p.BrandId
+                BrandId = p.BrandId,
+                DateAdded = p.DateAdded,
+
+
             }).ToList();
 
             return result;

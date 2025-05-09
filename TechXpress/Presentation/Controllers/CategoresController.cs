@@ -1,10 +1,14 @@
 ﻿using Business.DTOs.Categories;
 using Business.Managers.Categories;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Presentation.ViewModel.Category;
 using BestStoreMVC.ViewModels;
 
-namespace Presentation.Controllers
+namespace BestStoreMVC.Controllers
 {
     public class CategoresController : Controller
     {

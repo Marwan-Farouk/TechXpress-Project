@@ -25,12 +25,12 @@ namespace PresentationLayer.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string search, int? categoryId, int? brandId)
+
+        public async Task<IActionResult> Index(string search, int? categoryId, int? brandId, decimal? minPrice, decimal? maxPrice, string sortBy, int page = 1)
         {
-            // Get products (already properly awaited)
+
             var products = await _productManager.GetAllProductsAsync();
 
-            // Apply filters (sync operations are fine here)
             if (!string.IsNullOrEmpty(search))
             {
                 products = products.Where(p =>
@@ -45,10 +45,48 @@ namespace PresentationLayer.Controllers
             if (brandId.HasValue)
                 products = products.Where(p => p.BrandId == brandId.Value).ToList();
 
+            if (minPrice.HasValue)
+                products = products.Where(p => p.Price >= minPrice.Value).ToList();
+            if (maxPrice.HasValue)
+                products = products.Where(p => p.Price <= maxPrice.Value).ToList();
+
+
+            switch (sortBy)
+            {
+                case "price-asc":
+                    products = products.OrderBy(p => p.Price).ToList();
+                    break;
+                case "price-desc":
+                    products = products.OrderByDescending(p => p.Price).ToList();
+                    break;
+                case "name-asc":
+                    products = products.OrderBy(p => p.Name).ToList();
+                    break;
+                case "name-desc":
+                    products = products.OrderByDescending(p => p.Name).ToList();
+                    break;
+                default:
+                    products = products.OrderByDescending(p => p.DateAdded).ToList();
+                    break;
+            }
 
             ViewBag.Categories = await _categoryManager.GetAllCategoriesAsync();
             ViewBag.Brands = await _brandManager.GetAll();
-            return View(products);
+
+            // Pagination
+            const int pageSize = 10;
+            var totalItems = products.Count();
+            var totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
+            var pagedProducts = products.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            // Pass pagination data to ViewBag
+            ViewBag.CurrentPage = page;
+            ViewBag.TotalPages = totalPages;
+            ViewBag.TotalItems = totalItems;
+
+            ViewBag.Categories = await _categoryManager.GetAllCategoriesAsync();
+            ViewBag.Brands = await _brandManager.GetAll();
+            return View(pagedProducts);
         }
 
         [HttpGet]
@@ -56,6 +94,7 @@ namespace PresentationLayer.Controllers
         {
             var product = await _productManager.GetProductByIdAsync(id);
             if (product == null) return NotFound();
+            ViewBag.Category = await _categoryManager.GetCategoryByIdAsync(product.CategoryId);
             return View(product);
         }
 
@@ -90,7 +129,7 @@ namespace PresentationLayer.Controllers
                 ViewBag.Categories = await _categoryManager.GetAllCategoriesAsync();
                 ViewBag.Brands = await _brandManager.GetAll();
 
-                ViewBag.Categories = _categoryManager.GetAllCategoriesAsync();
+                ViewBag.Categories =await _categoryManager.GetAllCategoriesAsync();
                 return View(model);
             }
 
@@ -142,12 +181,8 @@ namespace PresentationLayer.Controllers
         {
             if (!ModelState.IsValid)
             {
-            
                 ViewBag.Categories = await _categoryManager.GetAllCategoriesAsync();
-                ViewBag.Brands = await  _brandManager.GetAll();
-
-                ViewBag.Categories = _categoryManager.GetAllCategoriesAsync();
-
+                ViewBag.Brands = await _brandManager.GetAll();
                 return View(model);
             }
 
@@ -159,7 +194,8 @@ namespace PresentationLayer.Controllers
                 Price = model.Price,
                 Stock = model.Stock,
                 CategoryId = model.CategoryId,
-                BrandId = model.BrandId
+                BrandId = model.BrandId,
+                CategoryName = model.CategoryName
             });
 
             return RedirectToAction(nameof(Details), new { id = model.Id });
@@ -179,6 +215,11 @@ namespace PresentationLayer.Controllers
             };
 
             return View(viewModel);
+        }
+        public async Task<IActionResult> Delete(int id)
+        {
+            await _productManager.DeleteProductAsync(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

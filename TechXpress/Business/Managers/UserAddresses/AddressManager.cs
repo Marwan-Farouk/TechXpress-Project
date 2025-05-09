@@ -40,4 +40,5 @@ public class AddressManager : IAddressManager
         var dtos = addressesList.Select(address => address.ToDto()).ToList();
         return dtos;
     }
+
 }

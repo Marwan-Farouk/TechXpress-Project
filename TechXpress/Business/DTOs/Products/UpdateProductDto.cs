@@ -17,7 +17,10 @@ namespace Business.DTOs.Products
         // public IFormFile? Image { get; set; }
         public int BrandId { get; set; }
         public int CategoryId { get; set; }
+        
         // This is the string path/name of the image file, not the actual file
+        public string CategoryName { get; set; }
         public string Image { get; set; }
+
     }
 }
