@@ -9,6 +9,8 @@
 
     <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/responsive.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/product-details.css" asp-append-version="true" />
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     @RenderSection("Styles", required: false)
@@ -39,52 +41,54 @@
                 else
                 {
                     <div class="user-nav">
-                    <a class="nav-link" asp-action="Login" asp-controller="User">Login</a>
+                        <a class="login" asp-action="Login" asp-controller="User">Login</a>
                     </div>
                 }
             </div>
         </nav>
     </header>
     <main>
-    @RenderBody()
+        @RenderBody()
     </main>
 
-        <footer class="main-footer">
-            <div class="container">
-                <div class="footer-grid">
-                    <div class="footer-section">
-                        <h3>TeckExpress</h3>
-                        <p>Your one-stop shop for quality products</p>
-                    </div>
-                    <div class="footer-section">
-                        <h3>Quick Links</h3>
-                        <ul>
-                        <li><a href="~/Home/Index">Home</a></li>
-                            <li><a href="~/Product/Index">Products</a></li>
-                            <li><a href="~/Cart/Index">Cart</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-section">
-                        <h3>Contact</h3>
-                        <ul>
-                            <li>Email: TechExpress@gmail.com</li>
-                            <li>Phone: 123-4567-89</li>
-                        </ul>
-                    </div>
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-section">
+                    <h3>TeckExpress</h3>
+                    <p>Your one-stop shop for quality products</p>
                 </div>
-                <div class="footer-bottom">
-                    <p>&copy; 2025 TeckExpress. All rights reserved.</p>
-                    <a asp-action="Index" asp-controller="Admin" class="admin-link">Admin Portal</a>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="~/Home/Index">Home</a></li>
+                        <li><a href="~/Product/Index">Products</a></li>
+                        <li><a href="~/Cart/Index">Cart</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <ul>
+                        <li>Email: TechExpress@gmail.com</li>
+                        <li>Phone: 123-4567-89</li>
+                    </ul>
                 </div>
             </div>
-        </footer>
+            <div class="footer-bottom">
+                <p>&copy; 2025 TeckExpress. All rights reserved.</p>
+                <a asp-action="Index" asp-controller="Admin" class="admin-link">Admin Portal</a>
+            </div>
+        </div>
+    </footer>
     @await RenderSectionAsync("Scripts", required: false)
-            <script>
+    <script>
         // Update cart count on page load
         document.addEventListener('DOMContentLoaded', async function() {
             await updateCartCount();
         });
-            </script>
+    </script>
     <script src="~/js/home.js" asp-append-version="true"></script>
+    <script src="~/js/products.js" asp-append-version="true"></script>
+    <script src="~/js/cart.js" asp-append-version="true"></script>
 </body>
 </html>

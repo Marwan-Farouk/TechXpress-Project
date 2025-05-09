@@ -25,8 +25,7 @@ namespace Business.Managers.Brand
             return brand == null ? null : new BrandDto
             {
                 Id = brand.Id,
-                Name = brand.Name,
-                Description= brand.Description
+                Name = brand.Name
             };
         }
 
@@ -36,8 +35,7 @@ namespace Business.Managers.Brand
             return brands.Select(b => new BrandDto
                 {
                     Id = b.Id,
-                    Name = b.Name,
-                    Description = b.Description
+                    Name = b.Name
                 }).ToList();
         }
 

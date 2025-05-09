@@ -2,6 +2,7 @@
 using DataAccess.Contexts;
 using DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,11 +38,13 @@ namespace DataAccess.Repositories.ORDER
                 .ToListAsync();
         }
 
-        public async Task AddAsync(Order order)
+        public async Task<Order> AddAsync(Order order)
         {
-            await _context.Orders.AddAsync(order);
+            var result = await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
+            return result.Entity;
         }
+
 
         public async Task UpdateAsync(Order order)
         {
@@ -91,6 +94,20 @@ namespace DataAccess.Repositories.ORDER
                 .Where(o => o.UserId == userId && o.Status.ToLower() == status.ToLower())
                 .ToListAsync();
         }
+        public async Task<Order> GetOrderByStripeSessionIdAsync(string sessionId)
+        {
+            if (string.IsNullOrEmpty(sessionId))
+            {
+                return null;
+            }
+
+            var order = await _context.Orders
+                .FirstOrDefaultAsync(o => o.StripeSessionId == sessionId);
+
+            return order;
+        }
+
+
 
     }
 }

@@ -33,9 +33,6 @@ namespace Business.DTOs.Products
         [Required]
         public int BrandId { get; set; }
 
-        [Required]
-        public string CategoryName { get; set; }
-
         public IFormFile? Image { get; set; }
         
 

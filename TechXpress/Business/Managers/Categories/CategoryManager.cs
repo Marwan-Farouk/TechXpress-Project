@@ -48,6 +48,7 @@ namespace Business.Managers.Categories
 
         public async Task UpdateCategoryAsync(UpdateCategoryDto dto)
         {
+
             var category = dto.ToEntity();
             await _categoryRepository.UpdateAsync(category);
         }
