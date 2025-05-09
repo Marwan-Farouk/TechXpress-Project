@@ -1,0 +1,38 @@
+﻿@using DataAccess.Entities
+
+@model List<User>
+
+@{
+    ViewData["Title"] = "List of Users";
+    Layout = "_AdminLayout";
+
+}
+
+<h2>List of Users</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Actions</th> <!-- العمود الجديد للزرار -->
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>
+                    <a asp-controller="Admin"
+                       asp-action="EditUser"
+                       asp-route-id="@user.Id"
+                       class="btn btn-sm btn-primary">
+                        Edit
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

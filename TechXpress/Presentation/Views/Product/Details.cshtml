@@ -1,0 +1,78 @@
+﻿@using Business.DTOs.Products
+@model GetProductByIdDto
+
+@{
+    ViewData["Title"] = "Details Product";
+    Layout = User.IsInRole("Admin") ? "_AdminLayout" : "_Layout";
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/product-details.css">
+}
+
+<div class="product-details-page">
+    <div class="container">
+        <nav class="breadcrumb" aria-label="breadcrumb">
+            <ol>
+                <li><a href="~/Home/Index">Home</a></li>
+                <li><a href="~/Product/Index">Products</a></li>
+                <li class="active" aria-current="page">@Model.Name.ToUpper()</li>
+            </ol>
+        </nav>
+
+        <div class="product-details-container">
+            <div class="product-gallery">
+                <div class="main-image-container" style="display: flex; justify-content: center;">
+                    <img src="@(string.IsNullOrEmpty(Model.Image) ? "/images/no-image.png" : Url.Content($"~/{Model.Image}"))" alt="@Model.Name" style="max-width: 400px;">
+                </div>
+            </div>
+
+            <div class="product-info">
+                <div class="product-category">@(ViewBag.Category?.Name ?? "No Category")</div>
+                <h1 class="product-title">@Model.Name</h1>
+                <div class="product-price">
+                    <span class="current-price">@Model.Price</span>
+                </div>
+                <div class="product-description">@Model.Description</div>
+
+                <div class="product-actions">
+                    <div class="quantity-selector">
+                        <button class="quantity-btn minus" aria-label="Decrease quantity">-</button>
+                        <input type="number" value="1" min="1" class="quantity-input" aria-label="Product quantity">
+                        <button class="quantity-btn plus" aria-label="Increase quantity">+</button>
+                    </div>
+                    <form asp-action="AddToCart" asp-controller="ShoppingCart" asp-route-id="@Model.Id" method="post" style="display:inline;">
+                        <button class="add-to-cart-btn">
+                            <span class="btn-text">Add to Cart</span>
+                            <span class="btn-icon">+</span>
+                        </button>
+                    </form>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <a class="btn btn-warning Edit" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+                        <a class="btn btn-danger Delete" asp-action="Delete" asp-route-id="@Model.Id" style="margin-bottom : 0px;">Delete</a>
+                    }
+                </div>
+
+                <div class="product-meta">
+                    <div class="meta-item">
+                        <span class="meta-label">Category: @(ViewBag.Category?.Name ?? "No Category")</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const errorMessage = "@TempData["ErrorMessage"]";
+        if (errorMessage && errorMessage.trim() !== "") {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: errorMessage,
+                confirmButtonText: 'OK'
+            });
+        }
+    });
+</script>

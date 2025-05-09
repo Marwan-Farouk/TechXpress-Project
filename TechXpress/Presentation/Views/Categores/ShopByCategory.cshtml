@@ -1,0 +1,63 @@
+﻿@using BestStoreMVC.ViewModels
+@using Presentation.ViewModel.Category
+@model List<CategoryViewModel>
+
+@{
+    ViewData["Title"] = "Shop by Category";
+
+}
+
+<div class="container py-5">
+    <h2 class="text-center fw-bold mb-5">🛍️ Shop by Category</h2>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @if (!Model.Any())
+        {
+            <div class="col">
+                <div class="alert alert-info w-100 text-center">
+                    <i class="fas fa-info-circle me-2"></i>No categories available at the moment.
+                </div>
+            </div>
+        }
+        else
+        {
+            foreach (var category in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body text-center">
+                            <h5 class="card-title fw-bold mb-3">@category.Name</h5>
+                            <p class="card-text text-muted text-truncate" style="max-height: 60px;">@category.Description</p>
+                            <a asp-controller="Product" asp-action="CategoryProducts" asp-route-categoryId="@category.Id" class="btn btn-outline-primary mt-3">
+                                <i class="fas fa-eye me-1"></i> View Products
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        .card-title {
+            font-size: 1.25rem;
+        }
+
+        .text-truncate {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            transition: 0.2s ease-in-out;
+        }
+    </style>
+}
+
+@section Scripts {
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+}
