@@ -8,6 +8,7 @@ namespace DataAccess.Repositories.ORDER
     {
         // CRUD Base
         Task<Order> GetByIdAsync(int id);
+        Task<Order> GetByIdAsync(int id, bool includeDetails);
         Task<List<Order>> GetAllAsync();
 
         Task UpdateAsync(Order order);

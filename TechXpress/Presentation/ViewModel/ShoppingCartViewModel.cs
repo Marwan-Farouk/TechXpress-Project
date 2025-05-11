@@ -30,6 +30,7 @@ namespace Presentation.ViewModels
     {
         public ShoppingCartViewModel Cart { get; set; }
         public List<UserAddressViewModel> UserAddresses { get; set; }
+        public int AddressId { get; set; }
     }
 }
 

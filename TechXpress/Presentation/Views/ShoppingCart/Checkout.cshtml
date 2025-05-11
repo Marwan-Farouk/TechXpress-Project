@@ -1,8 +1,8 @@
 ﻿@model Presentation.ViewModels.CheckoutViewModel
 @section Styles {
     <link href="~/css/checkout.css" rel="stylesheet" />
-
 }
+
 <div class="checkout-page">
     <div class="container">
         <nav class="breadcrumb" aria-label="breadcrumb">
@@ -21,11 +21,13 @@
                         <section class="checkout-section">
                             <h2>Shipping Address</h2>
                             <div class="address-box">
-                                @foreach (var address in Model.UserAddresses)
-                                {
-                                    <option value="@address.Id">@address.AddressLine, @address.City, @address.Country</option>
-                                    <input type="hidden" id="addressId" name="addressId" value="@(Model.UserAddresses.FirstOrDefault()?.Id ?? 0)" />
-                                }
+                                <select id="addressSelect" name="addressId" class="form-control" required>
+                                    @foreach (var address in Model.UserAddresses)
+                                    {
+                                        <option value="@address.Id">@address.AddressLine, @address.City, @address.Country</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="AddressId" class="text-danger"></span>
                             </div>
                         </section>
 
@@ -41,12 +43,9 @@
                                             <th>Subtotal</th>
                                         </tr>
                                     </thead>
-
-                                    {
                                     <tbody>
                                         @foreach (var item in Model.Cart.Items)
                                         {
-
                                             <tr>
                                                 <td>@item.ProductName</td>
                                                 <td>@item.Quantity</td>
@@ -81,7 +80,6 @@
                             <a asp-action="Index" class="back-to-cart">Back to Cart</a>
                             <button type="submit" id="place-order-btn" class="place-order-btn">Place Order</button>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -89,14 +87,10 @@
     </div>
 </div>
 
-<script>
-    function updateAddressId() {
-        var selectedAddress = document.getElementById('addressSelect').value;
-        document.getElementById('addressId').value = selectedAddress;
-    }
-
-    // Initialize on page load
-    document.addEventListener('DOMContentLoaded', function() {
-        updateAddressId();
-    });
-</script>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        });
+    </script>
+}

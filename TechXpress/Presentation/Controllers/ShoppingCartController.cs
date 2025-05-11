@@ -188,9 +188,36 @@ namespace Presentation.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin, Customer")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Checkout(int addressId)
         {
             var cart = GetCart();
+            if (!cart.Items.Any())
+            {
+                TempData["ErrorMessage"] = "Your cart is empty.";
+                return RedirectToAction("Index");
+            }
+
+            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity!.Name!);
+            if (user == null)
+            {
+                TempData["ErrorMessage"] = "User not found. Please log in again or contact support.";
+                return RedirectToAction("Login", "Account");
+            }
+
+            var userAddresses = await _addressManager.GetAddressesByUserId(user.Id);
+            if (userAddresses == null || !userAddresses.Any())
+            {
+                TempData["ErrorMessage"] = "Please add a shipping address before proceeding.";
+                return RedirectToAction("Index");
+            }
+
+            var selectedAddress = userAddresses.FirstOrDefault(a => a.Id == addressId);
+            if (selectedAddress == null)
+            {
+                TempData["ErrorMessage"] = $"Invalid address selected. AddressId: {addressId} does not exist for UserId: {user.Id}.";
+                return RedirectToAction("Checkout", "ShoppingCart");
+            }
 
             // Store products in dictionary to avoid tracking conflicts
             var productDict = new Dictionary<int, GetProductByIdDto>();
@@ -201,23 +228,23 @@ namespace Presentation.Controllers
                 var product = await _productManager.GetProductByIdAsync(item.ProductId);
                 if (product == null)
                 {
-                    return BadRequest($"Product with ID {item.ProductId} not found");
+                    TempData["ErrorMessage"] = $"Product with ID {item.ProductId} not found.";
+                    return RedirectToAction("Index");
                 }
 
                 if (product.Stock < item.Quantity)
                 {
-                    return BadRequest($"Insufficient stock for product: {product.Name}");
+                    TempData["ErrorMessage"] = $"Insufficient stock for product: {product.Name}.";
+                    return RedirectToAction("Index");
                 }
 
                 // Store product for later use
                 productDict[item.ProductId] = product;
             }
 
-            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity!.Name!);
-
             var order = new Order
             {
-                UserId = user!.Id,
+                UserId = user.Id,
                 AddressId = addressId,
                 OrderDate = DateTime.UtcNow,
                 TotalAmount = cart.TotalAmount,
@@ -251,15 +278,70 @@ namespace Presentation.Controllers
                 });
             }
 
+            var domain = Request.Scheme + "://" + Request.Host.Value + "/";
+            var options = new Stripe.Checkout.SessionCreateOptions
+            {
+                SuccessUrl = domain + "ShoppingCart/OrderConfirmed?sessionId={CHECKOUT_SESSION_ID}",
+                CancelUrl = domain + "ShoppingCart/Checkout",
+                LineItems = new List<SessionLineItemOptions>(),
+                Mode = "payment",
+            };
+
+            foreach (var item in cart.Items)
+            {
+                var product = productDict[item.ProductId];
+                var stripeLineItem = new SessionLineItemOptions
+                {
+                    PriceData = new SessionLineItemPriceDataOptions
+                    {
+                        UnitAmount = (long)(item.SubTotal * 100), // Convert to cents
+                        Currency = "usd",
+                        ProductData = new SessionLineItemPriceDataProductDataOptions
+                        {
+                            Name = product.Name,
+                        },
+                    },
+                    Quantity = item.Quantity,
+                };
+                options.LineItems.Add(stripeLineItem);
+            }
+
+            var service = new Stripe.Checkout.SessionService();
+            Session session = service.Create(options);
+            order.StripeSessionId = session.Id;
+            await _orderRepository.UpdateAsync(order);
+
             ClearCart();
-            return RedirectToAction("OrderConfirmed", new { orderId = order.Id });
+            Response.Headers.Add("Location", session.Url);
+            return Redirect(session.Url);
         }
 
         [HttpGet]
         [Authorize(Roles = "Admin, Customer")]
-        public async Task<IActionResult> OrderConfirmed(int orderId)
+        public async Task<IActionResult> OrderConfirmed()
         {
-            var order = await _orderRepository.GetByIdAsync(orderId);
+            var sessionId = Request.Query["sessionId"].ToString();
+            if (string.IsNullOrEmpty(sessionId))
+            {
+                TempData["ErrorMessage"] = "Session ID is missing or invalid!";
+                return RedirectToAction("Index");
+            }
+
+            var order = await _orderRepository.GetOrderByStripeSessionIdAsync(sessionId);
+            if (order == null)
+            {
+                TempData["ErrorMessage"] = $"Order with Session ID {sessionId} not found.";
+                return RedirectToAction("Index");
+            }
+
+            var service = new Stripe.Checkout.SessionService();
+            var session = await service.GetAsync(order.StripeSessionId);
+            if (session.PaymentStatus == "paid")
+            {
+                order.Status = "Paid";
+                await _orderRepository.UpdateAsync(order);
+            }
+
             return View("OrderConfirmation", order);
         }
 

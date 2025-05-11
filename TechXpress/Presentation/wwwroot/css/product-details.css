@@ -1,9 +1,9 @@
-/* Product Details Page Styles */
+
 .product-details-page {
     padding: 2rem 0;
 }
 
-/* Breadcrumb */
+
 .breadcrumb {
     margin-bottom: 2rem;
     padding: 0.5rem 0;
@@ -43,7 +43,6 @@
     font-weight: 500;
 }
 
-/* Product Layout */
 .product-details-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -51,7 +50,6 @@
     margin-bottom: 4rem;
 }
 
-/* Product Gallery */
 .product-gallery {
     position: relative;
 }
@@ -77,7 +75,6 @@
     transform: scale(1.2);
 }
 
-/* Product Info */
 .product-info {
     display: flex;
     flex-direction: column;
@@ -109,7 +106,6 @@
     line-height: 1.6;
 }
 
-/* Product Actions */
 .product-actions {
     display: flex;
     gap: 1rem;
@@ -178,7 +174,6 @@
     line-height: 1;
 }
 
-/* Product Meta */
 .product-meta {
     margin-top: 2rem;
     padding-top: 2rem;
@@ -200,7 +195,6 @@
     color:aliceblue;
 }
 
-/* Responsive Design */
 @media screen and (max-width: 1024px) {
     .product-details-container {
         gap: 2rem;

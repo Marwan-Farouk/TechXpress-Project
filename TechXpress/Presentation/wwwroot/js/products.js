@@ -58,11 +58,11 @@ document.addEventListener('DOMContentLoaded', () => {
             .catch(error => console.error("Error applying filters:", error));
     }
 
-    // Event Listeners for Filters
+
     categoryInputs.forEach(input => {
         input.addEventListener('change', (e) => {
             currentFilters.category = e.target.value;
-            currentFilters.page = 1; // Reset to first page when changing category
+            currentFilters.page = 1;
             filterProducts();
         });
     });
@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     applyPriceBtn.addEventListener('click', () => {
         currentFilters.minPrice = minPriceInput.value ? parseFloat(minPriceInput.value) : '';
         currentFilters.maxPrice = maxPriceInput.value ? parseFloat(maxPriceInput.value) : '';
-        currentFilters.page = 1; // Reset to first page when applying price
+        currentFilters.page = 1; 
         filterProducts();
     });
 
@@ -92,11 +92,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     sortSelect.addEventListener('change', (e) => {
         currentFilters.sortBy = e.target.value;
-        currentFilters.page = 1; // Reset to first page when sorting
+        currentFilters.page = 1; 
         filterProducts();
     });
 
-    // View toggle
     gridViewBtn.addEventListener('click', () => {
         productsGrid.classList.remove('list-view');
         gridViewBtn.classList.add('active');
@@ -109,7 +108,6 @@ document.addEventListener('DOMContentLoaded', () => {
         gridViewBtn.classList.remove('active');
     });
 
-    // Pagination Click
     document.addEventListener('click', (e) => {
         if (e.target.tagName === 'A' && e.target.getAttribute('asp-action') === 'Index') {
             e.preventDefault();

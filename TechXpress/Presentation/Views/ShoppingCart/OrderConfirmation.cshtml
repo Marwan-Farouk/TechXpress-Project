@@ -2,15 +2,16 @@
 @section Styles {
     <link href="~/css/order-confirmation.css" rel="stylesheet" />
 }
+
 <h2>Order Confirmation</h2>
 
 <div class="confirmation-page">
     <div class="container">
         <nav class="breadcrumb" aria-label="breadcrumb">
             <ol>
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="cart.html">Shopping Cart</a></li>
-                <li><a href="checkout.html">Checkout</a></li>
+                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                <li><a href="@Url.Action("Index", "ShoppingCart")">Shopping Cart</a></li>
+                <li><a href="@Url.Action("Checkout", "ShoppingCart")">Checkout</a></li>
                 <li class="active" aria-current="page">Order Confirmation</li>
             </ol>
         </nav>
@@ -28,22 +29,22 @@
                     <div class="order-info-grid">
                         <div class="order-info-item">
                             <span class="info-label">Order Number:</span>
-                            <span class="info-value" id="order-number"> @Model.Id</span>
+                            <span class="info-value" id="order-number">@Model.Id</span>
                         </div>
                         <div class="order-info-item">
                             <span class="info-label">Order Date:</span>
-                            <span class="info-value" id="order-date"> @Model.OrderDate</span>
+                            <span class="info-value" id="order-date">@Model.OrderDate</span>
                         </div>
                         <div class="order-info-item">
                             <span class="info-label">Stripe Session ID:</span>
-                            <span class="info-value" id="stripe-session-id"> @Model.StripeSessionId</span>
+                            <span class="info-value" id="stripe-session-id">@Model.StripeSessionId</span>
                         </div>
                     </div>
                 </div>
 
                 <div class="shipping-info-section">
                     <h2>Shipping Address</h2>
-                    <p class="address-text" id="shipping-address"> @Model.Address</p>
+                    <p class="address-text" id="shipping-address">@Model.Address.Country / @Model.Address.City / @Model.Address.Street</p>
                 </div>
 
                 <div class="order-summary-section">
@@ -58,13 +59,22 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model.OrderItems)
+                            @if (Model.OrderItems != null)
+                            {
+                                @foreach (var item in Model.OrderItems)
+                                {
+                                    <tr>
+                                        <td>@(item.Product?.Name ?? "Product not loaded")</td>
+                                        <td>@item.Quantity</td>
+                                        <td>@item.UnitPrice $</td>
+                                        <td>@(item.Quantity * item.UnitPrice) $</td>
+                                    </tr>
+                                }
+                            }
+                            else
                             {
                                 <tr>
-                                    <td>@item.Product.Name</td>
-                                    <td>@item.Quantity</td>
-                                    <td>@item.UnitPrice $</td>
-                                    <td>@(item.Quantity * item.UnitPrice) $</td>
+                                    <td colspan="4">No items found for this order.</td>
                                 </tr>
                             }
                         </tbody>
@@ -91,7 +101,6 @@
             </div>
 
             <div class="next-steps">
-                <p>We'll send a confirmation email to your registered email address with all the order details.</p>
                 <div class="action-buttons">
                     <a href="@Url.Action("Index", "Home")" class="continue-shopping-btn">Continue Shopping</a>
                 </div>
