@@ -5,10 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
-using Presentation.ViewModel.Category;
 using BestStoreMVC.ViewModels;
 
-namespace BestStoreMVC.Controllers
+
+namespace Presentation.Controllers
 {
     public class CategoresController : Controller
     {

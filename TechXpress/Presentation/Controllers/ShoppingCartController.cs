@@ -188,158 +188,88 @@ namespace Presentation.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin, Customer")]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Checkout(int addressId)
         {
             var cart = GetCart();
-            if (!cart.Items.Any())
-            {
-                TempData["ErrorMessage"] = "Your cart is empty.";
-                return RedirectToAction("Index");
-            }
 
-            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity?.Name);
-            if (user == null)
-            {
-                TempData["ErrorMessage"] = "User not found. Please log in again or contact support.";
-                return RedirectToAction("Login", "Account");
-            }
+            // Store products in dictionary to avoid tracking conflicts
+            var productDict = new Dictionary<int, GetProductByIdDto>();
 
-            var userAddresses = await _addressManager.GetAddressesByUserId(user.Id);
-            if (userAddresses == null || !userAddresses.Any())
+            // First check for sufficient stock for all items
+            foreach (var item in cart.Items)
             {
-                TempData["ErrorMessage"] = "Please add a shipping address before proceeding.";
-                return RedirectToAction("Index");
-            }
-
-            var selectedAddress = userAddresses.FirstOrDefault(a => a.Id == addressId);
-            if (selectedAddress == null)
-            {
-                TempData["ErrorMessage"] = $"Invalid address selected. AddressId: {addressId} does not exist for UserId: {user.Id}.";
-                return RedirectToAction("Checkout", "ShoppingCart");
-            }
-
-            TempData["DebugMessage"] = $"UserId: {user.Id}, AddressId: {addressId}, Cart Items: {cart.Items.Count}";
-
-            try
-            {
-                var order = new Order
+                var product = await _productManager.GetProductByIdAsync(item.ProductId);
+                if (product == null)
                 {
-                    UserId = user.Id,
-                    AddressId = addressId,
-                    OrderDate = DateTime.UtcNow,
-                    TotalAmount = cart.TotalAmount,
-                    Status = "Pending",
-                    OrderItems = cart.Items.Select(i => new OrderDetails
-                    {
-                        ProductId = i.ProductId,
-                        Quantity = i.Quantity,
-                        UnitPrice = i.Price,
-                        Discount = 0
-                    }).ToList()
-                };
-
-                await _orderRepository.AddAsync(order);
-                
-                var orderId = order.Id;
-                foreach (var item in cart.Items)
-                {
-                    var product = await _productManager.GetProductByIdAsync(item.ProductId);
-                    if (product == null || product.Stock < item.Quantity)
-                    {
-                        TempData["ErrorMessage"] = $"Insufficient stock for product: {product?.Name ?? "Unknown"}";
-                        return RedirectToAction("Index");
-                    }
-
-                    var updatedStock = product.Stock - item.Quantity;
-                    await _productManager.UpdateProductAsync(new UpdateProductDto
-                    {
-                        Id = product.Id,
-                        Name = product.Name,
-                        Description = product.Description,
-                        Price = product.Price,
-                        Stock = updatedStock,
-                        BrandId = product.BrandId,
-                        CategoryId = product.CategoryId,
-                    });
+                    return BadRequest($"Product with ID {item.ProductId} not found");
                 }
 
-                var domain = Request.Scheme + "://" + Request.Host.Value + "/";
-                var options = new Stripe.Checkout.SessionCreateOptions
+                if (product.Stock < item.Quantity)
                 {
-                    SuccessUrl = domain + "ShoppingCart/OrderConfirmed/" + order.Id,
-                    CancelUrl = domain + "ShoppingCart/Checkout",
-                    LineItems = new List<SessionLineItemOptions>(),
-                    Mode = "payment",
-                };
-
-                foreach (var item in cart.Items)
-                {
-                    var product = await _productManager.GetProductByIdAsync(item.ProductId);
-                    var stripeLineItem = new SessionLineItemOptions
-                    {
-                        PriceData = new SessionLineItemPriceDataOptions
-                        {
-                            UnitAmount = (long)(item.SubTotal * 100),
-                            Currency = "usd",
-                            ProductData = new SessionLineItemPriceDataProductDataOptions
-                            {
-                                Name = product.Name,
-                            },
-                        },
-                        Quantity = item.Quantity,
-                    };
-                    options.LineItems.Add(stripeLineItem);
+                    return BadRequest($"Insufficient stock for product: {product.Name}");
                 }
-                var service = new Stripe.Checkout.SessionService();
-                Session session = service.Create(options);
-                order.StripeSessionId = session.Id;
-                await _orderRepository.UpdateAsync(order);
 
-                // ✅ Store session ID in order
-                order.StripeSessionId = session.Id;
-                await _orderRepository.UpdateAsync(order);
-
-                ClearCart();
-                Response.Headers.Add("Location", session.Url);
-                return Redirect(session.Url);
-
+                // Store product for later use
+                productDict[item.ProductId] = product;
             }
-            catch (DbUpdateException ex)
+
+            var user = await _userManager.FindByNameAsync(HttpContext.User.Identity!.Name!);
+
+            var order = new Order
             {
-                TempData["ErrorMessage"] = $"An error occurred while placing your order: {ex.InnerException?.Message}";
-                return RedirectToAction("Index");
+                UserId = user!.Id,
+                AddressId = addressId,
+                OrderDate = DateTime.UtcNow,
+                TotalAmount = cart.TotalAmount,
+                Status = "Pending",
+                OrderItems = cart.Items.Select(i => new OrderDetails
+                {
+                    ProductId = i.ProductId,
+                    Quantity = i.Quantity,
+                    UnitPrice = i.Price,
+                    Discount = 0
+                }).ToList()
+            };
+
+            await _orderRepository.AddAsync(order);
+
+            // Deduct stock using the cached product data
+            foreach (var item in cart.Items)
+            {
+                var product = productDict[item.ProductId];
+                var updatedStock = product.Stock - item.Quantity;
+
+                await _productManager.UpdateProductAsync(new UpdateProductDto
+                {
+                    Id = product.Id,
+                    Name = product.Name,
+                    Description = product.Description,
+                    Price = product.Price,
+                    Stock = updatedStock,
+                    BrandId = product.BrandId,
+                    CategoryId = product.CategoryId,
+                });
             }
+
+            ClearCart();
+            return RedirectToAction("OrderConfirmed", new { orderId = order.Id });
         }
 
         [HttpGet]
         [Authorize(Roles = "Admin, Customer")]
-        public async Task<IActionResult> OrderConfirmed(string sessionId)
+        public async Task<IActionResult> OrderConfirmed(int orderId)
         {
-            if (string.IsNullOrEmpty(sessionId))
-            {
-                TempData["ErrorMessage"] = "Session ID is missing or invalid!";
-                return RedirectToAction("Index");
-            }
-
-            var order = await _orderRepository.GetOrderByStripeSessionIdAsync(sessionId);
-            if (order == null)
-            {
-                TempData["ErrorMessage"] = $"Order with Session ID {sessionId} not found.";
-                return RedirectToAction("Index");
-            }
-
-            var service = new Stripe.Checkout.SessionService();
-            var session = await service.GetAsync(order.StripeSessionId);
-            if (session.PaymentStatus == "paid")
-            {
-                order.Status = "Paid";
-                await _orderRepository.UpdateAsync(order);
-            }
-
-            ClearCart();
+            var order = await _orderRepository.GetByIdAsync(orderId);
             return View("OrderConfirmation", order);
         }
+
+        [HttpGet]
+        public IActionResult GetCartCount()
+        {
+            var cart = GetCart();
+            return Json(new { count = cart.Items.Sum(i => i.Quantity) });
+        }
+
 
 
 
