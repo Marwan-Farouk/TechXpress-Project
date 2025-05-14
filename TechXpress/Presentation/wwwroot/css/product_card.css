@@ -142,7 +142,6 @@
         transform: translateY(-2px);
     }
 
-/* List View Styles */
 .products-grid.list-view .product-card {
     display: grid;
     grid-template-columns: 200px 1fr auto;
@@ -172,7 +171,6 @@
     padding: 0.75rem 2rem;
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .products-grid.list-view .product-card {
         grid-template-columns: 150px 1fr;

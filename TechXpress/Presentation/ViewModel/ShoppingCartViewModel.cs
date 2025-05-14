@@ -17,13 +17,20 @@ namespace Presentation.ViewModels
         public string ProductName { get; set; }
         public decimal Price { get; set; }
         public int Quantity { get; set; }
-        public decimal SubTotal => Price * Quantity;
+        public decimal SubTotal { get; set; }
+        public string ImageUrl { get; set; }
+
+    public void CalculateSubTotal()
+        {
+            SubTotal = Price * Quantity;
+        }
     }
 
     public class CheckoutViewModel
     {
         public ShoppingCartViewModel Cart { get; set; }
         public List<UserAddressViewModel> UserAddresses { get; set; }
+        public int AddressId { get; set; }
     }
 }
 

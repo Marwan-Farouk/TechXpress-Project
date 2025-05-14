@@ -2,6 +2,7 @@
 using DataAccess.Contexts;
 using DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,17 @@ namespace DataAccess.Repositories.ORDER
                     .ThenInclude(oi => oi.Product)
                 .FirstOrDefaultAsync(o => o.Id == id))!;
         }
+        public async Task<Order> GetByIdAsync(int id, bool includeDetails = false)
+        {
+            if (includeDetails)
+            {
+                return await _context.Orders
+                    .Include(o => o.OrderItems)
+                    .ThenInclude(oi => oi.Product)
+                    .FirstOrDefaultAsync(o => o.Id == id);
+            }
+            return await _context.Orders.FindAsync(id);
+        }
 
         public async Task<List<Order>> GetAllAsync()
         {
@@ -37,11 +49,13 @@ namespace DataAccess.Repositories.ORDER
                 .ToListAsync();
         }
 
-        public async Task AddAsync(Order order)
+        public async Task<Order> AddAsync(Order order)
         {
-            await _context.Orders.AddAsync(order);
+            var result = await _context.Orders.AddAsync(order);
             await _context.SaveChangesAsync();
+            return result.Entity;
         }
+
 
         public async Task UpdateAsync(Order order)
         {
@@ -91,6 +105,16 @@ namespace DataAccess.Repositories.ORDER
                 .Where(o => o.UserId == userId && o.Status.ToLower() == status.ToLower())
                 .ToListAsync();
         }
+        public async Task<Order> GetOrderByStripeSessionIdAsync(string stripeSessionId)
+        {
+            return await _context.Orders
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Product)
+                .Include(o=>o.Address)
+                .FirstOrDefaultAsync(o => o.StripeSessionId == stripeSessionId);
+        }
+
+
 
     }
 }

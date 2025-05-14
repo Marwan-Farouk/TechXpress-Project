@@ -12,6 +12,7 @@ using DataAccess.Repositories.ORDER;
 using DataAccess.Repositories.PRODUCT;
 using DataAccess.Repositories.USERADDRESS;
 using Microsoft.EntityFrameworkCore;
+using Stripe;
 
 namespace Presentation
 {
@@ -86,6 +87,7 @@ namespace Presentation
             app.UseStaticFiles();
 
             app.UseRouting();
+            StripeConfiguration.ApiKey = builder.Configuration.GetSection("Stripe:SecretKey").Get<String>();
 
             app.UseAuthentication();
 
