@@ -1,12 +1,6 @@
 ﻿using DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DataAccess.Configurations
 {
@@ -18,8 +12,10 @@ namespace DataAccess.Configurations
             //=================
             // Table name
             builder.ToTable("Orders");
+
             // Primary key
             builder.HasKey(o => o.Id); // PK ID
+
             // Column Data Types
             builder.Property(o => o.Id) // ID
                 .HasColumnType("int").UseIdentityColumn(10, 1);
@@ -35,28 +31,32 @@ namespace DataAccess.Configurations
                 .HasColumnType("int");
             builder.Property(o => o.AddressId) // FK AddressId
                 .HasColumnType("int").IsRequired();
+
+            // Configure StripeSessionId
+            builder.Property(o => o.StripeSessionId)
+                .HasMaxLength(255) // Set max length to 255
+                .IsRequired(false); // It's nullable
+
             // Relationships
-            // User (one) ===> Order (many)
             builder
                 .HasOne(o => o.User)
                 .WithMany(u => u.Orders)
                 .HasForeignKey(o => o.UserId)
                 .OnDelete(DeleteBehavior.Restrict);
-            // UserAddress (one) ===> Order (many)
+
             builder
                 .HasOne(o => o.Address)
                 .WithMany(ua => ua.Orders)
                 .HasForeignKey(o => o.AddressId);
-            // Payment (one) ===> Order (one)
+
             builder
                 .HasOne(o => o.Payment)
                 .WithOne(p => p.Order)
                 .HasForeignKey<Order>(o => o.PaymentId);
-            // OrderDetails (many) ===> Order (one)
+
             builder
                 .HasMany(o => o.OrderItems)
                 .WithOne(od => od.Order);
-            //====================================================================================================
         }
     }
 }

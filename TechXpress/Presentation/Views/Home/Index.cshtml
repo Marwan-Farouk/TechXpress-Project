@@ -3,6 +3,7 @@
 
 @{
     ViewData["Title"] = "Home Page";
+    var i = 3;
 }
 
 @section Styles {
@@ -24,6 +25,7 @@
         <div class="products-grid" id="featured-products">
             @foreach (var product in Model)
             {
+                i--;
                 <div class="product-card">
                     <div class="product-image">
                         <img src="~/@product.Image" alt="@product.Name">
@@ -45,6 +47,10 @@
                         </form>
                     </div>
                 </div>
+                if (i == 0)
+                {
+                    break;
+                }
             }
         </div>
         </div>
@@ -56,11 +62,12 @@
             <div class="categories-grid">
                 <div class="category-card electronics">
                     <h3>Electronics</h3>
-                    <a href="#" class="category-link">Browse Electronics</a>
+                <a asp-action="Index" asp-controller="Product" class="category-link">Browse Electronics</a>
                 </div>
                 <div class="category-card sports">
                     <h3>Sports</h3>
-                    <a href="#" class="category-link">Browse Sports</a>
+
+                <a asp-action="Index" asp-controller="Product" class="category-link">Browse Sports</a>
                 </div>
             </div>
         <div class="text-center my-4">

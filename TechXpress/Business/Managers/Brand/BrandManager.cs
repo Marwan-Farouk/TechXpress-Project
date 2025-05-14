@@ -26,7 +26,7 @@ namespace Business.Managers.Brand
             {
                 Id = brand.Id,
                 Name = brand.Name,
-                Description= brand.Description
+                Description = brand.Description
             };
         }
 
@@ -36,9 +36,9 @@ namespace Business.Managers.Brand
             return brands.Select(b => new BrandDto
                 {
                     Id = b.Id,
-                    Name = b.Name,
-                    Description = b.Description
-                }).ToList();
+                Name = b.Name,
+                Description = b.Description
+            }).ToList();
         }
 
         public async Task<int> Create(CreateBrandDto dto)

@@ -18,6 +18,8 @@ namespace DataAccess.Entities
         public string Status { get; set; }
         public int? PaymentId { get; set; }
         public Payment? Payment { get; set; }
+        public string StripeSessionId { get; set; }
+
         public ICollection<OrderDetails> OrderItems { get; set; }
     }
 }
