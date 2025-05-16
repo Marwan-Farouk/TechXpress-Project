@@ -56,6 +56,8 @@ namespace Presentation.Controllers
                             ApartmentNumber = address.ApartmentNumber
                         });
                     }
+
+                    await _userManager.AddToRoleAsync(user, request.Role);
                     await _userManager.SignInAsync(user, rememberMe: true);
 
                     return returnUrl == null ? RedirectToAction("Index", "Home") : Redirect(returnUrl);

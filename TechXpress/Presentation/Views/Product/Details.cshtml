@@ -37,7 +37,7 @@
                 <div class="product-actions">
                     <div class="quantity-selector">
                         <button class="quantity-btn minus" aria-label="Decrease quantity">-</button>
-                        <input type="number" value="1" min="1" class="quantity-input" aria-label="Product quantity">
+                        <input type="number" value="1" min="1" max="@Model.Stock" class="quantity-input" aria-label="Product quantity">
                         <button class="quantity-btn plus" aria-label="Increase quantity">+</button>
                     </div>
                     <form asp-action="AddToCart" asp-controller="ShoppingCart" asp-route-id="@Model.Id" method="post" style="display:inline;">
@@ -74,5 +74,53 @@
                 confirmButtonText: 'OK'
             });
         }
+        // Quantity selector functionality
+        const minusBtn = document.querySelector('.quantity-btn.minus');
+        const plusBtn = document.querySelector('.quantity-btn.plus');
+        const quantityInput = document.querySelector('.quantity-input');
+        const quantityToAdd = document.getElementById('quantity-to-add');
+
+        // Get max value (stock)
+        const maxQuantity = parseInt(quantityInput.getAttribute('max')) || 999;
+
+        // Update hidden form field
+        const updateHiddenQuantity = () => {
+            if (quantityToAdd) {
+                quantityToAdd.value = quantityInput.value;
+            }
+        };
+
+        // Decrease quantity
+        minusBtn.addEventListener('click', () => {
+            let currentValue = parseInt(quantityInput.value);
+            if (currentValue > 1) {
+                quantityInput.value = currentValue - 1;
+                updateHiddenQuantity();
+            }
+        });
+
+        // Increase quantity with stock limit
+        plusBtn.addEventListener('click', () => {
+            let currentValue = parseInt(quantityInput.value);
+            if (currentValue < maxQuantity) {
+                quantityInput.value = currentValue + 1;
+                updateHiddenQuantity();
+            }
+        });
+
+        // Update on manual input
+        quantityInput.addEventListener('change', () => {
+            let currentValue = parseInt(quantityInput.value);
+
+            // Ensure quantity is within bounds
+            if (isNaN(currentValue) || currentValue < 1) {
+                quantityInput.value = 1;
+            } else if (currentValue > maxQuantity) {
+                quantityInput.value = maxQuantity;
+            }
+
+            updateHiddenQuantity();
+        });
+
     });
 </script>

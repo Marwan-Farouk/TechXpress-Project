@@ -22,7 +22,7 @@
 
         <div class="products-layout">
             <aside class="filters-sidebar">
-                @if (User.IsInRole("Admin"))
+                @if (User.IsInRole("Admin") || User.IsInRole(("Seller")) )
                 {
                     <form asp-action="Create" asp-controller="Product" method="post" style="display:inline;">
                         <button class="add-to-cart-btn" style="background-color:lightseagreen; margin-bottom: 10px">
@@ -109,7 +109,7 @@
                                 <p class="product-price">@product.Price</p>
                                 <form asp-action="AddToCart" asp-controller="ShoppingCart" asp-route-id="@product.Id" method="post" style="display:inline;">
                                     @Html.AntiForgeryToken()
-                                    <button class="add-to-cart-btn" onclick="addToCart(${product.id})">
+                                    <button class="add-to-cart-btn" onclick="addToCart(product.id)">
                                         Add to Cart
                                     </button>
                                 </form>
@@ -145,6 +145,7 @@
         </div>
     </div>
 </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>

@@ -28,7 +28,7 @@ namespace Business.DTOs.Products
 
         [Required]
         public int BrandId { get; set; }
-
+        [Required]
         public IFormFile? Image { get; set; }
     }
 }

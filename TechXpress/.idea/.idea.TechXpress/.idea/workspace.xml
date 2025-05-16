@@ -11,8 +11,15 @@
   <component name="ChangeListManager">
     <list default="true" id="0144a7ca-394c-49d4-bda6-fae20b1a3b16" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TechXpress/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TechXpress/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Views/Categores/Details.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Categores/Details.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Views/Order/OrderDetails.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Order/OrderDetails.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/ActionRequests/Product/CreateProductRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/ActionRequests/Product/CreateProductRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/ActionRequests/User/RegisterActionRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/ActionRequests/User/RegisterActionRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Views/Product/Create.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Product/Create.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Views/Product/Details.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Product/Details.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Views/Product/Edit.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Product/Edit.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Views/Product/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Product/Index.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Views/User/Register.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/User/Register.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/appsettings.Development.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,6 +30,11 @@
     <option name="firstShow" value="false" />
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$/.." value="New_Branch" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -38,6 +50,8 @@
   }
 }</component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="mock:///AIAssistantSnippet.." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet.." root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/294078ecfce6fdb942ecfee089f09717de7a6fcfe5efd9fdb6f4f93c0fb4813/ActionMethodExecutor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7d382df578ec93391918cfaa4ce7f4b8f35c9aed1241d6556dc9be26df13c/IdentityUser.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8e25cce28490c87faaf15522967e96692c1829b521f6b7a4fc8bde524eec/IdentityRole.cs" root0="SKIP_HIGHLIGHTING" />
@@ -69,7 +83,8 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors.Color Scheme Font",
+    "settings.editor.selected.configurable": "editor.preferences.inline.completion",
+    "settings.editor.splitter.proportion": "0.2592242",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -130,6 +145,7 @@
       <workItem from="1746389950058" duration="12850000" />
       <workItem from="1746454896368" duration="2736000" />
       <workItem from="1746576317906" duration="1716000" />
+      <workItem from="1747405525995" duration="3985000" />
     </task>
     <task id="LOCAL-00002" summary="Remove AccountController and related Account views&#10;&#10;Deleted `Register` and `Login` functionalities, including the `AccountController` and corresponding Razor views (`Register.cshtml` and `Login.cshtml`). Updated `Home/Index` to remove links to Account actions, reflecting the elimination of account-related features.">
       <option name="closed" value="true" />
@@ -164,6 +180,21 @@
   <component name="UnityCheckinConfiguration" checkUnsavedScenes="false" />
   <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
   <component name="Vcs.Log.Tabs.Properties">
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="User">
+          <value>
+            <list>
+              <RecentGroup>
+                <option name="FILTER_VALUES">
+                  <option value="*" />
+                </option>
+              </RecentGroup>
+            </list>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
@@ -180,6 +211,11 @@
     <MESSAGE value="Remove AccountController and related Account views&#10;&#10;Deleted `Register` and `Login` functionalities, including the `AccountController` and corresponding Razor views (`Register.cshtml` and `Login.cshtml`). Updated `Home/Index` to remove links to Account actions, reflecting the elimination of account-related features." />
     <MESSAGE value="Refactor user and role management to improve modularity&#10;&#10;Replaced direct usage of Identity managers with custom interfaces (`IUserManager`, `IRoleManager`) across controllers and services. Standardized user and role operations while enhancing maintainability. Updated views to use consistent layouts and addressed minor issues in DTO mappings." />
     <MESSAGE value="Add Access Denied page and update layout for role-based views&#10;&#10;- Introduced a new AccessDenied.cshtml view for unauthorized access handling.&#10;- Updated _Layout.cshtml to conditionally render the layout based on user roles.&#10;- Modified multiple views to use the appropriate layout depending on user roles.&#10;- Added authorization attributes to several controllers to enforce role-based access." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add Access Denied page and update layout for role-based views&#10;&#10;- Introduced a new AccessDenied.cshtml view for unauthorized access handling.&#10;- Updated _Layout.cshtml to conditionally render the layout based on user roles.&#10;- Modified multiple views to use the appropriate layout depending on user roles.&#10;- Added authorization attributes to several controllers to enforce role-based access." />
+    <MESSAGE value="Remove migration 'Migrated' and associated designer file.&#10;&#10;Deleted an unnecessary migration file along with its designer file. This cleanup helps streamline the codebase and remove redundant database schema configurations." />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove migration 'Migrated' and associated designer file.&#10;&#10;Deleted an unnecessary migration file along with its designer file. This cleanup helps streamline the codebase and remove redundant database schema configurations." />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

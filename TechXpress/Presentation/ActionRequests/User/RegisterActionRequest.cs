@@ -27,16 +27,9 @@ public class RegisterActionRequest
     [Compare("PhoneNumber")]
     public string PhoneNumberConfirm { get; set; }
     public List<AddAddressActionRequest> Addresses { get; set; }
+    [Required]
+    public string Role { get;set; }
 }
-//
-// @*
-//     first name
-//     last name
-//     email
-//     password
-//     confirm password
-//     birthdate
-//     phonenumber
-//     phonenumber confirm
-//     addresses
-// *@
+
+
+
