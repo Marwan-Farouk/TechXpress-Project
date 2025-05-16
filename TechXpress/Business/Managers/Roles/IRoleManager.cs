@@ -8,4 +8,6 @@ public interface IRoleManager
     List<Role> GetRoles();
     Task<Role?> FindByIdAsync(string id);
     Task<IdentityResult> CreateAsync(Role role);
+    Task<List<Role>> GetRolesAsync();
+
 }

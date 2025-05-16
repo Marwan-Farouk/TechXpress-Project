@@ -1,5 +1,6 @@
 ﻿using DataAccess.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business.Managers.Users;
 
@@ -45,6 +46,11 @@ public class UserManager : IUserManager
         return _userManager.Users.ToList();
     }
 
+    public async Task<List<User>> GetUsersAsync()
+    {
+        return await _userManager.Users.ToListAsync();
+    }
+
     public async Task<User?> FindByIdAsync(string userId)
     {
         return await _userManager.FindByIdAsync(userId);
@@ -80,3 +86,4 @@ public class UserManager : IUserManager
         return await _userManager.UpdateAsync(user);
     }
 }
+

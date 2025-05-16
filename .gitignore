@@ -400,3 +400,5 @@ FodyWeavers.xsd
 *.sln.iml
 .vscode/launch.json
 .vscode/tasks.json
+/TechXpress/Presentation/wwwroot/images/products
+*.7z

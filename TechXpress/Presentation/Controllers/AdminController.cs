@@ -1,16 +1,10 @@
-﻿using System.Diagnostics;
-using System.Threading.Tasks;
-using Business.DTOs.Products;
+﻿using Business.DTOs.Products;
 using Business.Managers.Roles;
 using Business.Managers.Users;
-using DataAccess.Entities;
-using Microsoft.AspNetCore.Authorization; /////////////////
-using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Presentation.ActionRequests.Admin;
-using Presentation.Models;
 using Presentation.ViewModel.Admin;
 
 namespace Presentation.Controllers;
@@ -22,7 +16,7 @@ public class AdminController : Controller
     private readonly IUserManager _userManager;
     private readonly IRoleManager _roleManager;
 
-    public AdminController(IUserManager userManager,IRoleManager roleManager)
+    public AdminController(IUserManager userManager, IRoleManager roleManager)
     {
         _userManager = userManager;
         _roleManager = roleManager;
@@ -38,8 +32,8 @@ public class AdminController : Controller
     [HttpGet]
     public async Task<IActionResult> AssignUserRole()
     {
-        var users = _userManager.GetUsers();
-        var roles = _roleManager.GetRoles();
+        var users = await _userManager.GetUsersAsync();
+        var roles = await _roleManager.GetRolesAsync();
 
         var model = new UserRoleViewModel
         {
@@ -51,7 +45,8 @@ public class AdminController : Controller
     [HttpPost]
     public async Task<IActionResult> AssignUserRole(UserRoleViewModel request)
     {
-        if (ModelState.IsValid) {
+        if (ModelState.IsValid)
+        {
             var user = await _userManager.FindByIdAsync(request.UserId.ToString());
             var role = await _roleManager.FindByIdAsync(request.RoleId.ToString());
             if (user == null || role == null)
@@ -60,38 +55,41 @@ public class AdminController : Controller
                 return View(request);
             }
             var result = await _userManager.AddToRoleAsync(user, role.Name);
-            if (result.Succeeded) {
+            if (result.Succeeded)
+            {
                 TempData["SuccessMessage"] = "User has been successfully Assigned to the role";
                 return RedirectToAction(nameof(AssignUserRole));
             }
-            foreach (var error in result.Errors) {
+            foreach (var error in result.Errors)
+            {
 
                 ModelState.AddModelError(error.Code, error.Description);
             }
 
         }
-        
+
         return View(request);
     }
     [HttpGet]
     public async Task<IActionResult> ListUsers()
     {
-        var users = _userManager.GetUsers();
+        var users = await _userManager.GetUsersAsync();
         return View(users);
     }
 
     [HttpGet]
+    [HttpGet]
     public async Task<IActionResult> ListUserRoles()
     {
-        // Use ToListAsync() for async database operations
-        var users = _userManager.GetUsers();
+        // Use async methods for database operations
+        var users = await _userManager.GetUsersAsync();
         var userRolesList = new List<UserRolesViewModel>();
 
         foreach (var user in users)
         {
             var userRolesVM = new UserRolesViewModel
             {
-                UserId = user.Id, // Uncommented this as it's needed for the form
+                UserId = user.Id,
                 UserName = user.UserName,
                 Roles = (await _userManager.GetRolesAsync(user)).ToList()
             };
@@ -99,8 +97,9 @@ public class AdminController : Controller
         }
 
         // Use async version and cache the roles
-        ViewBag.AllRoles = _roleManager.GetRoles()
-            .Select(role => role.Name);
+        var roles = await _roleManager.GetRolesAsync();
+        // Add ToList() here to convert IEnumerable to List
+        ViewBag.AllRoles = roles.Select(role => role.Name).ToList();
 
         return View(userRolesList);
     }

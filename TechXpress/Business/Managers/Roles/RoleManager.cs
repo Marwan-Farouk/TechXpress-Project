@@ -1,5 +1,6 @@
 ﻿using DataAccess.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business.Managers.Roles;
 
@@ -14,6 +15,11 @@ public class RoleManager : IRoleManager
     public List<Role> GetRoles()
     {
         return _roleManager.Roles.ToList();
+    }
+
+    public async Task<List<Role>> GetRolesAsync()
+    {
+        return await _roleManager.Roles.ToListAsync();
     }
 
     public async Task<Role?> FindByIdAsync(string id)
