@@ -129,7 +129,14 @@
                         @for (int i = 1; i <= ViewBag.TotalPages; i++)
                         {
                             <li class="@(ViewBag.CurrentPage == i ? "active" : "")">
-                                <a asp-action="Index" asp-route-page="@i" asp-route-search="@ViewContext.RouteData.Values["search"]" asp-route-categoryId="@ViewContext.RouteData.Values["categoryId"]" asp-route-brandId="@ViewContext.RouteData.Values["brandId"]" asp-route-minPrice="@ViewContext.RouteData.Values["minPrice"]" asp-route-maxPrice="@ViewContext.RouteData.Values["maxPrice"]" asp-route-sortBy="@ViewContext.RouteData.Values["sortBy"]">@i</a>
+                                <a asp-action="Index"
+                                   asp-route-page="@i"
+                                   asp-route-search="@ViewBag.Search"
+                                   asp-route-categoryId="@ViewBag.CategoryId"
+                                   asp-route-brandId="@ViewBag.BrandId"
+                                   asp-route-minPrice="@ViewBag.MinPrice"
+                                   asp-route-maxPrice="@ViewBag.MaxPrice"
+                                   asp-route-sortBy="@ViewBag.SortBy">@i</a>
                             </li>
                         }
                     </ul>

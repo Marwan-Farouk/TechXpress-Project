@@ -79,13 +79,18 @@ namespace PresentationLayer.Controllers
             var totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
             var pagedProducts = products.Skip((page - 1) * pageSize).Take(pageSize).ToList();
 
-            // Pass pagination data to ViewBag
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = totalPages;
             ViewBag.TotalItems = totalItems;
 
             ViewBag.Categories = await _categoryManager.GetAllCategoriesAsync();
             ViewBag.Brands = await _brandManager.GetAll();
+            ViewBag.Search = search;
+            ViewBag.CategoryId = categoryId;
+            ViewBag.BrandId = brandId;
+            ViewBag.MinPrice = minPrice;
+            ViewBag.MaxPrice = maxPrice;
+            ViewBag.SortBy = sortBy;
             return View(pagedProducts);
         }
 
