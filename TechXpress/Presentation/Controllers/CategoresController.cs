@@ -98,7 +98,7 @@ namespace Presentation.Controllers
             {
                 Name = categoryViewModel.Name,
                 Description = categoryViewModel.Description,
-                Stock = categoryViewModel.Stock
+                Stock = 0
             });
 
             return RedirectToAction(nameof(Index));

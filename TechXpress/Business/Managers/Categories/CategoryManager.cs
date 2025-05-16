@@ -52,5 +52,25 @@ namespace Business.Managers.Categories
             var category = dto.ToEntity();
             await _categoryRepository.UpdateAsync(category);
         }
+        public async Task IncrementCategoryStockAsync(int categoryId, int stockToAdd)
+        {
+            // Option 1: Using raw SQL
+            // await _dbContext.Database.ExecuteSqlRawAsync(
+            //    "UPDATE Categories SET Stock = Stock + {0} WHERE Id = {1}", 
+            //    stockToAdd, categoryId);
+    
+            // Option 2: Using EF Core with a fresh context instance or detached entity
+            var category = await _categoryRepository.GetByIdAsync(categoryId);
+            category.Stock += stockToAdd;
+            await _categoryRepository.UpdateAsync(category);
+        }
+        
+        public async Task DecrementCategoryStockAsync(int categoryId, int stockToRemove)
+        {
+            var category = await _categoryRepository.GetByIdAsync(categoryId);
+            category.Stock -= stockToRemove;
+            await _categoryRepository.UpdateAsync(category);
+        }
+
     }
 }

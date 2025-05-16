@@ -8,6 +8,7 @@ using Presentation.ViewModels;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Threading.Tasks;
+using Business.Managers.Categories;
 using Business.Managers.Users;
 using DataAccess.Repositories.USERADDRESS;
 using Microsoft.AspNetCore.Authorization;
@@ -24,14 +25,16 @@ namespace Presentation.Controllers
         private readonly IProductManager _productManager;
         private readonly IUserManager _userManager;
         private readonly IAddressManager _addressManager;
+        private readonly ICategoryManager _categoryManager;
 
         public ShoppingCartController(IOrderRepository orderRepository, IProductManager productManager,
-            IUserManager userManager, IAddressManager addressManager)
+            IUserManager userManager, IAddressManager addressManager,ICategoryManager categoryManager)
         {
             _orderRepository = orderRepository;
             _productManager = productManager;
             _userManager = userManager;
             _addressManager = addressManager;
+            _categoryManager = categoryManager;
         }
 
         // ======== Manage Cart via Cookies ========
@@ -69,12 +72,17 @@ namespace Presentation.Controllers
         {
             var cart = GetCart();
 
+            // Ensure quantity is at least 1
+            if (quantity < 1)
+                quantity = 1;
+        
             var product = await _productManager.GetProductByIdAsync(id);
             if (product == null || product.Stock < quantity)
             {
-                return BadRequest("Product not available or insufficient stock.");
+                TempData["ErrorMessage"] = "Product not available or insufficient stock.";
+                return RedirectToAction("Details", "Product", new { id });
             }
-
+        
             var existingItem = cart.Items.FirstOrDefault(i => i.ProductId == id);
             if (existingItem != null)
             {
@@ -93,7 +101,6 @@ namespace Presentation.Controllers
                 };
                 newItem.CalculateSubTotal();
                 cart.Items.Add(newItem);
-
             }
 
             cart.TotalAmount = cart.Items.Sum(i => i.SubTotal);
@@ -276,6 +283,13 @@ namespace Presentation.Controllers
                     BrandId = product.BrandId,
                     CategoryId = product.CategoryId,
                 });
+
+                var category = await _categoryManager.GetCategoryByIdAsync(product.CategoryId);
+                if (category != null)
+                {
+                    await _categoryManager.DecrementCategoryStockAsync(category.Id, item.Quantity);
+                }
+
             }
 
             var domain = Request.Scheme + "://" + Request.Host.Value + "/";

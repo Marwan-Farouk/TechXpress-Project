@@ -15,5 +15,8 @@ namespace Business.Managers.Categories
         Task UpdateCategoryAsync(UpdateCategoryDto dto);
         Task DeleteCategoryAsync(int id);
         dynamic GetAllAsync();
+        Task IncrementCategoryStockAsync(int categoryId, int stockToAdd);
+        Task DecrementCategoryStockAsync(int categoryId, int stockToRemove);
+
     }
 }

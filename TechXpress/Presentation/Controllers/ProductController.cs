@@ -6,6 +6,7 @@ using DataAccess.Contexts;
 using DataAccess.Repositories.BRAND;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Business.DTOs.Categories;
 using Microsoft.AspNetCore.Authorization;
 using Presentation.ViewModel.Category;
 
@@ -105,9 +106,9 @@ namespace PresentationLayer.Controllers
 
         [HttpPost]
         [Authorize(Roles = "Admin, Customer")]
-        public IActionResult AddToCart(int id)
+        public IActionResult AddToCart(int id, int quantity = 1)
         {
-            return RedirectToAction("AddToCart", "ShoppingCart", new { productId = id });
+            return RedirectToAction("AddToCart", "ShoppingCart", new { id, quantity });
         }
 
         // 📌 Show create form
@@ -148,6 +149,9 @@ namespace PresentationLayer.Controllers
                 BrandId = model.BrandId,
                 Image = model.Image
             });
+
+            await _categoryManager.IncrementCategoryStockAsync(model.CategoryId, model.Stock);
+
 
             return RedirectToAction("Index");
         }
@@ -191,6 +195,19 @@ namespace PresentationLayer.Controllers
                 return View(model);
             }
 
+            // Get the original product to check if category changed
+            var originalProduct = await _productManager.GetProductByIdAsync(model.Id);
+            if (originalProduct == null)
+            {
+                return NotFound();
+            }
+        
+            // Check if category changed and store original values
+            bool categoryChanged = originalProduct.CategoryId != model.CategoryId;
+            int oldCategoryId = originalProduct.CategoryId;
+            int oldStock = originalProduct.Stock;
+        
+            // Update the product
             await _productManager.UpdateProductAsync(new UpdateProductDto
             {
                 Id = model.Id,
@@ -200,8 +217,30 @@ namespace PresentationLayer.Controllers
                 Stock = model.Stock,
                 CategoryId = model.CategoryId,
                 BrandId = model.BrandId,
-                CategoryName = model.CategoryName
             });
+        
+            // If category changed, update both categories' stock counts
+            if (categoryChanged)
+            {
+                // Decrement stock from old category
+                await _categoryManager.DecrementCategoryStockAsync(oldCategoryId, oldStock);
+                
+                // Increment stock for new category
+                await _categoryManager.IncrementCategoryStockAsync(model.CategoryId, model.Stock);
+            }
+            // If only stock changed (not category), update the difference
+            else if (oldStock != model.Stock)
+            {
+                int stockDifference = model.Stock - oldStock;
+                if (stockDifference > 0)
+                {
+                    await _categoryManager.IncrementCategoryStockAsync(model.CategoryId, stockDifference);
+                }
+                else if (stockDifference < 0)
+                {
+                    await _categoryManager.DecrementCategoryStockAsync(model.CategoryId, Math.Abs(stockDifference));
+                }
+            }
 
             return RedirectToAction(nameof(Details), new { id = model.Id });
         }

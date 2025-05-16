@@ -9,16 +9,21 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0144a7ca-394c-49d4-bda6-fae20b1a3b16" name="Changes" comment="">
+    <list default="true" id="0144a7ca-394c-49d4-bda6-fae20b1a3b16" name="Changes" comment="Enhance product management views and user registration&#10;&#10;- Added validation scripts to Create and Edit product views.&#10;- Updated quantity input in Details view to respect stock limits.&#10;- Implemented quantity selector functionality for better user experience.&#10;- Introduced role selection in user registration form.&#10;- Ensured role assignment during user registration in the controller.">
       <change beforePath="$PROJECT_DIR$/.idea/.idea.TechXpress/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.TechXpress/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/ActionRequests/Product/CreateProductRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/ActionRequests/Product/CreateProductRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/ActionRequests/User/RegisterActionRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/ActionRequests/User/RegisterActionRequest.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/UserController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/UserController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Business/DTOs/Products/UpdateProductRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Business/DTOs/Products/UpdateProductRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Business/Managers/Categories/CategoryManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Business/Managers/Categories/CategoryManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Business/Managers/Categories/ICategoryManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Business/Managers/Categories/ICategoryManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Business/Managers/Products/ProductManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Business/Managers/Products/ProductManager.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/ActionRequests/Product/UpdateProductRequest.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/ActionRequests/Product/UpdateProductRequest.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/CategoresController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/CategoresController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/ProductController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/ProductController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Controllers/ShoppingCartController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Controllers/ShoppingCartController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Views/Categores/Create.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Categores/Create.cshtml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Presentation/Views/Categores/Edit.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Categores/Edit.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Presentation/Views/Product/Create.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Product/Create.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Presentation/Views/Product/Details.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Product/Details.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Presentation/Views/Product/Edit.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Product/Edit.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Views/Product/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/Product/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Presentation/Views/User/Register.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/Views/User/Register.cshtml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Presentation/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/Presentation/appsettings.Development.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -51,12 +56,19 @@
 }</component>
   <component name="HighlightingSettingsPerFile">
     <setting file="mock:///AIAssistantSnippet.." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet.." root0="SKIP_HIGHLIGHTING" />
     <setting file="mock:///AIAssistantSnippet.." root0="FORCE_HIGHLIGHTING" root1="SKIP_HIGHLIGHTING" root2="FORCE_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet.." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet.." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet.." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet.." root0="SKIP_HIGHLIGHTING" />
+    <setting file="mock:///AIAssistantSnippet.." root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/294078ecfce6fdb942ecfee089f09717de7a6fcfe5efd9fdb6f4f93c0fb4813/ActionMethodExecutor.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/7d382df578ec93391918cfaa4ce7f4b8f35c9aed1241d6556dc9be26df13c/IdentityUser.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/8e25cce28490c87faaf15522967e96692c1829b521f6b7a4fc8bde524eec/IdentityRole.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$APPLICATION_CONFIG_DIR$/resharper-host/SourcesCache/d8d9726f3deb1bbf671f5b791e4dc3e0338219a996f439ad2a69024b825c60/UserManager.cs" root0="SKIP_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Presentation/Controllers/RoleController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://D:/Coding/DEPI FullStack .NET/Final Project/Program/TechXpress-Project/TechXpress/Presentation/appsettings.Development.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Presentation/wwwroot/lib/bootstrap/dist/js/bootstrap.bundle.js.map" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="false" />
@@ -71,23 +83,23 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    ".NET Launch Settings Profile.HTTP.executor": "Debug",
-    ".NET Launch Settings Profile.HTTPS.executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "editor.preferences.inline.completion",
-    "settings.editor.splitter.proportion": "0.2592242",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;.NET Launch Settings Profile.HTTP.executor&quot;: &quot;Debug&quot;,
+    &quot;.NET Launch Settings Profile.HTTPS.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;editor.preferences.inline.completion&quot;,
+    &quot;settings.editor.splitter.proportion&quot;: &quot;0.2592242&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected=".NET Launch Settings Profile.HTTPS">
     <configuration name="HTTP" type="LaunchSettings" factoryName=".NET Launch Settings Profile">
       <option name="LAUNCH_PROFILE_PROJECT_FILE_PATH" value="$PROJECT_DIR$/Presentation/Presentation.csproj" />
@@ -145,7 +157,7 @@
       <workItem from="1746389950058" duration="12850000" />
       <workItem from="1746454896368" duration="2736000" />
       <workItem from="1746576317906" duration="1716000" />
-      <workItem from="1747405525995" duration="3985000" />
+      <workItem from="1747405525995" duration="9430000" />
     </task>
     <task id="LOCAL-00002" summary="Remove AccountController and related Account views&#10;&#10;Deleted `Register` and `Login` functionalities, including the `AccountController` and corresponding Razor views (`Register.cshtml` and `Login.cshtml`). Updated `Home/Index` to remove links to Account actions, reflecting the elimination of account-related features.">
       <option name="closed" value="true" />
@@ -171,7 +183,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746406893309</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Enhance product management views and user registration&#10;&#10;- Added validation scripts to Create and Edit product views.&#10;- Updated quantity input in Details view to respect stock limits.&#10;- Implemented quantity selector functionality for better user experience.&#10;- Introduced role selection in user registration form.&#10;- Ensured role assignment during user registration in the controller.">
+      <option name="closed" value="true" />
+      <created>1747413924869</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1747413924869</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -212,7 +232,27 @@
     <MESSAGE value="Refactor user and role management to improve modularity&#10;&#10;Replaced direct usage of Identity managers with custom interfaces (`IUserManager`, `IRoleManager`) across controllers and services. Standardized user and role operations while enhancing maintainability. Updated views to use consistent layouts and addressed minor issues in DTO mappings." />
     <MESSAGE value="Add Access Denied page and update layout for role-based views&#10;&#10;- Introduced a new AccessDenied.cshtml view for unauthorized access handling.&#10;- Updated _Layout.cshtml to conditionally render the layout based on user roles.&#10;- Modified multiple views to use the appropriate layout depending on user roles.&#10;- Added authorization attributes to several controllers to enforce role-based access." />
     <MESSAGE value="Remove migration 'Migrated' and associated designer file.&#10;&#10;Deleted an unnecessary migration file along with its designer file. This cleanup helps streamline the codebase and remove redundant database schema configurations." />
-    <option name="LAST_COMMIT_MESSAGE" value="Remove migration 'Migrated' and associated designer file.&#10;&#10;Deleted an unnecessary migration file along with its designer file. This cleanup helps streamline the codebase and remove redundant database schema configurations." />
+    <MESSAGE value="Enhance product management views and user registration&#10;&#10;- Added validation scripts to Create and Edit product views.&#10;- Updated quantity input in Details view to respect stock limits.&#10;- Implemented quantity selector functionality for better user experience.&#10;- Introduced role selection in user registration form.&#10;- Ensured role assignment during user registration in the controller." />
+    <option name="LAST_COMMIT_MESSAGE" value="Enhance product management views and user registration&#10;&#10;- Added validation scripts to Create and Edit product views.&#10;- Updated quantity input in Details view to respect stock limits.&#10;- Implemented quantity selector functionality for better user experience.&#10;- Introduced role selection in user registration form.&#10;- Ensured role assignment during user registration in the controller." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="DotNet Breakpoints">
+          <url>file://$PROJECT_DIR$/Presentation/Controllers/ShoppingCartController.cs</url>
+          <line>71</line>
+          <properties documentPath="D:\Coding\DEPI FullStack .NET\Final Project\Program\TechXpress-Project\TechXpress\Presentation\Controllers\ShoppingCartController.cs" containingFunctionPresentation="Method 'AddToCart'">
+            <startOffsets>
+              <option value="2585" />
+            </startOffsets>
+            <endOffsets>
+              <option value="2586" />
+            </endOffsets>
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

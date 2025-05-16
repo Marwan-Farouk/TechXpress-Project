@@ -8,6 +8,8 @@
 
 <form asp-action="Edit" method="post" enctype="multipart/form-data">
     <input type="hidden" asp-for="Id" />
+    <input type="hidden" asp-for="ExistingImage" />
+    <div class="validation-summary text-danger" asp-validation-summary="All"></div>
 
     <div class="mb-3">
         <label asp-for="Name" class="form-label">Product Name</label>
@@ -35,7 +37,7 @@
 
     <div class="mb-3">
         <label asp-for="CategoryId" class="form-label">Category</label>
-        <select asp-for="CategoryId" class="form-control">
+        <select asp-for="CategoryId" class="form-control" required>
             <option value="">-- Select Category --</option>
             @foreach (var category in ViewBag.Categories)
             {
@@ -47,7 +49,7 @@
 
     <div class="mb-3">
         <label asp-for="BrandId" class="form-label">Brand</label>
-        <select asp-for="BrandId" class="form-control">
+        <select asp-for="BrandId" class="form-control" required>
             <option value="">-- Select Brand --</option>
             @foreach (var brand in ViewBag.Brands)
             {
@@ -73,6 +75,7 @@
     <div class="mb-3">
         <label asp-for="Image" class="form-label">Upload New Image</label>
         <input asp-for="Image" type="file" class="form-control" accept="image/*" />
+        <span class="text-muted">Leave empty to keep current image</span>
         <span asp-validation-for="Image" class="text-danger"></span>
     </div>
 
@@ -81,6 +84,6 @@
     <a asp-action="Index" class="btn btn-secondary">Cancel</a>
 </form>
 
-section Scripts {
+@section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

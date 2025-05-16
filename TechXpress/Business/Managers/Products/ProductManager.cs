@@ -38,6 +38,10 @@ namespace Business.Managers.Products
         public async Task UpdateProductAsync(UpdateProductDto dto)
         {
             var product = dto.ToEntity();
+            
+            // If we're getting a new image path, use it; otherwise we'll preserve the existing one in repository
+            // Product repo will handle keeping the old image path if no new one is provided
+            
             await _productRepository.UpdateAsync(product);
         }
 
